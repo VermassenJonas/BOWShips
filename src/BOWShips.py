@@ -2,7 +2,7 @@
 import sys
 
 from PySide6.QtWidgets import *
-from GUI.MainContent import MainContent
+from GUI_MainContent import MainContent
 
 class MainScreen(QMainWindow):
 	def __init__(self):
