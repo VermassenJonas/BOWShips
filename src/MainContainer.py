@@ -24,8 +24,8 @@ class Ui_Form(object):
         Form.resize(800, 600)
         self.tabWidget = QTabWidget(Form)
         self.tabWidget.setObjectName(u"tabWidget")
-        self.tabWidget.setGeometry(QRect(0, 0, 771, 511))
-        self.tabWidget.setMinimumSize(QSize(771, 511))
+        self.tabWidget.setGeometry(QRect(0, 0, 800, 600))
+        self.tabWidget.setMinimumSize(QSize(800, 600))
         self.tab = QWidget()
         self.tab.setObjectName(u"tab")
         self.tabWidget.addTab(self.tab, "")
@@ -46,6 +46,9 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
+#if QT_CONFIG(tooltip)
+        self.tabWidget.setToolTip(QCoreApplication.translate("Form", u"<html><head/><body><p>Base parameters of the ship's hull</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("Form", u"Hull", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("Form", u"Tab 2", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("Form", u"Page", None))
