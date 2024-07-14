@@ -61,6 +61,7 @@ class SpeedDemo(QWidget):
 		self.calcButton.clicked.connect(self.calcSpeed)
 		self.calcSpeed()
 	# Greets the user
+
 	def calcSpeed(self):
 		ship.beam = self.beamField.value()
 		ship.length = self.lengthField.value()
