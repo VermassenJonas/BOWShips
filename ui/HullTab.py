@@ -115,10 +115,15 @@ class Ui_HullTab(object):
         self.gridLayout.addWidget(self.label_2, 1, 5, 1, 1)
 
 #if QT_CONFIG(shortcut)
+        self.label_7.setBuddy(self.lineEdit_10)
+        self.label_3.setBuddy(self.lineEdit_8)
+        self.label_6.setBuddy(self.lineEdit)
         self.label.setBuddy(self.lineEdit_6)
+        self.label_5.setBuddy(self.lineEdit_9)
 #endif // QT_CONFIG(shortcut)
 
         self.retranslateUi(HullTab)
+        self.lineEdit_2.textChanged.connect(HullTab.slot1)
 
         QMetaObject.connectSlotsByName(HullTab)
     # setupUi
@@ -128,9 +133,9 @@ class Ui_HullTab(object):
         self.label_7.setText(QCoreApplication.translate("HullTab", u"Type", None))
         self.label_3.setText(QCoreApplication.translate("HullTab", u"Country:", None))
         self.label_4.setText(QCoreApplication.translate("HullTab", u"Ship", None))
-        self.label_6.setText(QCoreApplication.translate("HullTab", u"TextLabel", None))
+        self.label_6.setText(QCoreApplication.translate("HullTab", u"Engine Built", None))
         self.label.setText(QCoreApplication.translate("HullTab", u"name", None))
-        self.label_5.setText(QCoreApplication.translate("HullTab", u"TextLabel", None))
+        self.label_5.setText(QCoreApplication.translate("HullTab", u"Laid Down:", None))
         self.label_2.setText(QCoreApplication.translate("HullTab", u"Year:", None))
     # retranslateUi
 
