@@ -3,17 +3,16 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import Property
 
 from Data_Ship import ship
+from BuildingBlocks import *
 
 class HullTab(QWidget):
 
 	lengthField = None
 	def updateLPP(self, e):
-		print('test')
 		self.LengthPPField.setValue(ship.length/2)
 
 	def updateShip(self):
 		ship.length = self.lengthField.value()
-		ship.fire()
 
 	def __init__(self, parent=None):
 		super(HullTab, self).__init__(parent)
@@ -27,29 +26,30 @@ class HullTab(QWidget):
 		self.beamLabel = QLabel(text="Ship beam (m):")
 		self.draftLabel = QLabel(text="Ship draft (m):")
 
-		self.lengthField = QDoubleSpinBox()
-		self.lengthField.setMaximum(99999999)
+		self.lengthField = ConfSpinBox()
+		self.lengthField.setPrefix('waterline: ')
+		self.lengthField.setSuffix(' m')
 		self.lengthField.setValue(ship.length)
-#
-		#self.beamField = QDoubleSpinBox()
-		#self.beamField.setValue(ship.beam)
-#
-		#self.draftField = QDoubleSpinBox()
-		#self.draftField.setMaximum(99999999)
-		#self.draftField.setValue(ship.draft)
-		#
-		#layout.addWidget(self.lengthLabel,0,0)
-		#layout.addWidget(self.beamLabel,0,1)
-		#layout.addWidget(self.draftLabel,0,2)
-#
-		layout.addWidget(self.lengthField,1,0)
-		#layout.addWidget(self.beamField,1,1)
-		#layout.addWidget(self.draftField,1,2)
 
-		self.LengthPPField = QDoubleSpinBox()
-		self.LengthPPField.setMaximum(99999999)
+		self.beamField = ConfSpinBox()
+		self.beamField.setValue(ship.beam)
+
+		self.draftField = ConfSpinBox()
+		self.draftField.setValue(ship.draft)
+		
+
+		self.LengthPPField = ConfSpinBox()
 		self.LengthPPField.setValue(ship.length/2)
-		layout.addWidget(self.LengthPPField, 2,0)
+		self.LengthPPField.setDisabled(True)
+
+		layout.addWidget(self.lengthLabel	,1,0)
+		layout.addWidget(self.beamLabel		,1,1)
+		layout.addWidget(self.draftLabel	,1,2)
+		layout.addWidget(self.lengthField	,2,0)
+		layout.addWidget(self.beamField		,2,1)
+		layout.addWidget(self.draftField	,2,2)
+		layout.addWidget(self.LengthPPField	,3,0)
+
 		self.lengthField.textChanged.connect(self.updateShip)
 
 		ship.subscribe(self.updateLPP)		
