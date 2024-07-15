@@ -12,16 +12,36 @@ def blockCoefficient():
 	return displacement/volume
 
 
-class Ship(QObject):
+
+
+
+class Event(object):
+	pass
+
+class Ship(object):
 	def __init__(self):
-		QObject.__init__(self)
-		self.length_ = 180
+		self.callbacks = []
 
-	def readLength(self):
-		return self.length_
+		self.length = 180
+		self.beam = 20
+		self.draft = 6
+		self.displacement = 10000
+		self.shaftCount = 2
+		self.speed = 30
 
-	def setLength(self, val):
-		self.length_ = val
+	def subscribe(self, callback):
+		self.callbacks.append(callback)
+	def fire(self, **attrs):
+		e = Event()
+		e.source = self
+		for k, v in attrs.items():
+			setattr(e, k, v)
+		for fn in self.callbacks:
+			fn(e)
+	def blockCoefficient():
+		volume = self.length*self.beam*self.draft
+		return displacement/volume
+	def setBlockCoefficient(block):
+		self.displacement = block*self.length*self.beam*self.draft
 
-	length = Property(float, readLength, setLength)
 ship = Ship()

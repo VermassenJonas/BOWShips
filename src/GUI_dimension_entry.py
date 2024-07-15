@@ -6,6 +6,15 @@ from Data_Ship import ship
 
 class HullTab(QWidget):
 
+	lengthField = None
+	def updateLPP(self, e):
+		print('test')
+		self.LengthPPField.setValue(ship.length/2)
+
+	def updateShip(self):
+		ship.length = self.lengthField.value()
+		ship.fire()
+
 	def __init__(self, parent=None):
 		super(HullTab, self).__init__(parent)
 
@@ -39,12 +48,15 @@ class HullTab(QWidget):
 
 		self.LengthPPField = QDoubleSpinBox()
 		self.LengthPPField.setMaximum(99999999)
-		self.LengthPPField.setValue(ship.length)
+		self.LengthPPField.setValue(ship.length/2)
 		layout.addWidget(self.LengthPPField, 2,0)
+		self.lengthField.textChanged.connect(self.updateShip)
 
-
-		
+		ship.subscribe(self.updateLPP)		
 		self.show()
+
+
+
 
 
 if __name__ == "__main__":

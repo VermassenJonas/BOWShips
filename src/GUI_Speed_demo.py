@@ -12,7 +12,7 @@ class SpeedDemo(QWidget):
 		# Create widgets
 		self.setWindowTitle('BOWShips pre-alpha demo')
 		self.lengthLabel = QLabel(text="Ship Length (m):")
-		self.lengthField = ConfSpinBox()
+		self.lengthField = ConfSpinBox(self)
 		self.lengthField.setValue(ship.length)
 		layout.addWidget(self.lengthLabel)
 		layout.addWidget(self.lengthField)
