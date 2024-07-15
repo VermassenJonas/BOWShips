@@ -3,7 +3,7 @@ from PySide6.QtWidgets import *
 
 import Data_Ship as ship
 import Logic_speedCalc as SpeedCalc
-
+from BuildingBlocks import *
 class SpeedDemo(QWidget):
 
 	def __init__(self, parent=None):
@@ -12,8 +12,7 @@ class SpeedDemo(QWidget):
 		# Create widgets
 		self.setWindowTitle('BOWShips pre-alpha demo')
 		self.lengthLabel = QLabel(text="Ship Length (m):")
-		self.lengthField = QSpinBox()
-		self.lengthField.setMaximum(1000)
+		self.lengthField = ConfSpinBox()
 		self.lengthField.setValue(ship.length)
 		layout.addWidget(self.lengthLabel)
 		layout.addWidget(self.lengthField)
