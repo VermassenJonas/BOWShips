@@ -7,7 +7,6 @@ class MainWindow(QMainWindow):
 	def __init__(self):
 		super(MainWindow, self).__init__()
 		self.hullTab = Ui_HullTab()
-		self.hullTab.label_7.setText('this does not work')
 		self.hullTab.setupUi(self)
 
 
