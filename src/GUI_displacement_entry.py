@@ -1,10 +1,10 @@
 import sys
 
 from PySide6.QtWidgets import *
-from PySide6.QtCore import Property
 
 from Data_Ship import ship
 from BuildingBlocks import *
+from observable_properties import subscribe
 
 class DisplacementEntry(QWidget):
 
@@ -31,22 +31,22 @@ class DisplacementEntry(QWidget):
 		self.displacementField.textChanged.connect(self.updateDisp)
 		self.blockCoeffField.textChanged.connect(self.updateBlock)
 
-		ship.displacement.subscribe(self.refreshDisp)
-		ship.blockCoeff.subscribe(self.refreshBlock)
+		ship.subscribe('displacement',self.refreshDisp )
+		ship.subscribe('blockCoeff',self.refreshBlock )
 
 		self.show()
 
 	def updateDisp(self):
-		ship.displacement.value = self.displacementField.value()
+		ship.displacement = self.displacementField.value()
 	def updateBlock(self):
-		ship.blockCoeff.value = self.blockCoeffField.value()
+		ship.blockCoeff = self.blockCoeffField.value()
 
-	def refreshDisp(self, e):
-		self.displacementField.setValue(ship.displacement.value)
-	def refreshBlock(self, e):
+	def refreshDisp(self):
+		self.displacementField.setValue(ship.displacement)
+	def refreshBlock(self):
 		self.counter += 1
 		print(f'counter: {self.counter}')
-		self.blockCoeffField.setValue(ship.blockCoeff.value)
+		self.blockCoeffField.setValue(ship.blockCoeff)
 
 if __name__ == "__main__":
 	app = QApplication()
