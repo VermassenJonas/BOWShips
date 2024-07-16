@@ -22,7 +22,7 @@ class DimensionEntry(QWidget):
 
 		self.lengthField = ConfSpinBox()
 		self.lengthField.setSuffix(' m')
-		self.lengthField.setValue(ship.length)
+		self.lengthField.setValue(ship.value)
 
 		self.beamField = ConfSpinBox()
 		#self.beamField.setPrefix('hull: ')
@@ -38,7 +38,7 @@ class DimensionEntry(QWidget):
 		
 
 		self.LengthOAField = ConfSpinBox()
-		self.LengthOAField.setValue(ship.length+2.5)
+		self.LengthOAField.setValue(ship.value+2.5)
 		self.LengthOAField.setDisabled(True)
 
 		layout.addWidget(self.lengthLabel	,1,0)
@@ -58,10 +58,10 @@ class DimensionEntry(QWidget):
 		self.show()
 
 	def updateLOA(self, e):
-		self.LengthOAField.setValue(ship.length*ship.beam*ship.draft)
+		self.LengthOAField.setValue(ship.value*ship.beam*ship.draft)
 
 	def updateShip(self):
-		ship.length = self.lengthField.value()
+		ship.value = self.lengthField.value()
 		ship.beam = self.beamField.value()
 
 
