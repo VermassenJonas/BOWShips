@@ -1,22 +1,26 @@
 import sys
 from PySide6.QtWidgets import *
-from PySide6.QtCore import Slot
+from PySide6.QtCore import (Slot, QRect)
 
-import Data_Ship as ship
+from Data_Ship import ship
+from GUI_dimension_entry import DimensionEntry
 
 class HullTab(QWidget):
 
 	def __init__(self, parent=None):
 		super(HullTab, self).__init__(parent)
  
+		layout = QVBoxLayout()
+		self.setLayout(layout)
 		# Create widgets		
-
+		dimensions = DimensionEntry()
+		layout.addChildWidget(dimensions)
 		
 		self.show()
 
 
 if __name__ == "__main__":
 	app = QApplication()
-	screen = HullTab()
-	screen.show()
+	screen = HullTab()	
+	screen.setGeometry(QRect(0, 0, 800, 600))
 	sys.exit(app.exec())

@@ -1,31 +1,30 @@
-# Copyright (C) 2022 The Qt Company Ltd.
-# SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
-
-"""QUiLoader example, showing how to dynamically load a Qt Designer form
-   from a UI file."""
-
-from argparse import ArgumentParser, RawTextHelpFormatter
 import sys
+from PySide6.QtWidgets import *
+from PySide6.QtCore import (Slot, QRect)
 
-from PySide6.QtCore import QFile, QIODevice
-from PySide6.QtWidgets import QApplication
-from PySide6.QtUiTools import QUiLoader
+from Data_Ship import ship
+from GUI_HullTab import HullTab
+
+class MainContent(QWidget):
+
+	def __init__(self, parent=None):
+		super(MainContent, self).__init__(parent)
+		layout = QHBoxLayout()
+		self.setLayout(layout)
 
 
-if __name__ == '__main__':
-    ui_file_name = 'MainContainer.ui'
+		# Create widgets		
+		tabHolder = QTabWidget()
+		tabHolder.addTab(HullTab(), 'hull')
 
-    app = QApplication(sys.argv)
-    ui_file = QFile(ui_file_name)
-    if not ui_file.open(QIODevice.ReadOnly):
-        reason = ui_file.errorString()
-        print(f"Cannot open {ui_file_name}: {reason}")
-        sys.exit(-1)
-    loader = QUiLoader()
-    widget = loader.load(ui_file, None)
-    ui_file.close()
-    if not widget:
-        print(loader.errorString())
-        sys.exit(-1)
-    widget.show()
-    sys.exit(app.exec())
+		layout.addChildWidget(tabHolder)
+
+
+		self.show()
+
+
+if __name__ == "__main__":
+	app = QApplication()
+	screen = MainContent()	
+	screen.setGeometry(QRect(0, 0, 800, 600))
+	sys.exit(app.exec())
