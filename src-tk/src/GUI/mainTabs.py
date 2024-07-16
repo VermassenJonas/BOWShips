@@ -4,7 +4,7 @@ from tkinter import ttk
 import translations.strings as strings
 
 import GUI.HullGUI as hullGUI
-import GUI.engineGUI as engineGUI
+import engineGUI as engineGUI
 
 
 def draw(base, root):
