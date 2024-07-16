@@ -10,11 +10,11 @@ class HullTab(QWidget):
 	def __init__(self, parent=None):
 		super(HullTab, self).__init__(parent)
  
-		layout = QVBoxLayout()
+		layout = QGridLayout()
 		self.setLayout(layout)
 		# Create widgets		
 		dimensions = DimensionEntry()
-		layout.addChildWidget(dimensions)
+		layout.addWidget(dimensions)
 		
 		self.show()
 
@@ -22,5 +22,5 @@ class HullTab(QWidget):
 if __name__ == "__main__":
 	app = QApplication()
 	screen = HullTab()	
-	screen.setGeometry(QRect(0, 0, 800, 600))
+	screen.setGeometry(QRect(100, 100, 800, 600))
 	sys.exit(app.exec())

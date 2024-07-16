@@ -17,7 +17,7 @@ class MainContent(QWidget):
 		tabHolder = QTabWidget()
 		tabHolder.addTab(HullTab(), 'hull')
 
-		layout.addChildWidget(tabHolder)
+		layout.addWidget(tabHolder)
 
 
 		self.show()
@@ -26,5 +26,5 @@ class MainContent(QWidget):
 if __name__ == "__main__":
 	app = QApplication()
 	screen = MainContent()	
-	screen.setGeometry(QRect(0, 0, 800, 600))
+	screen.setGeometry(QRect(100, 100, 800, 600))
 	sys.exit(app.exec())

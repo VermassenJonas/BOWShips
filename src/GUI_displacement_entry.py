@@ -1,0 +1,70 @@
+import sys
+from PySide6.QtWidgets import *
+from PySide6.QtCore import Property
+
+from Data_Ship import ship
+from BuildingBlocks import *
+
+class DisplacementEntry(QWidget):
+
+
+	def __init__(self, parent=None):
+		super(DisplacementEntry, self).__init__(parent)
+
+		# define layout
+		layout = QGridLayout()
+		self.setLayout(layout) 
+		# Create widgets		
+
+		self.lengthLabel = QLabel(text="Ship length:")
+		self.beamLabel = QLabel(text="Ship beam:")
+		self.draftLabel = QLabel(text="Ship draft:")
+
+		self.lengthField = ConfSpinBox()
+		self.lengthField.setPrefix('waterline: ')
+		self.lengthField.setSuffix(' m')
+		self.lengthField.setValue(ship.length)
+
+		self.beamField = ConfSpinBox()
+		self.beamField.setPrefix('hull: ')
+		self.beamField.setSuffix(' m')
+		self.beamField.setValue(ship.beam)
+
+		self.draftField = ConfSpinBox()
+		self.draftField.setPrefix('normal: ')
+		self.draftField.setSuffix(' m')
+		self.draftField.setValue(ship.draft)
+		
+
+		self.LengthOAField = ConfSpinBox()
+		self.LengthOAField.setValue(ship.length+2.5)
+		self.LengthOAField.setDisabled(True)
+
+		layout.addWidget(self.lengthLabel	,1,0)
+		layout.addWidget(self.beamLabel		,1,1)
+		layout.addWidget(self.draftLabel	,1,2)
+		layout.addWidget(self.lengthField	,2,0)
+		layout.addWidget(self.beamField		,2,1)
+		layout.addWidget(self.draftField	,2,2)
+		layout.addWidget(self.LengthOAField	,3,0)
+
+		self.lengthField.textChanged.connect(self.updateShip)
+		self.beamField.textChanged.connect(self.updateShip)
+		self.draftField.textChanged.connect(self.updateShip)
+
+		ship.subscribe(self.updateLOA)		
+		self.show()
+
+	def updateLOA(self, e):
+		self.LengthOAField.setValue(ship.length+2.5)
+
+	def updateShip(self):
+		ship.length = self.lengthField.value()
+
+
+
+
+if __name__ == "__main__":
+	app = QApplication()
+	screen = DisplacementEntry()
+	sys.exit(app.exec())
