@@ -16,24 +16,25 @@ class DimensionEntry(QWidget):
 		self.setLayout(layout) 
 		# Create widgets		
 
-		self.lengthLabel = QLabel(text="Ship length:")
+		self.lengthLabel = QLabel(text="Ship length (waterline):")
 		self.beamLabel = QLabel(text="Ship beam:")
-		self.draftLabel = QLabel(text="Ship draft:")
+		self.draftLabel = QLabel(text="Ship draft (normal):")
 
 		self.lengthField = ConfSpinBox()
-		self.lengthField.setPrefix('waterline: ')
 		self.lengthField.setSuffix(' m')
 		self.lengthField.setValue(ship.length)
 
 		self.beamField = ConfSpinBox()
-		self.beamField.setPrefix('hull: ')
+		#self.beamField.setPrefix('hull: ')
 		self.beamField.setSuffix(' m')
 		self.beamField.setValue(ship.beam)
 
 		self.draftField = ConfSpinBox()
-		self.draftField.setPrefix('normal: ')
+		#self.draftField.setPrefix('normal: ')
 		self.draftField.setSuffix(' m')
 		self.draftField.setValue(ship.draft)
+
+
 		
 
 		self.LengthOAField = ConfSpinBox()
@@ -46,7 +47,8 @@ class DimensionEntry(QWidget):
 		layout.addWidget(self.lengthField	,2,0)
 		layout.addWidget(self.beamField		,2,1)
 		layout.addWidget(self.draftField	,2,2)
-		layout.addWidget(self.LengthOAField	,3,0)
+
+		layout.addWidget(self.LengthOAField	,4,0)
 
 		self.lengthField.textChanged.connect(self.updateShip)
 		self.beamField.textChanged.connect(self.updateShip)
@@ -56,10 +58,11 @@ class DimensionEntry(QWidget):
 		self.show()
 
 	def updateLOA(self, e):
-		self.LengthOAField.setValue(ship.length+2.5)
+		self.LengthOAField.setValue(ship.length*ship.beam*ship.draft)
 
 	def updateShip(self):
 		ship.length = self.lengthField.value()
+		ship.beam = self.beamField.value()
 
 
 
