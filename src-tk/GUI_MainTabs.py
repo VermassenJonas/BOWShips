@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 from GUI.Component import Component
-from GUI_HullTab import HullTab
+from GUI_Hull_Tab import HullTab
 class MainTabs(Component):
 	def __init__(self, parent, app) -> None:
 		super().__init__(parent, app)

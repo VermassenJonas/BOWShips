@@ -4,4 +4,5 @@ freeboard = "Freeboard"
 ship_info = "Ship Info"
 report = "Report"
 ship_overview = 'Ship Overview'
-engine = 'engine'
+engine = 'Engine'
+ship = 'Ship'
