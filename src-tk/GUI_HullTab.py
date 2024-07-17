@@ -4,11 +4,9 @@ from GUI.Component import Component
 class HullTab(Component):
 	def __init__(self, parent, app) -> None:
 		super().__init__(parent, app)
-		self.base =  ttk.Frame(self.parent, width=450)
+		self.base =  ttk.Frame(self.parent)
 		self.base.pack()
 		ttk.Label(self.base,  text ="0placeholder").pack()
-		#mainTabs.add(FreeboardTab, 	text =strings.freeboard) 
-		#mainTabs.add(EngineTab, 	text =strings.engine) 
 
 		
 

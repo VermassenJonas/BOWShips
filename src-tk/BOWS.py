@@ -16,9 +16,10 @@ class App(Component):
 
 	def draw(self):		
 		self.base = tk.Frame(self.parent)
-		MainContent(self.base,self)
+		mainContent = MainContent(self.base,self)
+		self.parent.title(self.lang.main_title)
 		self.base.pack()
-
+		mainContent.base.pack()
 	def process(self):
 		print('update')
 		for f in self.readCBs:
