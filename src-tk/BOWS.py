@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
+import translations.en as en_lang
 from GUI.Component import Component
 from GUI_MainContent import MainContent
 class App(Component):
@@ -11,6 +12,7 @@ class App(Component):
 		self.calcCBs = []
 		self.updateCBs = []
 		self.process()
+		self.lang = en_lang
 
 	def draw(self):		
 		self.base = tk.Frame(self.parent)

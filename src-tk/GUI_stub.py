@@ -1,17 +1,11 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 from GUI.Component import Component
-from GUI_HullTab import HullTab
 class MainTabs(Component):
 	def __init__(self, parent, app) -> None:
 		super().__init__(parent, app)
 		self.base =  ttk.Notebook(self.parent, width=450)
 		self.base.pack()
-		self.hullTab = ttk.Frame(self.base) 
-		self.base.add(HullTab(self.base, self.app).base, 		text =self.app.lang.hull) 
-			
-		#mainTabs.add(FreeboardTab, 	text =strings.freeboard) 
-		#mainTabs.add(EngineTab, 	text =strings.engine) 
 
 		
 
