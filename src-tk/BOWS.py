@@ -3,7 +3,6 @@ import tkinter.ttk as ttk
 
 import translations.en as en_lang
 from GUI.Component import Component
-from GUI_MainContent import MainContent
 class App(Component):
 	def __init__(self, parent, app) -> None:
 		super().__init__(parent, app)
@@ -34,6 +33,7 @@ class App(Component):
 	
 
 if __name__ == "__main__":
+	from GUI_MainContent import MainContent
 	root = tk.Tk()
 	root.geometry("600x600")
 	app = App(root, None)

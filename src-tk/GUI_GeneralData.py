@@ -2,8 +2,9 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from GUI.Component import Component
 from GUI.Customization import boldFont
+from BOWS import App 
 class GeneralData(Component):
-	def __init__(self, parent : tk.Widget, app) -> None:
+	def __init__(self, parent : tk.Widget, app : App) -> None:
 		super().__init__(parent, app)
 		self.base =  ttk.Frame(self.parent, width=450)
 		label = tk.Label(self.base, text=app.lang.ship)
