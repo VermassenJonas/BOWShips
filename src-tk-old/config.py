@@ -1,1 +1,1 @@
-lang = "en" #TODO: implement lang switching
+lang = "en"

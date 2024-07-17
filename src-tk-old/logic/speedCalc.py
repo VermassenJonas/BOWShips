@@ -649,7 +649,7 @@ def main():
     print(f"{name}: {round(shaftPower/1000)} kW")
     # creating a csv reader object
 
-def calcHPforSpeed(): #TODO: extract magic numbers
+def calcHPforSpeed():
     # manual data
     name = "test"
     length = ship.hull.length
