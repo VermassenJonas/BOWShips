@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-
+from BOWS import controlCenter
 from logic.speedCalc import calcHPforSpeed  
 from logic.shipData import ship
 from decimal import Decimal
@@ -34,4 +34,4 @@ def draw(root):
 		print('update here')
 		length = str(ship.hull.length)
 		beam = str(ship.hull.length/Decimal(9))
-
+	controlCenter.sub_update(update)
