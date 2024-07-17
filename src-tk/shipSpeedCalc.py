@@ -196,7 +196,7 @@ def rB_calcs(aBT, hB, G, TF, v)->float:
     calculates the resistance of a bulbous bow given the ship speed and dimensions of the bow
     """
     #measure of emergence of the bow
-    p_B = 0.56 * math.sqrt(aBT) / (TF - 1.4999 * hB)
+    p_B = 0.56 * math.sqrt(aBT) / (TF - 1.5 * hB)
 
     #Froude Number based on immersion of the bow
     Fni = v / math.sqrt(G * (TF - hB - 0.25 * math.sqrt(aBT)) + 0.15 * v ** 2)

@@ -3,7 +3,6 @@ from tkinter import ttk
 
 from logic.speedCalc import calcHPforSpeed  
 from logic.shipData import ship
-from BOWS import controlCenter
 from decimal import Decimal
 
 class engineGUI(tk.Frame):
@@ -31,10 +30,8 @@ def draw(root):
 	def passData():
 		ship.hull.length = Decimal(length)
 		ship.hull.beam = Decimal(beam)
-	controlCenter.sub_read(passData)
 	def update():
 		print('update here')
 		length = str(ship.hull.length)
 		beam = str(ship.hull.length/Decimal(9))
-	controlCenter.sub_update(update)
 
