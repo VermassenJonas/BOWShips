@@ -45,13 +45,13 @@ class DimensionData(Component):
 
 	def doRigging(self):
 		self.app.subscribe_update( *self.deferEntryUpdate(self.lengthMeterEntry, self.app.ship.length))
-		#self.app.subscribe_update( *self.deferEntryUpdate(self.lengthFeetEntry, self.app.ship.lengthft))
-		self.app.subscribe_update( *self.deferEntryUpdate(self.beamMeterEntry, self.app.ship.beam))
+		self.app.subscribe_update( *self.deferEntryUpdate(self.lengthFeetEntry, self.app.ship.lengthft))
 
-		self.bindEntry(self.lengthMeterEntry, partial(self.app.ship.setLength, self.lengthMeterEntry.get()))
-
+		self.bindEntry(*self.deferRead(self.lengthMeterEntry, self.app.ship.length))
+		self.bindEntry(*self.deferRead(self.lengthFeetEntry, self.app.ship.lengthft))
 		pass #TODO: implement interactivity
-	
+	def readLength(self, e):		
+		self.app.ship.length(self.lengthMeterEntry.get())
 
 if __name__ == "__main__":
 	root = tk.Tk()

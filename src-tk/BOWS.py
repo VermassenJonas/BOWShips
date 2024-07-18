@@ -10,6 +10,7 @@ class App(Component):
 	def __init__(self, parent, app) -> None:
 		super().__init__(parent, app)
 		self.app = self
+		self.readCBs = []
 		self.calcCBs = []
 		self._updateCBs = []
 		self.ship = Ship()
@@ -26,12 +27,13 @@ class App(Component):
 		self._updateCBs.append((element, fn))
 	
 	def process(self):
+		for fn in self.readCBs:
+			fn()
 		for fn in self.calcCBs:
 			fn()
 		for (element, fn ) in self._updateCBs:
 			if element and element.focus_get() != element:
 				fn()
-		print (self.ship.length)
 		self.parent.after(300, self.process)
 	
 
