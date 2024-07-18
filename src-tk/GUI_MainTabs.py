@@ -10,7 +10,7 @@ class MainTabs(Component):
 	def __init__(self, parent, app : App) -> None:
 		super().__init__(parent, app)
 		#self.base = tk.Frame(parent, width=300, height=200, background='blue')
-		self.base =  ttk.Notebook(self.parent, width=GUIconst.framewidth)
+		self.base =  ttk.Notebook(self.parent, width=GUIconst.framewidth, height=550)
 		self.hullTab = ttk.Frame(self.base) 
 		hullTab = HullTab(self.base, self.app)
 		hullTab.base.pack()

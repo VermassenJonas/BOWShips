@@ -3,13 +3,14 @@ import tkinter.ttk as ttk
 from GUI.Component import Component
 from BOWS import App
 import GUI.constants as GUIconst
-
+from GUI_Engine_SpeedPower import SpeedPower
 
 class EngineTab(Component):
 	def __init__(self, parent : tk.Widget, app : App)  -> None:
 		super().__init__(parent, app)
 		self.base =  ttk.Frame(self.parent, width=GUIconst.framewidth)
-
+		self.speedPower = SpeedPower(self.base, self.app)
+		self.speedPower.base.grid()
 		self.doRigging()
 
 	def doRigging(self):

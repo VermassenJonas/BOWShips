@@ -5,7 +5,7 @@ class Component:
 		self.parent = parent
 		self.app = app
 	
-	def bindEntry(entry, fn):
+	def bindEntry(entry : tk.Entry, fn):
 		#entry.bind('<Return>', fn)
 		#entry.bind('<FocusOut>', fn)
 		entry.bind('<Key>', fn)

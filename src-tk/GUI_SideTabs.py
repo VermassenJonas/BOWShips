@@ -11,8 +11,8 @@ class SideTabs(Component):
 		self.base =  ttk.Notebook(self.parent, width=GUIconst.framewidth)
 		shipOverviewTab = ttk.Frame(self.base) 
 		reportTab = ttk.Frame(self.base) 
-		self.base.add(shipOverviewTab)
-		self.base.add(reportTab)
+		self.base.add(shipOverviewTab, text=f'{app.lang.ship_info}')
+		self.base.add(reportTab, text=f'{app.lang.report}')
 		
 		#self.base.add(shipOverviewTab, 	text =self.app.lang.ship_overview) 
 		#self.base.add(reportTab, 		text =self.app.lang.report) 
