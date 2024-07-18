@@ -23,7 +23,7 @@ class App(Component):
 			f()
 		for f in self.updateCBs:
 			f()
-		self.parent.after(300, self.process)
+		self.parent.after(100, self.process)
 	
 
 	
@@ -31,7 +31,7 @@ class App(Component):
 if __name__ == "__main__":
 	from GUI_MainContent import MainContent #deferred to prevent circular imports
 	root = tk.Tk()
-	root.geometry("600x600")
+	root.geometry("800x600")
 	app = App(root, None)
 	app.draw()
 	root.mainloop()

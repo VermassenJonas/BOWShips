@@ -2,13 +2,13 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from GUI.Component import Component
 from BOWS import App
-
+import GUI.constants as GUIconst
 
 class SideTabs(Component):
 	def __init__(self, parent : tk.Widget, app : App) -> None:
 		super().__init__(parent, app)
 		#self.base = tk.Frame(parent, width=300, height=200, background='red')
-		self.base =  ttk.Notebook(self.parent, width=450)
+		self.base =  ttk.Notebook(self.parent, width=GUIconst.framewidth)
 		shipOverviewTab = ttk.Frame(self.base) 
 		reportTab = ttk.Frame(self.base) 
 		self.base.add(shipOverviewTab)

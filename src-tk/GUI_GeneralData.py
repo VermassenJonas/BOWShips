@@ -3,40 +3,41 @@ import tkinter.ttk as ttk
 from GUI.Component import Component
 from GUI.Customization import boldFont
 from BOWS import App 
+import GUI.constants as GUIconst
 
 class GeneralData(Component):
 	def __init__(self, parent : tk.Widget, app : App) -> None:
 		super().__init__(parent, app)
-		self.base =  ttk.Frame(self.parent, width=450)
-		
-		labelTitle = tk.Label(self.base, text=app.lang.ship)
-		labelTitle.config(font=boldFont())
-		nameLabel = tk.Label(self.base, text=f'{app.lang.name}:')
-		nameEntry = tk.Entry(self.base)
-		countryLabel = tk.Label(self.base, text=f'{app.lang.country}:')
-		countryEntry = tk.Entry(self.base)
-		typeLabel = tk.Label(self.base, text=f'{app.lang.type}:')
-		typeEntry = tk.Entry(self.base)
+		self.base =  ttk.Frame(self.parent, width=GUIconst.framewidth)
 
-		yearLabel = tk.Label(self.base, text=f'{app.lang.year}:')
-		laidDownLabel = tk.Label(self.base, text='0laid down')
-		laidDownEntry = tk.Entry(self.base)
-		engineBuiltLabel = tk.Label(self.base, text='0engine built')
-		engineBuiltEntry = tk.Entry(self.base)
+		self.labelTitle = tk.Label(self.base, text=app.lang.ship)
+		self.labelTitle.config(font=boldFont())
+		self.nameLabel = tk.Label(self.base, text=f'{app.lang.name}:')
+		self.nameEntry = tk.Entry(self.base)
+		self.countryLabel = tk.Label(self.base, text=f'{app.lang.country}:')
+		self.countryEntry = tk.Entry(self.base)
+		self.typeLabel = tk.Label(self.base, text=f'{app.lang.type}:')
+		self.typeEntry = tk.Entry(self.base)
+
+		self.yearLabel = tk.Label(self.base, text=f'{app.lang.year}:')
+		self.laidDownLabel = tk.Label(self.base, text=f'{app.lang.laid_down}:')
+		self.laidDownEntry = tk.Entry(self.base)
+		self.engineBuiltLabel = tk.Label(self.base, text=f'{app.lang.engine_built}:')
+		self.engineBuiltEntry = tk.Entry(self.base)
 
 
-		labelTitle.grid(column=0, row=0)
-		nameLabel.grid(column=0, row=1)
-		nameEntry.grid(column=1, row=1)
-		countryLabel.grid(column=0, row=2)
-		countryEntry.grid(column=1, row=2)
-		typeLabel.grid(column=0, row=3)
-		typeEntry.grid(column=1, row=3)
-		yearLabel.grid(column=3, row=1)
-		laidDownLabel.grid(column=2, row=2)
-		laidDownEntry.grid(column=3, row=2)
-		engineBuiltLabel.grid(column=2, row=3)
-		engineBuiltEntry.grid(column=3, row=3)
+		self.labelTitle.grid(column=0, row=0)
+		self.nameLabel.grid(column=0, row=1)
+		self.nameEntry.grid(column=1, row=1)
+		self.countryLabel.grid(column=0, row=2)
+		self.countryEntry.grid(column=1, row=2)
+		self.typeLabel.grid(column=0, row=3)
+		self.typeEntry.grid(column=1, row=3)
+		self.yearLabel.grid(column=3, row=1)
+		self.laidDownLabel.grid(column=2, row=2)
+		self.laidDownEntry.grid(column=3, row=2)
+		self.engineBuiltLabel.grid(column=2, row=3)
+		self.engineBuiltEntry.grid(column=3, row=3)
 		
 
 if __name__ == "__main__":	
