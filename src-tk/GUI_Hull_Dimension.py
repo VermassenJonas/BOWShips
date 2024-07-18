@@ -1,16 +1,16 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 from GUI.Component import Component
-from GUI.Customization import boldFont
 from BOWS import App
 import GUI.constants as GUIconst
+import GUI.Customization as GuiCust
 class DimensionData(Component):
 	def __init__(self, parent : tk.Widget, app : App)  -> None:
 		super().__init__(parent, app)
 		self.base =  ttk.Frame(self.parent, width=GUIconst.framewidth)
 		
-		self.labelTitle = tk.Label(self.base, text=f'{app.lang.dimensions}')
-		self.labelTitle.config(font=boldFont())
+		self.titleLabel = tk.Label(self.base, text=f'{app.lang.dimensions}')
+		GuiCust.configHeader(self.titleLabel)
 
 		self.lengthLabel = tk.Label(self.base, text=f'{app.lang.length}:')
 		self.beamLabel = tk.Label(self.base, text=f'{app.lang.beam}:')
@@ -25,7 +25,7 @@ class DimensionData(Component):
 		self.draftMeterEntry 	= tk.Entry(self.base)
 		self.draftFeetEntry 	= tk.Entry(self.base)
 
-		self.labelTitle.grid	(column=0, row=0, columnspan=2)
+		self.titleLabel.grid	(column=0, row=0, columnspan=2)
 		self.lengthLabel.grid	(column=1, row=1)
 		self.beamLabel.grid		(column=2, row=1)
 		self.draftLabel.grid	(column=3, row=1)

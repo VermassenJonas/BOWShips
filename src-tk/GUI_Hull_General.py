@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 from GUI.Component import Component
-from GUI.Customization import boldFont
+import GUI.Customization as GuiCust
 from BOWS import App 
 import GUI.constants as GUIconst
 
@@ -10,8 +10,8 @@ class GeneralData(Component):
 		super().__init__(parent, app)
 		self.base =  ttk.Frame(self.parent, width=GUIconst.framewidth)
 
-		self.labelTitle = tk.Label(self.base, text=app.lang.ship)
-		self.labelTitle.config(font=boldFont())
+		self.titleLabel = tk.Label(self.base, text=app.lang.ship)
+		GuiCust.configHeader(self.titleLabel)
 		self.nameLabel = tk.Label(self.base, text=f'{app.lang.name}:')
 		self.nameEntry = tk.Entry(self.base)
 		self.countryLabel = tk.Label(self.base, text=f'{app.lang.country}:')
@@ -26,7 +26,7 @@ class GeneralData(Component):
 		self.engineBuiltEntry = tk.Entry(self.base)
 
 
-		self.labelTitle.grid(column=0, row=0)
+		self.titleLabel.grid(column=0, row=0)
 		self.nameLabel.grid(column=0, row=1)
 		self.nameEntry.grid(column=1, row=1)
 		self.countryLabel.grid(column=0, row=2)
@@ -38,7 +38,11 @@ class GeneralData(Component):
 		self.laidDownEntry.grid(column=3, row=2)
 		self.engineBuiltLabel.grid(column=2, row=3)
 		self.engineBuiltEntry.grid(column=3, row=3)
-		
+
+		self.doRigging()
+
+	def doRigging(self):
+		pass #TODO: implement interactivity	
 
 if __name__ == "__main__":	
 	root = tk.Tk()

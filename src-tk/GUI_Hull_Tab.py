@@ -1,9 +1,9 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 from GUI.Component import Component
-from GUI_GeneralData import GeneralData
-from GUI_DimensionData import DimensionData
-from GUI_DisplacementData import DisplacementData
+from GUI_Hull_General import GeneralData
+from GUI_Hull_Dimension import DimensionData
+from GUI_Hull_Displacement import DisplacementData
 from BOWS import App
 class HullTab(Component):
 	def __init__(self, parent : tk.Widget, app : App) -> None:
