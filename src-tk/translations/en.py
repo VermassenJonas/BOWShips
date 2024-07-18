@@ -6,3 +6,7 @@ report = "Report"
 ship_overview = 'Ship Overview'
 engine = 'Engine'
 ship = 'Ship'
+name = 'Name'
+country = 'Country'
+type = 'Type'
+year = 'Year'

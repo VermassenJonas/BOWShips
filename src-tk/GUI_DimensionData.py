@@ -2,10 +2,9 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from GUI.Component import Component
 from GUI.Customization import boldFont
-from BOWS import App 
-
-class GeneralData(Component):
-	def __init__(self, parent : tk.Widget, app : App) -> None:
+from BOWS import App
+class DimensionData(Component):
+	def __init__(self, parent : tk.Widget, app : App)  -> None:
 		super().__init__(parent, app)
 		self.base =  ttk.Frame(self.parent, width=450)
 		
@@ -24,7 +23,6 @@ class GeneralData(Component):
 		engineBuiltLabel = tk.Label(self.base, text='0engine built')
 		engineBuiltEntry = tk.Entry(self.base)
 
-
 		labelTitle.grid(column=0, row=0)
 		nameLabel.grid(column=0, row=1)
 		nameEntry.grid(column=1, row=1)
@@ -37,12 +35,13 @@ class GeneralData(Component):
 		laidDownEntry.grid(column=3, row=2)
 		engineBuiltLabel.grid(column=2, row=3)
 		engineBuiltEntry.grid(column=3, row=3)
+
 		
 
-if __name__ == "__main__":	
+if __name__ == "__main__":
 	root = tk.Tk()
 	root.geometry("600x600")
 	app = App(root, None)
-	screen =GeneralData(root, app)
-	screen.base.grid()
+	screen =DimensionData(root, app)
+	screen.base.pack()
 	root.mainloop()

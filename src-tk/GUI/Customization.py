@@ -1,6 +1,3 @@
-
-
-
 from tkinter import font
 
 def boldFont() -> font.Font:

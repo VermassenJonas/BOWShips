@@ -24,16 +24,12 @@ class App(Component):
 		for f in self.updateCBs:
 			f()
 		self.parent.after(300, self.process)
-	def bindEntry(entry : tk.Entry, fn):
-		entry.bind('<Return>', fn)
-		entry.bind('<FocusOut>', fn)
-		#TODO: set up performace switching
 	
 
 	
 
 if __name__ == "__main__":
-	from GUI_MainContent import MainContent
+	from GUI_MainContent import MainContent #deferred to prevent circular imports
 	root = tk.Tk()
 	root.geometry("600x600")
 	app = App(root, None)
