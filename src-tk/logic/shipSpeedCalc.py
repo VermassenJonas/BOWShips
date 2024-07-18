@@ -645,7 +645,6 @@ def main():
                             numPropellers = numShafts, dProp = dProp,
                             numBlades = numBlades, n = propSpeed)
     print(f"{name}: {round(shaftPower/1000)} kW")
-    # creating a csv reader object
        
             
 

@@ -1,13 +1,15 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+from functools import partial
 from GUI.Component import Component
 from BOWS import App
-import GUI.constants as GUIconst
+import constants as constants
 import GUI.Customization as GuiCust
 class DimensionData(Component):
+	app : App
 	def __init__(self, parent : tk.Widget, app : App)  -> None:
 		super().__init__(parent, app)
-		self.base =  ttk.Frame(self.parent, width=GUIconst.framewidth)
+		self.base =  ttk.Frame(self.parent, width=constants.framewidth)
 		
 		self.titleLabel = tk.Label(self.base, text=f'{app.lang.dimensions}')
 		GuiCust.configHeader(self.titleLabel)
@@ -39,10 +41,17 @@ class DimensionData(Component):
 		self.draftMeterEntry.grid	(column=3, row=2)
 		self.draftFeetEntry.grid	(column=3, row=3)
 
-	def doRigging(self):
-		pass #TODO: implement interactivity
+		self.doRigging()
 
-		
+	def doRigging(self):
+		self.app.subscribe_update( *self.deferEntryUpdate(self.lengthMeterEntry, self.app.ship.length))
+		#self.app.subscribe_update( *self.deferEntryUpdate(self.lengthFeetEntry, self.app.ship.lengthft))
+		self.app.subscribe_update( *self.deferEntryUpdate(self.beamMeterEntry, self.app.ship.beam))
+
+		self.bindEntry(self.lengthMeterEntry, partial(self.app.ship.setLength, self.lengthMeterEntry.get()))
+
+		pass #TODO: implement interactivity
+	
 
 if __name__ == "__main__":
 	root = tk.Tk()

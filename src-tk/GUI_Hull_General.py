@@ -3,12 +3,12 @@ import tkinter.ttk as ttk
 from GUI.Component import Component
 import GUI.Customization as GuiCust
 from BOWS import App 
-import GUI.constants as GUIconst
+import constants as constants
 
 class GeneralData(Component):
 	def __init__(self, parent : tk.Widget, app : App) -> None:
 		super().__init__(parent, app)
-		self.base =  ttk.Frame(self.parent, width=GUIconst.framewidth)
+		self.base =  ttk.Frame(self.parent, width=constants.framewidth)
 
 		self.titleLabel = tk.Label(self.base, text=app.lang.ship)
 		GuiCust.configHeader(self.titleLabel)
