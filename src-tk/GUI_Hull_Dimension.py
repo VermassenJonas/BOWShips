@@ -1,31 +1,29 @@
-import tkinter as tk
-import tkinter.ttk as ttk
-from functools import partial
+from tkinter import Widget
 from GUI.Component import Component
 from BOWS import App
 import constants as constants
-import GUI.Customization as GuiCust
+import GUI.WidgetMaker as wm
+
 class DimensionData(Component):
 	app : App
-	def __init__(self, parent : tk.Widget, app : App)  -> None:
+	def __init__(self, parent : Widget, app : App)  -> None:
 		super().__init__(parent, app)
-		self.base =  ttk.Frame(self.parent, width=constants.framewidth)
+		self.base =  wm.create_frame(self.parent)
 		
-		self.titleLabel = tk.Label(self.base, text=f'{app.lang.dimensions}')
-		GuiCust.configHeader(self.titleLabel)
+		self.titleLabel = wm.create_title_label(self.base, text=f'{app.lang.dimensions}')
 
-		self.lengthLabel	= tk.Label(self.base, text=f'{app.lang.length}:')
-		self.beamLabel 		= tk.Label(self.base, text=f'{app.lang.beam}:')
-		self.draftLabel 	= tk.Label(self.base, text=f'{app.lang.draft}:')
-		self.meterLabel 	= tk.Label(self.base, text=f'{app.lang.meter} (m):' )
-		self.feetLabel 		= tk.Label(self.base, text=f'{app.lang.feet} (ft):' )
+		self.lengthLabel	= wm.create_label(self.base, text=f'{app.lang.length}:')
+		self.beamLabel 		= wm.create_label(self.base, text=f'{app.lang.beam}:')
+		self.draftLabel 	= wm.create_label(self.base, text=f'{app.lang.draft}:')
+		self.meterLabel 	= wm.create_label(self.base, text=f'{app.lang.meter} (m):' )
+		self.feetLabel 		= wm.create_label(self.base, text=f'{app.lang.feet} (ft):' )
 
-		self.lengthMeterEntry 	= tk.Entry(self.base)
-		self.lengthFeetEntry 	= tk.Entry(self.base)
-		self.beamMeterEntry 	= tk.Entry(self.base)
-		self.beamFeetEntry 		= tk.Entry(self.base)
-		self.draftMeterEntry 	= tk.Entry(self.base)
-		self.draftFeetEntry 	= tk.Entry(self.base)
+		self.lengthMeterEntry 	= wm.create_entry(self.base)
+		self.lengthFeetEntry 	= wm.create_entry(self.base)
+		self.beamMeterEntry 	= wm.create_entry(self.base)
+		self.beamFeetEntry 		= wm.create_entry(self.base)
+		self.draftMeterEntry 	= wm.create_entry(self.base)
+		self.draftFeetEntry 	= wm.create_entry(self.base)
 
 		self.titleLabel.grid	(column=0, row=0, columnspan=2)
 		self.lengthLabel.grid	(column=1, row=1)
@@ -44,23 +42,23 @@ class DimensionData(Component):
 		self.doRigging()
 
 	def doRigging(self):
-		#self.app.subscribe_update(*self.deferEntryUpdate(self.beamMeterEntry, 	self.app.ship.beam))
-		#self.app.subscribe_update(*self.deferEntryUpdate(self.beamFeetEntry, 	self.app.ship.beamft))
-		#self.app.subscribe_update(*self.deferEntryUpdate(self.draftMeterEntry, 	self.app.ship.draft))
-		#self.app.subscribe_update(*self.deferEntryUpdate(self.draftFeetEntry, 	self.app.ship.draftft))
 
-		self.app.ship.length.addCallback(partial(self._updateEntry, self.lengthMeterEntry))
-		self.app.ship.lengthft.addCallback(partial(self._updateEntry, self.lengthFeetEntry))
+		self.bindEntryCallback(self.lengthMeterEntry, 	self.app.ship.length)
+		self.bindEntryCallback(self.lengthFeetEntry, 	self.app.ship.lengthft)
+		self.bindEntryCallback(self.beamMeterEntry, 	self.app.ship.beam)
+		self.bindEntryCallback(self.beamFeetEntry,	 	self.app.ship.beamft)
+		self.bindEntryCallback(self.draftMeterEntry,	self.app.ship.draft)
+		self.bindEntryCallback(self.draftFeetEntry, 	self.app.ship.draftft)
 
-		self.bindEntryRead(self.lengthMeterEntry, self.app.ship.length)
-		self.bindEntryRead(self.lengthFeetEntry, self.app.ship.lengthft)
-		#self.bindEntry(*self.deferRead(self.beamMeterEntry, 	self.app.ship.beam))
-		#self.bindEntry(*self.deferRead(self.beamFeetEntry, 		self.app.ship.beamft))
-		#self.bindEntry(*self.deferRead(self.draftMeterEntry, 	self.app.ship.draft))
-		#self.bindEntry(*self.deferRead(self.draftFeetEntry, 	self.app.ship.draftft))
+		self.bindEntryRead(self.lengthMeterEntry, 		self.app.ship.length)
+		self.bindEntryRead(self.lengthFeetEntry, 		self.app.ship.lengthft)
+		self.bindEntryRead(self.beamMeterEntry, 		self.app.ship.beam)
+		self.bindEntryRead(self.beamFeetEntry, 			self.app.ship.beamft)
+		self.bindEntryRead(self.draftMeterEntry, 		self.app.ship.draft)
+		self.bindEntryRead(self.draftFeetEntry, 		self.app.ship.draftft)
 
 if __name__ == "__main__":
-	root = tk.Tk()
+	root = wm.create_root()
 	root.geometry("600x600")
 	app = App(root, None)
 	screen =DimensionData(root, app)

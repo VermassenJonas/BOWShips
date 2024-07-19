@@ -1,22 +1,20 @@
-import tkinter as tk
-import tkinter.ttk as ttk
+from tkinter import Widget
 from GUI.Component import Component
-from BOWS import App
-import GUI.Customization as GuiCust
 import constants as constants
+from BOWS import App
+import GUI.WidgetMaker as wm
 
 class DisplacementData(Component):
-	def __init__(self, parent : tk.Widget, app : App)  -> None:
+	def __init__(self, parent : Widget, app : App)  -> None:
 		super().__init__(parent, app)
-		self.base =  ttk.Frame(self.parent, width=constants.framewidth)
+		self.base =  wm.create_frame(self.parent)
 		
-		self.titleLabel = tk.Label(self.base, text=f'{app.lang.displacement}')
-		GuiCust.configHeader(self.titleLabel)
+		self.titleLabel = wm.create_title_label(self.base, text=f'{app.lang.displacement}')
 
-		self.blockLabel = tk.Label(self.base, text=f'{app.lang.block_coefficient}:')
-		self.dispLabel = tk.Label(self.base, text=f'{app.lang.displacement}:')
-		self.blockEntry = tk.Entry(self.base)
-		self.dispEntry = tk.Entry(self.base)
+		self.blockLabel 	= wm.create_label(self.base, text=f'{app.lang.block_coefficient}:')
+		self.dispLabel 		= wm.create_label(self.base, text=f'{app.lang.displacement}:')
+		self.blockEntry 	= wm.create_entry(self.base)
+		self.dispEntry 		= wm.create_entry(self.base)
 
 		self.titleLabel.grid(column=0, row=0, columnspan=2)
 
@@ -27,15 +25,14 @@ class DisplacementData(Component):
 
 		self.doRigging()
 	def doRigging(self):
-		#self.app.subscribe_update(*self.deferEntryUpdate(self.dispEntry, 	self.app.ship.displacement))
-		#self.app.subscribe_update(*self.deferEntryUpdate(self.blockEntry, 	self.app.ship.blockCoeff))
-#
-		#self.bindEntry(*self.deferRead(self.dispEntry, 		self.app.ship.displacement))
-		#self.bindEntry(*self.deferRead(self.blockEntry, 	self.app.ship.blockCoeff))
-		pass
+		self.bindEntryCallback(self.dispEntry,			self.app.ship.displacement)
+		self.bindEntryCallback(self.blockEntry,		 	self.app.ship.blockCoeff)
+
+		self.bindEntryRead(self.dispEntry, 			self.app.ship.displacement)
+		self.bindEntryRead(self.blockEntry, 		self.app.ship.blockCoeff)
 
 if __name__ == "__main__":
-	root = tk.Tk()
+	root = wm.create_root()
 	root.geometry("600x600")
 	app = App(root, None)
 	screen =DisplacementData(root, app)

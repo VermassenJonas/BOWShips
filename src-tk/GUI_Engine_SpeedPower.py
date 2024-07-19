@@ -1,25 +1,23 @@
-import tkinter as tk
-import tkinter.ttk as ttk
+from tkinter import Widget, DISABLED
 from GUI.Component import Component
 from BOWS import App
 import constants
-import GUI.Customization as GuiCust
+import GUI.WidgetMaker as wm
 
 class SpeedPower(Component):
-	def __init__(self, parent : tk.Widget, app : App)  -> None:
+	def __init__(self, parent : Widget, app : App)  -> None:
 		super().__init__(parent, app)
-		self.base =  ttk.Frame(self.parent, width=constants.framewidth)
+		self.base =  wm.create_frame(self.parent, width=constants.framewidth)
 
-		titleLabel = tk.Label(self.base, text=f'{app.lang.speed_and_power}')
-		GuiCust.configHeader(titleLabel)
+		titleLabel = wm.create_title_label(self.base, text=f'{app.lang.speed_and_power}')
 		
-		maxSpeedlabel = tk.Label(self.base, text='0maxSpeed')
-		cruiseSpeedLabel = tk.Label(self.base, text='0cruise speed')
-		shaftCountLabel = tk.Label(self.base, text='0shafts')
-		maxSpeedEntry = tk.Entry(self.base)
-		cruiseSpeedEntry = tk.Entry(self.base, state=tk.DISABLED) #TODO: Cruising's for later
-		shaftCountEntry = tk.Entry(self.base)
-		powReqMaxHPLabel = tk.Label(self.base, text=f'0Power(shp): 0x0000')
+		maxSpeedlabel 		= wm.create_label(self.base, text='0maxSpeed')
+		cruiseSpeedLabel 	= wm.create_label(self.base, text='0cruise speed')
+		shaftCountLabel 	= wm.create_label(self.base, text='0shafts')
+		maxSpeedEntry 		= wm.create_entry(self.base)
+		cruiseSpeedEntry 	= wm.create_entry(self.base, state=DISABLED) #TODO: Cruising's for later
+		shaftCountEntry 	= wm.create_entry(self.base)
+		powReqMaxHPLabel 	= wm.create_label(self.base, text=f'0Power(shp): 0x0000')
 
 
 		titleLabel.grid			(column=0, row=0, columnspan=2)
@@ -37,7 +35,7 @@ class SpeedPower(Component):
 		pass #TODO: implement interactivity	
 
 if __name__ == "__main__":
-	root = tk.Tk()
+	root = wm.create_root()
 	root.geometry("600x600")
 	app = App(root, None)
 	screen =SpeedPower(root, app)

@@ -1,13 +1,12 @@
-from decimal import Decimal
-import tkinter as tk
-import tkinter.ttk as ttk
-import constants
+from tkinter import Widget
+import tkinter.messagebox as messagebox
 import translations.en as en_lang
 from GUI.Component import Component
 from logic.Ship import Ship
+import GUI.WidgetMaker as wm
 class App(Component):
 	ship : Ship
-	def __init__(self, parent, app) -> None:
+	def __init__(self, parent : Widget, app) -> None:
 		super().__init__(parent, app)
 		self.app = self
 		self.readCBs = []
@@ -18,12 +17,12 @@ class App(Component):
 		self.process()
 
 	def draw(self):		
-		self.base = tk.Frame(self.parent)
+		self.base = wm.create_frame(self.parent)
 		mainContent = MainContent(self.base,self)
 		self.parent.title(self.lang.main_title)
 		self.base.pack()
 		mainContent.base.pack()
-	def subscribe_update(self, element : tk.Widget, fn):
+	def subscribe_update(self, element : Widget, fn):
 		self._updateCBs.append((element, fn))
 	
 	def process(self):
@@ -41,7 +40,12 @@ class App(Component):
 
 if __name__ == "__main__":
 	from GUI_MainContent import MainContent #deferred to prevent circular imports
-	root = tk.Tk()
+	root = wm.create_root()
+	def on_closing():
+		if messagebox.askokcancel("Quit", "Do you want to quit?"):
+			root.destroy()
+
+	root.protocol("WM_DELETE_WINDOW", on_closing)
 	root.geometry("800x600")
 	app = App(root, None)
 	app.draw()

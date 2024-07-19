@@ -1,16 +1,14 @@
-import tkinter as tk
-import tkinter.ttk as ttk
+from tkinter import Widget
 from GUI.Component import Component
 from BOWS import App
 import constants as constants
-
+import GUI.WidgetMaker as wm
 class SideTabs(Component):
-	def __init__(self, parent : tk.Widget, app : App) -> None:
+	def __init__(self, parent : Widget, app : App) -> None:
 		super().__init__(parent, app)
-		#self.base = tk.Frame(parent, width=300, height=200, background='red')
-		self.base =  ttk.Notebook(self.parent, width=constants.framewidth)
-		shipOverviewTab = ttk.Frame(self.base) 
-		reportTab = ttk.Frame(self.base) 
+		self.base =  wm.create_notebook(self.parent)
+		shipOverviewTab = wm.create_frame(self.base) 
+		reportTab = wm.create_frame(self.base) 
 		self.base.add(shipOverviewTab, text=f'{app.lang.ship_info}')
 		self.base.add(reportTab, text=f'{app.lang.report}')
 		
@@ -21,7 +19,7 @@ class SideTabs(Component):
 		
 
 if __name__ == "__main__":	
-	root = tk.Tk()
+	root = wm.create_root()
 	root.geometry("600x600")
 	app = App(root, None)
 	screen = SideTabs(root, app)

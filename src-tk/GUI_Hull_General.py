@@ -1,29 +1,29 @@
-import tkinter as tk
-import tkinter.ttk as ttk
+from tkinter import Widget
 from GUI.Component import Component
-import GUI.Customization as GuiCust
 from BOWS import App 
 import constants as constants
+import GUI.WidgetMaker as wm
 
 class GeneralData(Component):
-	def __init__(self, parent : tk.Widget, app : App) -> None:
+	def __init__(self, parent : Widget, app : App) -> None:
 		super().__init__(parent, app)
-		self.base =  ttk.Frame(self.parent, width=constants.framewidth)
+		self.base =  wm.create_frame(self.parent, width=constants.framewidth)
 
-		self.titleLabel = tk.Label(self.base, text=app.lang.ship)
-		GuiCust.configHeader(self.titleLabel)
-		self.nameLabel = tk.Label(self.base, text=f'{app.lang.name}:')
-		self.nameEntry = tk.Entry(self.base)
-		self.countryLabel = tk.Label(self.base, text=f'{app.lang.country}:')
-		self.countryEntry = tk.Entry(self.base)
-		self.typeLabel = tk.Label(self.base, text=f'{app.lang.type}:')
-		self.typeEntry = tk.Entry(self.base)
+		self.titleLabel 	= wm.create_title_label(self.base, text=app.lang.ship)
 
-		self.yearLabel = tk.Label(self.base, text=f'{app.lang.year}:')
-		self.laidDownLabel = tk.Label(self.base, text=f'{app.lang.laid_down}:')
-		self.laidDownEntry = tk.Entry(self.base)
-		self.engineBuiltLabel = tk.Label(self.base, text=f'{app.lang.engine_built}:')
-		self.engineBuiltEntry = tk.Entry(self.base)
+		self.nameLabel 		= wm.create_label(self.base, text=f'{app.lang.name}:')
+		self.countryLabel	= wm.create_label(self.base, text=f'{app.lang.country}:')
+		self.typeLabel 		= wm.create_label(self.base, text=f'{app.lang.type}:')
+
+		self.nameEntry 		= wm.create_entry(self.base)
+		self.countryEntry 	= wm.create_entry(self.base)
+		self.typeEntry		= wm.create_entry(self.base)
+
+		self.yearLabel 			= wm.create_label(self.base, text=f'{app.lang.year}:')
+		self.laidDownLabel 		= wm.create_label(self.base, text=f'{app.lang.laid_down}:')
+		self.engineBuiltLabel	= wm.create_label(self.base, text=f'{app.lang.engine_built}:')
+		self.laidDownEntry 		= wm.create_entry(self.base)
+		self.engineBuiltEntry 	= wm.create_entry(self.base)
 
 
 		self.titleLabel.grid(column=0, row=0)
@@ -45,7 +45,7 @@ class GeneralData(Component):
 		pass #TODO: implement interactivity	
 
 if __name__ == "__main__":	
-	root = tk.Tk()
+	root = wm.create_root()
 	root.geometry("600x600")
 	app = App(root, None)
 	screen =GeneralData(root, app)
