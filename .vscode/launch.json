@@ -8,7 +8,7 @@
 			"name": "Python Debugger: Current File",
 			"type": "debugpy",
 			"request": "launch",
-			"program": "./src-tk/BOWS.py",
+			"program": "./src-qt-new/BOWS.py",
 			"console": "integratedTerminal"
 		}
 	]
