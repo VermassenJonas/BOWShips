@@ -19,10 +19,10 @@ class DimensionData(Component):
 		self.feetLabel 		= wm.create_label(self.base, text=f'{app.lang.feet} (ft):' )
 
 		self.lengthMeterEntry 	= wm.create_entry(self.base)
-		self.lengthFeetEntry 	= wm.create_entry(self.base)
 		self.beamMeterEntry 	= wm.create_entry(self.base)
-		self.beamFeetEntry 		= wm.create_entry(self.base)
 		self.draftMeterEntry 	= wm.create_entry(self.base)
+		self.lengthFeetEntry 	= wm.create_entry(self.base)
+		self.beamFeetEntry 		= wm.create_entry(self.base)
 		self.draftFeetEntry 	= wm.create_entry(self.base)
 
 		self.titleLabel.grid	(column=0, row=0, columnspan=2)
@@ -33,10 +33,10 @@ class DimensionData(Component):
 		self.feetLabel.grid		(column=0, row=3)
 
 		self.lengthMeterEntry.grid	(column=1, row=2)
-		self.lengthFeetEntry.grid	(column=1, row=3)
 		self.beamMeterEntry.grid	(column=2, row=2)
-		self.beamFeetEntry.grid		(column=2, row=3)
 		self.draftMeterEntry.grid	(column=3, row=2)
+		self.lengthFeetEntry.grid	(column=1, row=3)
+		self.beamFeetEntry.grid		(column=2, row=3)
 		self.draftFeetEntry.grid	(column=3, row=3)
 
 		self.doRigging()
