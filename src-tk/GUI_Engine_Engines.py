@@ -12,12 +12,12 @@ class Engines(Component):
 		super().__init__(parent, app)
 		self.base =  wm.create_frame(self.parent)
 		self.titleLabel = wm.create_title_label(self.base, self.app.lang.engines)
-		self.titleLabel.grid()
+		self.titleLabel.grid(column=0, row=0)
 		
 		self.fuelType = FuelType(self.base, self.app)
-		self.fuelType.base.grid()
+		self.fuelType.base.grid(column=0, row=1)
 		self.engineType = EngineType(self.base, self.app)
-		self.engineType.base.grid(column=1)
+		self.engineType.base.grid(column=1, row=1)
 		self.doRigging()
 
 	def doRigging(self):

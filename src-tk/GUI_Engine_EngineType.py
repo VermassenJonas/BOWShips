@@ -18,7 +18,7 @@ class EngineType(Component):
 		self.doRigging()
 
 	def doRigging(self):
-		self.engineVar.set( self.app.ship.engineType())
+		self.engineVar.set( self.app.ship.engineType().name)
 		self.bindVarRead(self.engineVar, self.app.ship.engineType)
 
 if __name__ == "__main__":

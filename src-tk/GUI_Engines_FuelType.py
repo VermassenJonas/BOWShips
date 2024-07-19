@@ -27,8 +27,10 @@ class FuelType(Component):
 		self.bindVarRead(self.fuelVar, self.app.ship.fuelType)
 		self.app.ship.fuelType.addCallback(self.confFuelField)
 
+		self.bindVarRead(self.percVar, self.app.ship.coalPercent)
 
-	def confFuelField(self, value : enums.Fuel):
+
+	def confFuelField(self, value : enums.Fuel | None):
 		if value == enums.Fuel.COAL:
 			self.percEntry.config(state=DISABLED)
 			self.percVar.set('100')

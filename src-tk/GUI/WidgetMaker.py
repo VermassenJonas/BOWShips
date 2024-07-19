@@ -8,7 +8,7 @@ def _boldFont() -> font.Font:
 	return font.Font(weight='bold')
 
 def _standardizeAlignment(widget : tk.Widget):
-	widget.grid = partial(widget.grid, sticky=tk.W)
+	widget.grid = partial(widget.grid, sticky=tk.NW)
 
 def create_entry(parent : tk.Misc) -> tk.Entry:
 	widget = tk.Entry(parent) 
