@@ -14,11 +14,11 @@ class DimensionData(Component):
 		self.titleLabel = tk.Label(self.base, text=f'{app.lang.dimensions}')
 		GuiCust.configHeader(self.titleLabel)
 
-		self.lengthLabel = tk.Label(self.base, text=f'{app.lang.length}:')
-		self.beamLabel = tk.Label(self.base, text=f'{app.lang.beam}:')
-		self.draftLabel = tk.Label(self.base, text=f'{app.lang.draft}:')
-		self.meterLabel = tk.Label(self.base, text=f'{app.lang.meters} (m):' )
-		self.feetLabel = tk.Label(self.base, text=f'{app.lang.feet} (ft):' )
+		self.lengthLabel	= tk.Label(self.base, text=f'{app.lang.length}:')
+		self.beamLabel 		= tk.Label(self.base, text=f'{app.lang.beam}:')
+		self.draftLabel 	= tk.Label(self.base, text=f'{app.lang.draft}:')
+		self.meterLabel 	= tk.Label(self.base, text=f'{app.lang.meter} (m):' )
+		self.feetLabel 		= tk.Label(self.base, text=f'{app.lang.feet} (ft):' )
 
 		self.lengthMeterEntry 	= tk.Entry(self.base)
 		self.lengthFeetEntry 	= tk.Entry(self.base)
@@ -44,14 +44,19 @@ class DimensionData(Component):
 		self.doRigging()
 
 	def doRigging(self):
-		self.app.subscribe_update( *self.deferEntryUpdate(self.lengthMeterEntry, self.app.ship.length))
-		self.app.subscribe_update( *self.deferEntryUpdate(self.lengthFeetEntry, self.app.ship.lengthft))
+		self.app.subscribe_update(*self.deferEntryUpdate(self.lengthMeterEntry, self.app.ship.length))
+		self.app.subscribe_update(*self.deferEntryUpdate(self.lengthFeetEntry, 	self.app.ship.lengthft))
+		self.app.subscribe_update(*self.deferEntryUpdate(self.beamMeterEntry, 	self.app.ship.beam))
+		self.app.subscribe_update(*self.deferEntryUpdate(self.beamFeetEntry, 	self.app.ship.beamft))
+		self.app.subscribe_update(*self.deferEntryUpdate(self.draftMeterEntry, 	self.app.ship.draft))
+		self.app.subscribe_update(*self.deferEntryUpdate(self.draftFeetEntry, 	self.app.ship.draftft))
 
-		self.bindEntry(*self.deferRead(self.lengthMeterEntry, self.app.ship.length))
-		self.bindEntry(*self.deferRead(self.lengthFeetEntry, self.app.ship.lengthft))
-		pass #TODO: implement interactivity
-	def readLength(self, e):		
-		self.app.ship.length(self.lengthMeterEntry.get())
+		self.bindEntry(*self.deferRead(self.lengthMeterEntry, 	self.app.ship.length))
+		self.bindEntry(*self.deferRead(self.lengthFeetEntry, 	self.app.ship.lengthft))
+		self.bindEntry(*self.deferRead(self.beamMeterEntry, 	self.app.ship.beam))
+		self.bindEntry(*self.deferRead(self.beamFeetEntry, 		self.app.ship.beamft))
+		self.bindEntry(*self.deferRead(self.draftMeterEntry, 	self.app.ship.draft))
+		self.bindEntry(*self.deferRead(self.draftFeetEntry, 	self.app.ship.draftft))
 
 if __name__ == "__main__":
 	root = tk.Tk()

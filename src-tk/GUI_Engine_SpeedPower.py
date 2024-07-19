@@ -41,5 +41,5 @@ if __name__ == "__main__":
 	root.geometry("600x600")
 	app = App(root, None)
 	screen =SpeedPower(root, app)
-	screen.base.pack()
+	screen.base.grid()
 	root.mainloop()
