@@ -44,19 +44,20 @@ class DimensionData(Component):
 		self.doRigging()
 
 	def doRigging(self):
-		self.app.subscribe_update(*self.deferEntryUpdate(self.lengthMeterEntry, self.app.ship.length))
-		self.app.subscribe_update(*self.deferEntryUpdate(self.lengthFeetEntry, 	self.app.ship.lengthft))
-		self.app.subscribe_update(*self.deferEntryUpdate(self.beamMeterEntry, 	self.app.ship.beam))
-		self.app.subscribe_update(*self.deferEntryUpdate(self.beamFeetEntry, 	self.app.ship.beamft))
-		self.app.subscribe_update(*self.deferEntryUpdate(self.draftMeterEntry, 	self.app.ship.draft))
-		self.app.subscribe_update(*self.deferEntryUpdate(self.draftFeetEntry, 	self.app.ship.draftft))
+		#self.app.subscribe_update(*self.deferEntryUpdate(self.beamMeterEntry, 	self.app.ship.beam))
+		#self.app.subscribe_update(*self.deferEntryUpdate(self.beamFeetEntry, 	self.app.ship.beamft))
+		#self.app.subscribe_update(*self.deferEntryUpdate(self.draftMeterEntry, 	self.app.ship.draft))
+		#self.app.subscribe_update(*self.deferEntryUpdate(self.draftFeetEntry, 	self.app.ship.draftft))
 
-		self.bindEntry(*self.deferRead(self.lengthMeterEntry, 	self.app.ship.length))
-		self.bindEntry(*self.deferRead(self.lengthFeetEntry, 	self.app.ship.lengthft))
-		self.bindEntry(*self.deferRead(self.beamMeterEntry, 	self.app.ship.beam))
-		self.bindEntry(*self.deferRead(self.beamFeetEntry, 		self.app.ship.beamft))
-		self.bindEntry(*self.deferRead(self.draftMeterEntry, 	self.app.ship.draft))
-		self.bindEntry(*self.deferRead(self.draftFeetEntry, 	self.app.ship.draftft))
+		self.app.ship.length.addCallback(partial(self._updateEntry, self.lengthMeterEntry))
+		self.app.ship.lengthft.addCallback(partial(self._updateEntry, self.lengthFeetEntry))
+
+		self.bindEntryRead(self.lengthMeterEntry, self.app.ship.length)
+		self.bindEntryRead(self.lengthFeetEntry, self.app.ship.lengthft)
+		#self.bindEntry(*self.deferRead(self.beamMeterEntry, 	self.app.ship.beam))
+		#self.bindEntry(*self.deferRead(self.beamFeetEntry, 		self.app.ship.beamft))
+		#self.bindEntry(*self.deferRead(self.draftMeterEntry, 	self.app.ship.draft))
+		#self.bindEntry(*self.deferRead(self.draftFeetEntry, 	self.app.ship.draftft))
 
 if __name__ == "__main__":
 	root = tk.Tk()

@@ -27,12 +27,12 @@ class DisplacementData(Component):
 
 		self.doRigging()
 	def doRigging(self):
-		self.app.subscribe_update(*self.deferEntryUpdate(self.dispEntry, 	self.app.ship.displacement))
-		self.app.subscribe_update(*self.deferEntryUpdate(self.blockEntry, 	self.app.ship.blockCoeff))
-
-		self.bindEntry(*self.deferRead(self.dispEntry, 		self.app.ship.displacement))
-		self.bindEntry(*self.deferRead(self.blockEntry, 	self.app.ship.blockCoeff))
-
+		#self.app.subscribe_update(*self.deferEntryUpdate(self.dispEntry, 	self.app.ship.displacement))
+		#self.app.subscribe_update(*self.deferEntryUpdate(self.blockEntry, 	self.app.ship.blockCoeff))
+#
+		#self.bindEntry(*self.deferRead(self.dispEntry, 		self.app.ship.displacement))
+		#self.bindEntry(*self.deferRead(self.blockEntry, 	self.app.ship.blockCoeff))
+		pass
 
 if __name__ == "__main__":
 	root = tk.Tk()

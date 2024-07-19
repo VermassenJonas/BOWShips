@@ -1,22 +1,17 @@
 import tkinter as tk
 from functools import partial
+from logic.Property import Property
 class Component:
 	def __init__(self, parent, app):
 		self.parent = parent
 		self.app = app
 	
-	def bindEntry(self, entry : tk.Entry, fn):
+	def bindEntryRead(self, entry : tk.Entry, var_fn):
+		fn = partial(var_fn, val_fn=entry.get)
 		entry.bind('<Return>', fn)
-		entry.bind('<FocusOut>', fn)
-		#entry.bind('<Key>', fn)
-
-	def deferRead(self,entry: tk.Entry, var_fn ):
-		return (entry, partial(var_fn, val_fn=entry.get))
-
-	
-	def updateEntry(self, element : tk.Entry, val_fn):
+		entry.bind('<FocusOut>', fn)	
+	def _updateEntry(self, element : tk.Entry, value):
 		element.delete(0, tk.END)
-		element.insert(0, str(val_fn()))
-	
-	def deferEntryUpdate(self,element : tk.Entry, val_fn):
-		return (element,partial(self.updateEntry, element, val_fn))
+		element.insert(0, str(value))
+	def bindEntryCallback(self, entry : tk.Entry , property : Property):
+		property.addCallback(partial(self._updateEntry, entry))

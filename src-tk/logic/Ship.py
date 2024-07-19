@@ -1,84 +1,85 @@
 from decimal import Decimal, getcontext
+from logic.Property import Property, CalculatedProperty
 import constants
 class Ship:
 	def __init__(self) -> None:
 		getcontext().prec = constants.precision
+		self.length = Property(Decimal(180))
+		self.length.addProcessor(self._validateDecimal).addProcessor(self._rem_zeros)
+		self.lengthft = CalculatedProperty(self.length)
+		self.lengthft.addProcessor(self._validateDecimal).addProcessor(self.ftToM)
+		self.lengthft.addBackProcessor(self.mToFt).addBackProcessor(self._rem_zeros)
+
+		
 		self.name = ''
 		self.country = ''
 		self.type = ''
-		self._length = Decimal(180)
 		self._beam = Decimal(20)
 		self._draft = Decimal(6)
 		self._displacement = Decimal(10000)	
+
 		
 #region Properties
 	#region Hull Dimensions
-	def length(self, value=None, val_fn = None, *args) -> Decimal:
-		if val_fn:
-			value = val_fn()
-		if self.validateDecimal(value):
-			self._length = Decimal(value)
-		return self.rem_zeros(self._length)
-	def lengthft(self, value=None, val_fn = None, *args) -> Decimal:
-		if val_fn:
-			value = val_fn()
-		if self.validateDecimal(value):
-			self._length = Decimal(value) * constants.ftTometer
-		return self.rem_zeros(self._length / constants.ftTometer)
 	def beam(self, value=None, val_fn = None, *args) -> Decimal:
 		if val_fn:
 			value = val_fn()
-		if self.validateDecimal(value):
+		if self._validateDecimal(value):
 			self._beam = Decimal(value)
-		return self.rem_zeros(self._beam)
+		return self._rem_zeros(self._beam)
 	def beamft(self, value=None, val_fn = None, *args) -> Decimal:
 		if val_fn:
 			value = val_fn()
-		if self.validateDecimal(value):
+		if self._validateDecimal(value):
 			self._beam = Decimal(value) * constants.ftTometer
-		return self.rem_zeros(self._beam / constants.ftTometer)
+		return self._rem_zeros(self._beam / constants.ftTometer)
 	def draft(self, value=None, val_fn = None, *args) -> Decimal:
 		if val_fn:
 			value = val_fn()
-		if self.validateDecimal(value):
+		if self._validateDecimal(value):
 			self._draft = Decimal(value)
-		return self.rem_zeros(self._draft)
+		return self._rem_zeros(self._draft)
 	def draftft(self, value=None, val_fn = None, *args) -> Decimal:
 		if val_fn:
 			value = val_fn()
-		if self.validateDecimal(value):
+		if self._validateDecimal(value):
 			self._draft = Decimal(value) * constants.ftTometer
-		return self.rem_zeros(self._draft / constants.ftTometer)
+		return self._rem_zeros(self._draft / constants.ftTometer)
 	def displacement(self, value=None, val_fn = None, *args) -> Decimal:
 		if val_fn:
 			value = val_fn()
-		if self.validateDecimal(value):
+		if self._validateDecimal(value):
 			self._displacement = Decimal(value)
-		return self.rem_zeros(self._displacement)
+		return self._rem_zeros(self._displacement)
 	def blockCoeff(self, value=None, val_fn = None, *args) -> Decimal:
 		if val_fn:
 			value = val_fn()
-		if self.validateDecimal(value):
-			self._displacement = Decimal(value) * self.volume()
-		return self.rem_zeros(self._displacement / self.volume())
+		if self._validateDecimal(value):
+			self._displacement = Decimal(value) * self._volume()
+		return self._rem_zeros(self._displacement / self._volume())
 	#endregion
 	#region speed & power
 
 	#endregion
 #endregion
 #region calcs
-	def volume(self):
-		return self.rem_zeros(self._length*self._beam*self._draft)
+	def _volume(self):
+		return self._rem_zeros(self.length.value*self._beam*self._draft)
+	def ftToM(self,value):
+		return value * constants.ftTometer
+	def mToFt(self,value):
+		return value / constants.ftTometer
 #endregion
 #region cleaning
-	def validateDecimal(self, value):
+	def _validateDecimal(self, value):
 		try:
-			Decimal(value)
-			return True
+			result = Decimal(value)
+			return result 
 		except:
 			return False	
 		#TODO: improve validation logic; improper try usage
 		
-	def rem_zeros(self, d : Decimal) -> Decimal:
+	def _rem_zeros(self, d : Decimal) -> Decimal:
 		return d.quantize(Decimal(1)) if d == d.to_integral() else d.normalize()
 #endregion
+
