@@ -15,3 +15,7 @@ class Component:
 		element.insert(0, str(value))
 	def bindEntryCallback(self, entry : tk.Entry , property : Property):
 		property.addCallback(partial(self._updateEntry, entry))
+	def bindVarRead(self, var : tk.StringVar, property: Property):
+		def _readVar(*args):
+			property(var.get())
+		var.trace_add('write', _readVar)

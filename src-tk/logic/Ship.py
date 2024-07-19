@@ -1,13 +1,17 @@
 from decimal import Decimal, getcontext
+from enum import Enum
+from functools import partial
 from logic.Property import Property, CalculatedProperty
 import constants
+import logic.Enums as enums
 class Ship:
 	def __init__(self) -> None:
 		getcontext().prec = constants.precision
 
-		self.name = Property('')
-		self.country = Property('')
-		self.type = Property('')
+		self.name 		= Property('')
+		self.country	= Property('')
+		self.type 		= Property('')
+
 		self.length = Property(Decimal(180))
 		self.length.addProcessor(self._validateDecimal)
 		self.lengthft = CalculatedProperty(self.length)
@@ -31,6 +35,12 @@ class Ship:
 		self.blockCoeff = CalculatedProperty(self.displacement)
 		self.blockCoeff.addProcessor(self._validateDecimal).addProcessor(self.blockToDisp)
 		self.blockCoeff.addBackProcessor(self.dispToBlock)
+
+		self.fuelType = Property(enums.Fuel.COAL)
+		self.fuelType.addProcessor(partial(self.readEnum, enums.Fuel))
+		self.engineType = Property(enums.Engine.SIMPLE)
+		self.engineType.addProcessor(partial(self.readEnum, enums.Engine))
+		self.coalPercent = Property(Decimal(100))
 
 
 #region calcs
@@ -57,5 +67,10 @@ class Ship:
 		
 	def _rem_zeros(self, d : Decimal) -> Decimal:
 		return d.quantize(Decimal(1)) if d == d.to_integral() else d.normalize()
-#endregion
 
+	def readEnum(self, enum : Enum, name : str | None):
+		if name:
+			return enum[name]
+		else:
+			return False 
+#endregion

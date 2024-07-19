@@ -25,12 +25,12 @@ class DimensionData(Component):
 		self.beamFeetEntry 		= wm.create_entry(self.base)
 		self.draftFeetEntry 	= wm.create_entry(self.base)
 
-		self.titleLabel.grid	(column=0, row=0, columnspan=2)
-		self.lengthLabel.grid	(column=1, row=1)
-		self.beamLabel.grid		(column=2, row=1)
-		self.draftLabel.grid	(column=3, row=1)
-		self.meterLabel.grid	(column=0, row=2)
-		self.feetLabel.grid		(column=0, row=3)
+		self.titleLabel.grid		(column=0, row=0, columnspan=2)
+		self.lengthLabel.grid		(column=1, row=1)
+		self.beamLabel.grid			(column=2, row=1)
+		self.draftLabel.grid		(column=3, row=1)
+		self.meterLabel.grid		(column=0, row=2)
+		self.feetLabel.grid			(column=0, row=3)
 
 		self.lengthMeterEntry.grid	(column=1, row=2)
 		self.beamMeterEntry.grid	(column=2, row=2)

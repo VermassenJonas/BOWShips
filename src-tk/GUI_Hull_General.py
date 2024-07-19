@@ -1,4 +1,4 @@
-from tkinter import Widget
+from tkinter import E, EW, Widget
 from GUI.Component import Component
 from BOWS import App 
 import constants as constants
@@ -7,7 +7,7 @@ import GUI.WidgetMaker as wm
 class GeneralData(Component):
 	def __init__(self, parent : Widget, app : App) -> None:
 		super().__init__(parent, app)
-		self.base =  wm.create_frame(self.parent, width=constants.framewidth)
+		self.base =  wm.create_frame(self.parent)
 
 		self.titleLabel 	= wm.create_title_label(self.base, text=app.lang.ship)
 
@@ -33,7 +33,7 @@ class GeneralData(Component):
 		self.countryEntry.grid(column=1, row=2)
 		self.typeLabel.grid(column=0, row=3)
 		self.typeEntry.grid(column=1, row=3)
-		self.yearLabel.grid(column=3, row=1)
+		self.yearLabel.grid(column=3, row=1, sticky=EW)
 		self.laidDownLabel.grid(column=2, row=2)
 		self.laidDownEntry.grid(column=3, row=2)
 		self.engineBuiltLabel.grid(column=2, row=3)

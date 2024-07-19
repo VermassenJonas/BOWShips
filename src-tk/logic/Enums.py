@@ -6,6 +6,6 @@ class Engine(Enum):
 	COMPLEX = 'complex'
 	TURBINE = 'turbine'
 class Fuel(Enum):
-	OIL 	= 'oil'
-	COAL 	= 'coal'
-	BOTH 	= 'both'
+	COAL 	= 'Coal'
+	OIL 	= 'Oil'
+	MIXED 	= 'Mixed'

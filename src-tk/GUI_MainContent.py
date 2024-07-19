@@ -1,4 +1,4 @@
-from tkinter import Widget, HORIZONTAL, BOTH
+from tkinter import RAISED, Widget, HORIZONTAL, BOTH
 
 from BOWS import App
 from GUI.Component import Component
@@ -10,7 +10,7 @@ class MainContent(Component):
 		super().__init__(parent, app)
 
 		self.base = wm.create_paned_window(parent)
-		self.base.config(orient=HORIZONTAL, sashwidth=10)
+		self.base.config(orient=HORIZONTAL, sashwidth=5, sashrelief=RAISED)
 		mainTabs = MainTabs(self.base, app)
 		self.base.add(mainTabs.base)
 

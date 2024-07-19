@@ -1,9 +1,10 @@
-from tkinter import Widget
+from tkinter import BOTH, Widget
 import tkinter.messagebox as messagebox
 import translations.en as en_lang
 from GUI.Component import Component
 from logic.Ship import Ship
 import GUI.WidgetMaker as wm
+import constants
 class App(Component):
 	ship : Ship
 	def __init__(self, parent : Widget, app) -> None:
@@ -13,18 +14,17 @@ class App(Component):
 		self.calcCBs = []
 		self._updateCBs = []
 		self.ship = Ship()
-		self.lang = en_lang
+		self.lang = en_lang.lang
 		self.process()
 
 	def draw(self):		
 		self.base = wm.create_frame(self.parent)
 		mainContent = MainContent(self.base,self)
-		self.parent.title(self.lang.main_title)
-		self.base.pack()
-		mainContent.base.pack()
+		self.parent.title(self.lang('main_title'))
+		self.base.grid()
+		mainContent.base.grid()
 	def subscribe_update(self, element : Widget, fn):
 		self._updateCBs.append((element, fn))
-	
 	def process(self):
 		for fn in self.readCBs:
 			fn()
@@ -33,7 +33,8 @@ class App(Component):
 		for (element, fn ) in self._updateCBs:
 			if element and element.focus_get() != element:
 				fn()
-		self.parent.after(300, self.process)
+		print(f'subscribers: {len(self.readCBs)}, {len(self.calcCBs)}, {len(self._updateCBs)}')
+		self.parent.after(constants.clockspeed, self.process)
 	
 
 	

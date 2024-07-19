@@ -11,9 +11,9 @@ class MainTabs(Component):
 		super().__init__(parent, app)
 		self.base =  wm.create_notebook(self.parent)
 		self.hullTab = HullTab(self.base, self.app)
-		self.hullTab.base.pack(expand=True, fill=BOTH)
+		self.hullTab.base.grid()
 		self.engineTab = EngineTab(self.base, self.app)
-		self.engineTab.base.pack(expand=True, fill=BOTH)
+		self.engineTab.base.grid()
 		self.base.add(self.hullTab.base, 	text=f'{app.lang.hull}') 
 		self.base.add(self.engineTab.base,	text=f'{app.lang.engine}')
 		
