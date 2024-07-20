@@ -32,7 +32,8 @@ class Property(Generic[T]):
 		val = self._value
 		for proc in self._processors:
 			val = proc(new, val)
-		self._value = val
+		if val:
+			self._value = val
 	def __call__(self, value: T = None, val_fn = None) -> T:
 		if val_fn:
 			value = val_fn()
@@ -43,15 +44,15 @@ class Property(Generic[T]):
 
 class AliasProperty(Property[T]):
 	def __init__(self, property : Property) -> None:
-		super().__init__(None)
-		self.property = property
+		self._property = property
 		property.addCallback(self._notify)
+		super().__init__(None)
 	def _get(self) -> T:
-		self._value = property()
+		self._value = self.property()
 		return super()._get()
 	def _set(self, new):
 		super()._set(new)
-		property(self._value)
+		self._property(self._value)
 
 class CalculatedProperty(Property[T]):
 	def __init__(self, calcFun, *properties : List[Property]) -> None:

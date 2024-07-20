@@ -46,20 +46,20 @@ class Ship:
 
 
 #region calcs
-	def ftToM(self,value) -> Decimal:
+	def ftToM(self,value, old=None) -> Decimal:
 		return self._rem_zeros(value * constants.ftTometer)
-	def mToFt(self,value) -> Decimal:
+	def mToFt(self,value, old=None) -> Decimal:
 		return self._rem_zeros(value / constants.ftTometer)
 	def calcBlockVolume(self) -> Decimal:
 		return self._rem_zeros(self.length()*self.beam()*self.draft())
-	def dispToBlock(self, value) -> Decimal:
+	def dispToBlock(self, value, old=None) -> Decimal:
 		return self._rem_zeros(value / self.blockVolume())
-	def blockToDisp(self, value) -> Decimal:
+	def blockToDisp(self, value, old=None) -> Decimal:
 		return self._rem_zeros(value * self.blockVolume())	
 
 #endregion
 #region cleaning
-	def _validateDecimal(self, value):
+	def _validateDecimal(self, value, old=None):
 		try:
 			result = Decimal(value)
 			return self._rem_zeros(result) 
