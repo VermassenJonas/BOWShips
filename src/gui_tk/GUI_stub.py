@@ -13,3 +13,11 @@ class Stub(Component):
 	def doRigging(self):
 		pass #TODO: implement interactivity	
 		
+if __name__ == '__main__':
+	from gui_tk.tk_main import App	
+	root = wm.create_root()
+	root.geometry("800x600")
+	app = App(root, None)
+	screen = Stub(root, app)	
+	screen.base.pack(expand=True)
+	root.mainloop()

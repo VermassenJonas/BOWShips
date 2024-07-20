@@ -32,6 +32,7 @@ class Property(Generic[T]):
 		val = self._value
 		for proc in self._processors:
 			val = proc(new, val)
+			val, new = new, val
 		if val:
 			self._value = val
 	def __call__(self, value: T = None, val_fn = None) -> T:

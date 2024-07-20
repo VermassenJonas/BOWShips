@@ -46,15 +46,15 @@ class Ship:
 
 
 #region calcs
-	def ftToM(self,value, old=None) -> Decimal:
+	def ftToM(self,value : Decimal, old=None) -> Decimal:
 		return self._rem_zeros(value * constants.ftTometer)
-	def mToFt(self,value, old=None) -> Decimal:
+	def mToFt(self,value : Decimal, old=None) -> Decimal:
 		return self._rem_zeros(value / constants.ftTometer)
 	def calcBlockVolume(self) -> Decimal:
 		return self._rem_zeros(self.length()*self.beam()*self.draft())
-	def dispToBlock(self, value, old=None) -> Decimal:
+	def dispToBlock(self, value : Decimal, old=None) -> Decimal:
 		return self._rem_zeros(value / self.blockVolume())
-	def blockToDisp(self, value, old=None) -> Decimal:
+	def blockToDisp(self, value : Decimal, old=None) -> Decimal:
 		return self._rem_zeros(value * self.blockVolume())	
 
 #endregion
