@@ -2,7 +2,7 @@ from tkinter import Widget
 from GUI.Component import Component
 from BOWS import App
 import constants
-import GUI.WidgetMaker as wm
+from GUI.WidgetManager import wm
 import logic.Enums as enums
 
 class EngineType(Component):

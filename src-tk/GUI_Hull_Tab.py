@@ -4,7 +4,7 @@ from GUI_Hull_General import GeneralData
 from GUI_Hull_Dimension import DimensionData
 from GUI_Hull_Displacement import DisplacementData
 from BOWS import App
-import GUI.WidgetMaker as wm
+from GUI.WidgetManager import wm
 class HullTab(Component):
 	def __init__(self, parent : Widget, app : App) -> None:
 		super().__init__(parent, app)

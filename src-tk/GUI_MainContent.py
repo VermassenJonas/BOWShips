@@ -4,13 +4,13 @@ from BOWS import App
 from GUI.Component import Component
 from GUI_MainTabs import MainTabs
 from GUI_SideTabs import SideTabs
-import GUI.WidgetMaker as wm
+from GUI.WidgetManager import wm
 class MainContent(Component):
 	def __init__(self, parent : Widget, app : App) -> None:
 		super().__init__(parent, app)
 
 		self.base = wm.create_paned_window(parent)
-		self.base.config(orient=HORIZONTAL, sashwidth=5, sashrelief=RAISED)
+		self.base.config(orient=HORIZONTAL, sashwidth=5)
 		mainTabs = MainTabs(self.base, app)
 		self.base.add(mainTabs.base)
 

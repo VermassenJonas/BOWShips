@@ -2,7 +2,7 @@ from tkinter import Widget
 from GUI.Component import Component
 import constants as constants
 from BOWS import App
-import GUI.WidgetMaker as wm
+from GUI.WidgetManager import wm
 
 class DisplacementData(Component):
 	def __init__(self, parent : Widget, app : App)  -> None:

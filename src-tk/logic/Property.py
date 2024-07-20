@@ -1,70 +1,75 @@
-from typing import Any, Generic, TypeVar
+from typing import Generic, TypeVar, List
 
 T = TypeVar('T')
+
 class Property(Generic[T]):
-	def __init__(self, value: T) -> None:
+	_value : T
+	def __init__(self, value : T) -> None:
 		super().__init__()
-		self.value = value
 		self._callbacks = []
 		self._processors = []
-	def addCallback(self, callback):
-		self._callbacks.append(callback)
-		return self
-	def addProcessor(self, processor=None, processors=None):
-		if processor:
-			self._processors.append(processor)
-		if processors:
-			self._processors.extend(processors)
-		return self
+		self._backProcessors = []
+		self._value = value
+		self._set(value)
+	def addCallback(self, *callbacks):
+		for callback in callbacks:
+			self._callbacks.append(callback)
 	def _notify(self):
 		for callback in self._callbacks:
-			callback(self.value)
-	def __call__(self, value=None, val_fn=None,*args: Any, **kwds: Any) -> T:
-		if val_fn:
-			value = val_fn()
-		for processor in self._processors:
-			var = processor(value)
-			if var:
-				value = var
-			else:
-				value = None
-				break
-		if value:
-			self.value = value
-			self._notify()
-		return self.value
-class CalculatedProperty(Property[T]):
-	def __init__(self, property : Property[T]) -> None:
-		super().__init__(None)
-		self._backProcessors = []
-		self.property = property
-		self.property.addCallback(self._notify)
-	def _notify(self, *args):
-		for callback in self._callbacks:
-			callback(self())
-	def addBackProcessor(self, processor=None, processors=None):
-		if processor:
-			self._backProcessors.append(processor)
-		if processors:
-			self._backProcessors.extend(processors)
-		return self
-	def calcValue(self) -> T:
-		value = self.property()
-		for processor in self._backProcessors:
-			value = processor(value)
+			callback()
+	def addProcessor(self, *processors):
+		for processor in processors:
+			self._processors.append(processor)
+	def addBackProcessor(self, *backProcessors):
+		for backProcessor in backProcessors:
+			self._backProcessors.append(backProcessor)
+	def _get(self) -> T:
+		value = self._value
+		for backProc in self._backProcessors:
+			value = backProc(value)
 		return value
-	def __call__(self,value=None, val_fn=None, *args: Any, **kwds: Any) -> T:
+	def _set(self,new ):
+		val = self._value
+		for proc in self._processors:
+			val = proc(new, val)
+		self._value = val
+	def __call__(self, value: T = None, val_fn = None) -> T:
 		if val_fn:
 			value = val_fn()
-		if value:
-			for processor in self._processors:
-				var = processor(value)
-				if var:
-					value = var
-				else:
-					value = None
-					break
-			if value:
-				self.property(value)				
-				self._notify()
-		return self.calcValue()
+		if not value:
+			return self._get()
+		else:
+			self._set(value)
+
+class AliasProperty(Property[T]):
+	def __init__(self, property : Property) -> None:
+		super().__init__(None)
+		self.property = property
+		property.addCallback(self._notify)
+	def _get(self) -> T:
+		self._value = property()
+		return super()._get()
+	def _set(self, new):
+		super()._set(new)
+		property(self._value)
+
+class CalculatedProperty(Property[T]):
+	def __init__(self, calcFun, *properties : List[Property]) -> None:
+		super().__init__(None)
+		self._properties = properties
+		self._dirtyflags = {}
+		self._calcFun = calcFun
+		self._value = calcFun()
+		self._dirty = False
+		for property in self._properties:
+			property.addCallback(self._notify)
+	def _notify(self):
+		self._dirty = True
+		return super()._notify()
+	def _get(self):
+		if self._dirty:
+			self._value = self._calcFun()
+			self._dirty = False
+		return super()._get()
+	def __call__(self) -> T:
+		return self._get()

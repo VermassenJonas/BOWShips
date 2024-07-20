@@ -4,7 +4,7 @@ from BOWS import App
 import constants
 from GUI_Engine_SpeedPower import SpeedPower
 from GUI_Engine_Engines import Engines
-import GUI.WidgetMaker as wm
+from GUI.WidgetManager import wm
 
 class EngineTab(Component):
 	def __init__(self, parent : Widget, app : App)  -> None:

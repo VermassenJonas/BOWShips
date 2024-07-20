@@ -4,7 +4,7 @@ from GUI_Hull_Tab import HullTab
 from GUI_Engine_Tab import EngineTab
 import constants as constants
 from BOWS import App
-import GUI.WidgetMaker as wm
+from GUI.WidgetManager import wm
 
 class MainTabs(Component):
 	def __init__(self, parent : Widget, app : App) -> None:

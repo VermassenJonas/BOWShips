@@ -2,7 +2,7 @@ from tkinter import E, EW, Widget
 from GUI.Component import Component
 from BOWS import App 
 import constants as constants
-import GUI.WidgetMaker as wm
+from GUI.WidgetManager import wm
 
 class GeneralData(Component):
 	def __init__(self, parent : Widget, app : App) -> None:

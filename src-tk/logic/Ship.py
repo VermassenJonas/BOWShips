@@ -1,7 +1,7 @@
 from decimal import Decimal, getcontext
 from enum import Enum
 from functools import partial
-from logic.Property import Property, CalculatedProperty
+from logic.Property import Property, AliasProperty, CalculatedProperty
 import constants
 import logic.Enums as enums
 class Ship:
@@ -14,26 +14,28 @@ class Ship:
 
 		self.length = Property(Decimal(180))
 		self.length.addProcessor(self._validateDecimal)
-		self.lengthft = CalculatedProperty(self.length)
-		self.lengthft.addProcessor(self._validateDecimal).addProcessor(self.ftToM)
+		self.lengthft = AliasProperty(self.length)
+		self.lengthft.addProcessor(self._validateDecimal, self.ftToM)
 		self.lengthft.addBackProcessor(self.mToFt)
 
 		self.beam = Property(Decimal(20))
 		self.beam.addProcessor(self._validateDecimal)
-		self.beamft = CalculatedProperty(self.beam)
-		self.beamft.addProcessor(self._validateDecimal).addProcessor(self.ftToM)
+		self.beamft = AliasProperty(self.beam)
+		self.beamft.addProcessor(self._validateDecimal,self.ftToM)
 		self.beamft.addBackProcessor(self.mToFt)
 
 		self.draft = Property(Decimal(180))
 		self.draft.addProcessor(self._validateDecimal)
-		self.draftft = CalculatedProperty(self.draft)
-		self.draftft.addProcessor(self._validateDecimal).addProcessor(self.ftToM)
+		self.draftft = AliasProperty(self.draft)
+		self.draftft.addProcessor(self._validateDecimal,self.ftToM)
 		self.draftft.addBackProcessor(self.mToFt)
+
+		self.blockVolume = CalculatedProperty(self.calcBlockVolume, self.length, self.beam, self.draft)
 
 		self.displacement = Property(Decimal(10000))
 		self.displacement.addProcessor(self._validateDecimal)
-		self.blockCoeff = CalculatedProperty(self.displacement)
-		self.blockCoeff.addProcessor(self._validateDecimal).addProcessor(self.blockToDisp)
+		self.blockCoeff = AliasProperty(self.displacement)
+		self.blockCoeff.addProcessor(self._validateDecimal,self.blockToDisp)
 		self.blockCoeff.addBackProcessor(self.dispToBlock)
 
 		self.fuelType = Property(enums.Fuel.COAL)
@@ -48,12 +50,12 @@ class Ship:
 		return self._rem_zeros(value * constants.ftTometer)
 	def mToFt(self,value) -> Decimal:
 		return self._rem_zeros(value / constants.ftTometer)
-	def _volume(self) -> Decimal:
+	def calcBlockVolume(self) -> Decimal:
 		return self._rem_zeros(self.length()*self.beam()*self.draft())
 	def dispToBlock(self, value) -> Decimal:
-		return self._rem_zeros(value / self._volume())
+		return self._rem_zeros(value / self.blockVolume())
 	def blockToDisp(self, value) -> Decimal:
-		return self._rem_zeros(value * self._volume())	
+		return self._rem_zeros(value * self.blockVolume())	
 
 #endregion
 #region cleaning

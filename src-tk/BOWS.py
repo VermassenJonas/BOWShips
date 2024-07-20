@@ -3,7 +3,7 @@ import tkinter.messagebox as messagebox
 import translations.en as en_lang
 from GUI.Component import Component
 from logic.Ship import Ship
-import GUI.WidgetMaker as wm
+from GUI.WidgetManager import wm
 import constants
 class App(Component):
 	ship : Ship
