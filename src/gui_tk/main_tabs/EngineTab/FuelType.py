@@ -22,14 +22,15 @@ class FuelType(Component):
 
 	def doRigging(self):
 		self.fuelVar.set( self.app.ship.fuelType().name)
-		self.confFuelField(self.app.ship.fuelType())
+		self.confFuelField()
 		self.bindVarRead(self.fuelVar, self.app.ship.fuelType)
 		self.app.ship.fuelType.addCallback(self.confFuelField)
 
 		self.bindVarRead(self.percVar, self.app.ship.coalPercent)
 
 
-	def confFuelField(self, value : enums.Fuel | None):
+	def confFuelField(self):
+		value = self.app.ship.fuelType()
 		if value == enums.Fuel.COAL:
 			self.percEntry.config(state=DISABLED)
 			self.percVar.set('100')
