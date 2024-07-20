@@ -1,11 +1,11 @@
-from tkinter import ACTIVE, NORMAL, Widget, StringVar, DISABLED
+from tkinter import ACTIVE, NORMAL, Misc, Widget, StringVar, DISABLED
 from gui_tk.tk_main import App
 import logic.Enums as enums
 from gui_tk.utils.Component import Component
 from gui_tk.utils.WidgetManager import wm
 
 class FuelType(Component):
-	def __init__(self, parent : Widget, app : App)  -> None:
+	def __init__(self, parent : Misc, app : App)  -> None:
 		super().__init__(parent, app)
 		self.base =  wm.create_frame(self.parent)
 		self.base.grid(column=0, row=1)

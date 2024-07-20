@@ -1,4 +1,4 @@
-from tkinter import Widget, BOTH
+from tkinter import Misc, Widget, BOTH
 from gui_tk.utils.Component import Component
 from gui_tk.main_tabs.HullTab.HullTab import HullTab
 from gui_tk.main_tabs.EngineTab.EngineTab import EngineTab
@@ -7,7 +7,7 @@ from gui_tk.tk_main import App
 from gui_tk.utils.WidgetManager import wm
 
 class MainTabs(Component):
-	def __init__(self, parent : Widget, app : App) -> None:
+	def __init__(self, parent : Misc, app : App) -> None:
 		super().__init__(parent, app)
 		self.base =  wm.create_notebook(self.parent)
 		self.hullTab = HullTab(self.base, self.app)
@@ -22,7 +22,7 @@ class MainTabs(Component):
 		
 
 if __name__ == "__main__":	
-	from BOWS import App
+	from gui_tk.tk_main import App
 	root = wm.create_root()
 	root.geometry("600x600")
 	app = App(root, None)

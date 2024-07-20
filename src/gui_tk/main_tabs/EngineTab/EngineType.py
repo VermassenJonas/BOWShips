@@ -1,11 +1,11 @@
-from tkinter import Widget
+from tkinter import Misc, Widget
 from gui_tk.tk_main import App
 from gui_tk.utils.Component import Component
 from gui_tk.utils.WidgetManager import wm
 import logic.Enums as enums
 
 class EngineType(Component):
-	def __init__(self, parent : Widget, app : App)  -> None:
+	def __init__(self, parent : Misc, app : App)  -> None:
 		super().__init__(parent, app)
 		self.base =  wm.create_frame(self.parent)
 		self.base.grid(column=1, row=1)

@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, EnumMeta
 from functools import partial
 from tkinter import font
 import tkinter as tk
@@ -67,10 +67,10 @@ class WidgetManager(metaclass=Singleton):
 		self._addWidget(widget)
 		return widget
 
-	def create_radio_set(self, parent : tk.Misc,app, enum: Enum):
+	def create_radio_set(self, parent : tk.Misc,app, enum: type[Enum]):
 		buttons = []
 		var = tk.StringVar()
-		for item in list(enum): # type: ignore #TODO: fix incorrect type in function handle
+		for item in list(enum): 
 			button = self.create_radiobutton(parent, text=app.lang(item.value), variable=var, value=item.name)
 			buttons.append(button)
 			self._addWidget(button)
