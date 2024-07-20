@@ -70,7 +70,7 @@ class Ship:
 	def _rem_zeros(self, d : Decimal) -> Decimal:
 		return d.quantize(Decimal(1)) if d == d.to_integral() else d.normalize()
 
-	def readEnum(self, enum : Enum, name : str | None):
+	def readEnum(self, enum : Enum, name : str | None, old = None):
 		if name:
 			return enum[name]
 		else:
