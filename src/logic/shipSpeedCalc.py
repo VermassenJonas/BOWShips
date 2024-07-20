@@ -1,5 +1,8 @@
+from decimal import Decimal
 import math
 import csv
+
+from logic.Ship import Ship
 
 
 ########## FRICTIONAL RESISTANCE (R_F) CALCS ###############
@@ -107,7 +110,7 @@ def c3_calcs(aBT, beam, TF, T, hB)->float:
     """
     Calculates the regression-computed coefficient c3, which models the influence of a bulbous bow on wave resistance
     """
-    return 0.56 * aBT ** 1.5 / (beam * T * (0.31 * math.sqrt(aBT) + TF - hB))
+    return 0.56 * aBT ** 1.5 / (beam * T * (0.31 * math.sqrt(aBT) + TF - hB)+ 0.00001) #TODO
 
 def c2_calcs(c3, aBT)->float:
 #c2 is wave resistance coefficient due to bulbous bow. defaults to 1 for non-bulbous bows
@@ -196,7 +199,7 @@ def rB_calcs(aBT, hB, G, TF, v)->float:
     calculates the resistance of a bulbous bow given the ship speed and dimensions of the bow
     """
     #measure of emergence of the bow
-    p_B = 0.56 * math.sqrt(aBT) / (TF - 1.5 * hB)
+    p_B = 0.56 * math.sqrt(aBT) / (TF - 1.4999999 * hB) #TODO: more elegant solution plz (was 1.5)
 
     #Froude Number based on immersion of the bow
     Fni = v / math.sqrt(G * (TF - hB - 0.25 * math.sqrt(aBT)) + 0.15 * v ** 2)
@@ -349,7 +352,7 @@ def c19_calcs(cB, cP, cM)->float:
 
 
 
-def wt_calcs(c9, c20, cV, length, T, c11, cP1, beam, c19, dProp, cStern, cB, numPropellers, c10)->float:
+def wt_calcs(c9, c20, cV, length, T, c11, cP1, beam, c19, dProp, cStern, cB, numPropellers, c10)->tuple[float, float]:
     """
     Calculates the wake fraction (w) and thrust deduction coefficients (t).
     """
@@ -361,7 +364,7 @@ def wt_calcs(c9, c20, cV, length, T, c11, cP1, beam, c19, dProp, cStern, cB, num
         w = c9 * c20 * cV * (length / T) * (0.050776 + 0.93405 * c11 * (cV / (1 - cP1))) + (0.27915 * c20 * math.sqrt(beam / (length * (1 - cP1)))) + c19 * c20
         #still use Holtrop 1978 calculation
         td = 0.001979 * length / (beam - beam * cP1) + 1.0585 * c10 
-        - 0.00524 - 0.0148 * dProp ** 2 / (beam * T) + 0.0015 * cStern
+        #- 0.00524 - 0.0148 * dProp ** 2 / (beam * T) + 0.0015 * cStern
     else: #2 propellers (extrapolated to 2+ propellers)
         w = 0.3095 * cB + 10 * cV * cB - 0.23 * dProp / math.sqrt(beam * T)
         td = 0.325 * cB - 0.1885 * dProp / math.sqrt(beam * T)
@@ -627,14 +630,14 @@ def HoltropMennenPowerCalculation(length, beam, T, displacementMass, v,
     shaftPower *= 1 / trueEfficiencyCoefficient
     return shaftPower
 
-def main():
+def main(ship : Ship):
     # manual data
     name = "test"
-    length = 240
-    beam = 30
-    draft = 10
-    displacement = 40000
-    numShafts = 1
+    length = float(ship.length())
+    beam = float(ship.beam())
+    draft = float(ship.draft())
+    displacement = float(ship.displacement())
+    numShafts = 2
     numBlades = 4
     speed = 30 / 1.944
     cM = 0.95
@@ -650,7 +653,22 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    ship = Ship()
+    ship.length(240)
+    ship.beam(30)
+    ship.draft(10)
+    ship.displacement(40000)
+    main(ship)
+    ship.length(180)
+    ship.beam(20)
+    ship.draft(6)
+    ship.displacement(10000)
+    main(ship)
+    ship.length(120)
+    ship.beam(12)
+    ship.draft(4)
+    ship.displacement(3000)
+    main(ship)
 
 #sources: overall calculation (Holthrop and Mennen 1978): https://repository.tudelft.nl/islandora/object/uuid:ee370fed-4b4f-4a70-af77-e14c3e692fd4/datastream/OBJ/download
 #coefficient of friction + reynolds number calculation: https://repository.tudelft.nl/islandora/object/uuid%3A16d77473-7043-4099-a8c6-bf58f555e2e7

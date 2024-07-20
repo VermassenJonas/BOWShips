@@ -28,15 +28,15 @@ class Property(Generic[T]):
 		for backProc in self._backProcessors:
 			value = backProc(value)
 		return value
-	def _set(self,new ) -> None:
+	def _set(self,value ) -> None:
 		for proc in self._processors:
 			old = self._value
-			val = proc(new, old)
-			new, old = val, new
-		if new:
-			self._value = new
+			val = proc(value, old)
+			value, old = val, value
+		if value:
+			self._value = value
 		self._notify()
-	def __call__(self, value: T | None= None, val_fn = None) -> T:
+	def __call__(self, value: Any= None, val_fn = None) -> T:
 		if val_fn:
 			value = val_fn()
 		if value:
@@ -72,5 +72,5 @@ class CalculatedProperty(Property[T]):
 			self._value = self._calcFun()
 			self._dirty = False
 		return super()._get()
-	def __call__(self) -> T:
+	def __call__(self, *args) -> T:
 		return self._get()
