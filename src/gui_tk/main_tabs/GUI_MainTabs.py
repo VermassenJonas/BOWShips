@@ -2,7 +2,7 @@ from tkinter import Widget, BOTH
 from GUI.Component import Component
 from GUI_Hull_Tab import HullTab
 from GUI_Engine_Tab import EngineTab
-import constants as constants
+import src.logic.constants as constants
 from BOWS import App
 from GUI.WidgetManager import wm
 

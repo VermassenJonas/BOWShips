@@ -3,7 +3,7 @@ from tkinter import RAISED, Widget, HORIZONTAL, BOTH
 from BOWS import App
 from GUI.Component import Component
 from GUI_MainTabs import MainTabs
-from GUI_SideTabs import SideTabs
+from src.gui_tk.side_tabs.GUI_SideTabs import SideTabs
 from GUI.WidgetManager import wm
 class MainContent(Component):
 	def __init__(self, parent : Widget, app : App) -> None:

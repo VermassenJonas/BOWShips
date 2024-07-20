@@ -1,6 +1,6 @@
 from tkinter import Widget
 from GUI.Component import Component
-import constants as constants
+import src.logic.constants as constants
 from BOWS import App
 from GUI.WidgetManager import wm
 

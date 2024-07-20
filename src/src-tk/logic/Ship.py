@@ -2,7 +2,7 @@ from decimal import Decimal, getcontext
 from enum import Enum
 from functools import partial
 from logic.Property import Property, AliasProperty, CalculatedProperty
-import constants
+import src.logic.constants as constants
 import logic.Enums as enums
 class Ship:
 	def __init__(self) -> None:

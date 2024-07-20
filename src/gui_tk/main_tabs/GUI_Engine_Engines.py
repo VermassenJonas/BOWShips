@@ -1,7 +1,7 @@
 from tkinter import W, Widget, StringVar
 from GUI.Component import Component
 from BOWS import App
-import constants
+import src.logic.constants as constants
 from GUI.WidgetManager import wm
 import logic.Enums as enums
 from GUI_Engine_EngineType import EngineType

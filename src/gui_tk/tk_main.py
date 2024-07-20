@@ -1,10 +1,10 @@
 from tkinter import BOTH, Widget
 import tkinter.messagebox as messagebox
 import translations.en as en_lang
-from GUI.Component import Component
+from gui_tk.utils.Component import Component
 from logic.Ship import Ship
 from GUI.WidgetManager import wm
-import constants
+import src.logic.constants as constants
 class App(Component):
 	ship : Ship
 	def __init__(self, parent : Widget, app) -> None:
@@ -39,7 +39,7 @@ class App(Component):
 
 	
 
-if __name__ == "__main__":
+def main():
 	from GUI_MainContent import MainContent #deferred to prevent circular imports
 	root = wm.create_root()
 	def on_closing():
@@ -51,3 +51,7 @@ if __name__ == "__main__":
 	app = App(root, None)
 	app.draw()
 	root.mainloop()
+
+
+if __name__ == "__main__":
+	main()

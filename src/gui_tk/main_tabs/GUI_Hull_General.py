@@ -1,7 +1,7 @@
 from tkinter import E, EW, Widget
 from GUI.Component import Component
 from BOWS import App 
-import constants as constants
+import src.logic.constants as constants
 from GUI.WidgetManager import wm
 
 class GeneralData(Component):

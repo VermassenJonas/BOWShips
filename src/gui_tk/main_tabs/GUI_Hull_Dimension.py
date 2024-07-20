@@ -1,7 +1,7 @@
 from tkinter import Widget
 from GUI.Component import Component
 from BOWS import App
-import constants as constants
+import src.logic.constants as constants
 from GUI.WidgetManager import wm
 
 class DimensionData(Component):
