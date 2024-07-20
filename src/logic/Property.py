@@ -29,12 +29,13 @@ class Property(Generic[T]):
 			value = backProc(value)
 		return value
 	def _set(self,new ):
-		val = self._value
 		for proc in self._processors:
-			val = proc(new, val)
-			val, new = new, val
-		if val:
-			self._value = val
+			old = self._value
+			val = proc(new, old)
+			new, old = val, new
+		if new:
+			self._value = new
+		self._notify()
 	def __call__(self, value: T = None, val_fn = None) -> T:
 		if val_fn:
 			value = val_fn()
@@ -49,10 +50,12 @@ class AliasProperty(Property[T]):
 		property.addCallback(self._notify)
 		super().__init__(None)
 	def _get(self) -> T:
-		self._value = self.property()
+		self._value = self._property()
 		return super()._get()
-	def _set(self, new):
-		super()._set(new)
+	def _set(self, value):
+		self._callbacks, temp  = [], self._callbacks #switcharoo smoke & mirrors to prevent callbacks from being called early/twice
+		super()._set(value)
+		self._callbacks = temp
 		self._property(self._value)
 
 class CalculatedProperty(Property[T]):

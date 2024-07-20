@@ -11,9 +11,9 @@ class Component:
 		entry.bind('<Return>', fn)
 		entry.bind('<FocusOut>', fn)
 	def bindEntryCallback(self, entry : tk.Entry , property : Property):			
-		def _updateEntry( element : tk.Entry, value):
+		def _updateEntry( element : tk.Entry):
 			element.delete(0, tk.END)
-			element.insert(0, str(value))
+			element.insert(0, str(property()))
 		property.addCallback(partial(_updateEntry, entry))
 	def bindVarRead(self, var : tk.StringVar, property: Property):
 		def _readVar(*args):
