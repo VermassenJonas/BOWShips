@@ -1,9 +1,8 @@
 from tkinter import ACTIVE, NORMAL, Widget, StringVar, DISABLED
-from GUI.Component import Component
-from BOWS import App
-import src.logic.constants as constants
-from GUI.WidgetManager import wm
+from gui_tk.tk_main import App
 import logic.Enums as enums
+from gui_tk.utils.Component import Component
+from gui_tk.utils.WidgetManager import wm
 
 class FuelType(Component):
 	def __init__(self, parent : Widget, app : App)  -> None:

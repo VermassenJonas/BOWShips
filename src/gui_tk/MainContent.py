@@ -1,10 +1,10 @@
 from tkinter import RAISED, Widget, HORIZONTAL, BOTH
 
-from BOWS import App
-from GUI.Component import Component
-from GUI_MainTabs import MainTabs
-from src.gui_tk.side_tabs.GUI_SideTabs import SideTabs
-from GUI.WidgetManager import wm
+from gui_tk.tk_main import App
+from gui_tk.utils.Component import Component
+from gui_tk.main_tabs.MainTabs import MainTabs
+from gui_tk.side_tabs.SideTabs import SideTabs
+from gui_tk.utils.WidgetManager import wm
 class MainContent(Component):
 	def __init__(self, parent : Widget, app : App) -> None:
 		super().__init__(parent, app)

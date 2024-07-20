@@ -35,7 +35,7 @@ class Lang(object):
 		try:
 			return object.__getattribute__(self, name)
 		except:
-			return f'00{name}' #if you see this prefix, add translation.		
+			return f'00_{name}' #if you see this prefix, add translation.		
 	def __call__(self, codeString : str, *args: Any, **kwds: Any) -> str:
 		return self.__getattribute__(codeString)
 lang = Lang()

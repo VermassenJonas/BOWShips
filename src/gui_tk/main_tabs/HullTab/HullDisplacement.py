@@ -1,8 +1,7 @@
 from tkinter import Widget
-from GUI.Component import Component
-import src.logic.constants as constants
-from BOWS import App
-from GUI.WidgetManager import wm
+from gui_tk.tk_main import App
+from gui_tk.utils.Component import Component
+from gui_tk.utils.WidgetManager import wm
 
 class DisplacementData(Component):
 	def __init__(self, parent : Widget, app : App)  -> None:

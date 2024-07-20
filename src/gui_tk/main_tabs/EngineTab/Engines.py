@@ -1,11 +1,9 @@
 from tkinter import W, Widget, StringVar
-from GUI.Component import Component
-from BOWS import App
-import src.logic.constants as constants
-from GUI.WidgetManager import wm
-import logic.Enums as enums
-from GUI_Engine_EngineType import EngineType
-from GUI_Engines_FuelType import FuelType
+from gui_tk.tk_main import App
+from gui_tk.main_tabs.EngineTab.EngineType import EngineType
+from gui_tk.main_tabs.EngineTab.FuelType import FuelType
+from gui_tk.utils.Component import Component
+from gui_tk.utils.WidgetManager import wm
 
 class Engines(Component):
 	def __init__(self, parent : Widget, app : App)  -> None:

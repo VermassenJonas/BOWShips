@@ -1,10 +1,9 @@
 from tkinter import Widget
-from GUI.Component import Component
-from BOWS import App
-import src.logic.constants as constants
-from GUI_Engine_SpeedPower import SpeedPower
-from GUI_Engine_Engines import Engines
-from GUI.WidgetManager import wm
+from gui_tk.tk_main import App
+from gui_tk.main_tabs.EngineTab.SpeedNPower import SpeedPower
+from gui_tk.main_tabs.EngineTab.Engines import Engines
+from gui_tk.utils.Component import Component
+from gui_tk.utils.WidgetManager import wm
 
 class EngineTab(Component):
 	def __init__(self, parent : Widget, app : App)  -> None:

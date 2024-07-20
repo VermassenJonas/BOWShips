@@ -1,10 +1,10 @@
 from tkinter import Widget
-from GUI.Component import Component
-from GUI_Hull_General import GeneralData
-from GUI_Hull_Dimension import DimensionData
-from GUI_Hull_Displacement import DisplacementData
-from BOWS import App
-from GUI.WidgetManager import wm
+from gui_tk.main_tabs.HullTab.HullGeneral import GeneralData
+from gui_tk.main_tabs.HullTab.HullDimension import DimensionData
+from gui_tk.main_tabs.HullTab.HullDisplacement import DisplacementData
+from gui_tk.tk_main import App
+from gui_tk.utils.Component import Component
+from gui_tk.utils.WidgetManager import wm
 class HullTab(Component):
 	def __init__(self, parent : Widget, app : App) -> None:
 		super().__init__(parent, app)

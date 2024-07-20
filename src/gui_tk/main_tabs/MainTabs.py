@@ -1,10 +1,10 @@
 from tkinter import Widget, BOTH
-from GUI.Component import Component
-from GUI_Hull_Tab import HullTab
-from GUI_Engine_Tab import EngineTab
-import src.logic.constants as constants
-from BOWS import App
-from GUI.WidgetManager import wm
+from gui_tk.utils.Component import Component
+from gui_tk.main_tabs.HullTab.HullTab import HullTab
+from gui_tk.main_tabs.EngineTab.EngineTab import EngineTab
+import logic.constants as constants
+from gui_tk.tk_main import App
+from gui_tk.utils.WidgetManager import wm
 
 class MainTabs(Component):
 	def __init__(self, parent : Widget, app : App) -> None:

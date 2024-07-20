@@ -1,8 +1,7 @@
 from tkinter import Widget, DISABLED
-from GUI.Component import Component
-from BOWS import App
-import src.logic.constants as constants
-from GUI.WidgetManager import wm
+from gui_tk.tk_main import App
+from gui_tk.utils.Component import Component
+from gui_tk.utils.WidgetManager import wm
 
 class SpeedPower(Component):
 	def __init__(self, parent : Widget, app : App)  -> None:

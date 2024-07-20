@@ -3,8 +3,7 @@ import tkinter.messagebox as messagebox
 import translations.en as en_lang
 from gui_tk.utils.Component import Component
 from logic.Ship import Ship
-from GUI.WidgetManager import wm
-import src.logic.constants as constants
+from gui_tk.utils.WidgetManager import wm
 class App(Component):
 	ship : Ship
 	def __init__(self, parent : Widget, app) -> None:
@@ -15,9 +14,10 @@ class App(Component):
 		self._updateCBs = []
 		self.ship = Ship()
 		self.lang = en_lang.lang
-		self.process()
+		#self.process()
 
-	def draw(self):		
+	def draw(self):	
+		from gui_tk.MainContent import MainContent	
 		self.base = wm.create_frame(self.parent)
 		mainContent = MainContent(self.base,self)
 		self.parent.title(self.lang('main_title'))
@@ -34,13 +34,13 @@ class App(Component):
 			if element and element.focus_get() != element:
 				fn()
 		print(f'subscribers: {len(self.readCBs)}, {len(self.calcCBs)}, {len(self._updateCBs)}')
-		self.parent.after(constants.clockspeed, self.process)
+		self.parent.after(5000, self.process)
 	
 
 	
 
 def main():
-	from GUI_MainContent import MainContent #deferred to prevent circular imports
+	from gui_tk.MainContent import MainContent #deferred to prevent circular imports
 	root = wm.create_root()
 	def on_closing():
 		if messagebox.askokcancel("Quit", "Do you want to quit?"):
