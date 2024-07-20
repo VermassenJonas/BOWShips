@@ -35,7 +35,7 @@ class Property(Generic[T]):
 		return self.value
 class AliasProperty(Property[T]):
 	def __init__(self, property : Property[T]) -> None:
-		super().__init__(None)
+		super().__init__(value=None)
 		self._backProcessors = []
 		self.property = property
 		self.property.addCallback(self._notify)

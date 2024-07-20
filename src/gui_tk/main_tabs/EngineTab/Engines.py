@@ -1,4 +1,4 @@
-from tkinter import W, Widget, StringVar
+from tkinter import W, Misc, Widget, StringVar
 from gui_tk.tk_main import App
 from gui_tk.main_tabs.EngineTab.EngineType import EngineType
 from gui_tk.main_tabs.EngineTab.FuelType import FuelType
@@ -6,7 +6,7 @@ from gui_tk.utils.Component import Component
 from gui_tk.utils.WidgetManager import wm
 
 class Engines(Component):
-	def __init__(self, parent : Widget, app : App)  -> None:
+	def __init__(self, parent : Misc, app : App)  -> None:
 		super().__init__(parent, app)
 		self.base =  wm.create_frame(self.parent)
 		self.titleLabel = wm.create_title_label(self.base, self.app.lang.engines)

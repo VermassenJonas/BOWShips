@@ -60,9 +60,9 @@ class WidgetManager(metaclass=Singleton):
 		self._addWidget(widget)
 		return widget
 
-	def create_radiobutton(self, parent, text='', variable=None, 
+	def create_radiobutton(self, parent, variable : tk.StringVar, text='', 
 					value=None) -> tk.Radiobutton:
-		widget = ttk.Radiobutton(parent, text=text, variable=variable, value=value)
+		widget = tk.Radiobutton(parent, text=text, variable=variable, value=value)
 		self._standardizeAlignment(widget)
 		self._addWidget(widget)
 		return widget
@@ -70,7 +70,7 @@ class WidgetManager(metaclass=Singleton):
 	def create_radio_set(self, parent : tk.Misc,app, enum: Enum):
 		buttons = []
 		var = tk.StringVar()
-		for item in list(enum):
+		for item in list(enum): # type: ignore #TODO: fix incorrect type in function handle
 			button = self.create_radiobutton(parent, text=app.lang(item.value), variable=var, value=item.name)
 			buttons.append(button)
 			self._addWidget(button)

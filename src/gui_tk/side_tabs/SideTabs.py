@@ -3,7 +3,7 @@ from gui_tk.tk_main import App
 from gui_tk.utils.Component import Component
 from gui_tk.utils.WidgetManager import wm
 class SideTabs(Component):
-	def __init__(self, parent : Widget, app : App) -> None:
+	def __init__(self, parent, app : App) -> None:
 		super().__init__(parent, app)
 		self.base =  wm.create_notebook(self.parent)
 		shipOverviewTab = wm.create_frame(self.base) 

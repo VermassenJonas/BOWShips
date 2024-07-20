@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar, List
+from typing import Any, Generic, TypeVar
 
 T = TypeVar('T')
 
@@ -28,7 +28,7 @@ class Property(Generic[T]):
 		for backProc in self._backProcessors:
 			value = backProc(value)
 		return value
-	def _set(self,new ):
+	def _set(self,new ) -> None:
 		for proc in self._processors:
 			old = self._value
 			val = proc(new, old)
@@ -36,37 +36,33 @@ class Property(Generic[T]):
 		if new:
 			self._value = new
 		self._notify()
-	def __call__(self, value: T = None, val_fn = None) -> T:
+	def __call__(self, value: T | None= None, val_fn = None) -> T:
 		if val_fn:
 			value = val_fn()
-		if not value:
-			return self._get()
-		else:
+		if value:
 			self._set(value)
+		return self._get()
 
 class AliasProperty(Property[T]):
-	def __init__(self, property : Property) -> None:
-		self._property = property
-		property.addCallback(self._notify)
-		super().__init__(None)
+	def __init__(self, _property : Property) -> None:
+		self._property = _property
+		_property.addCallback(self._notify)
+		super().__init__(_property())
 	def _get(self) -> T:
 		self._value = self._property()
 		return super()._get()
 	def _set(self, value):
-		self._callbacks, temp  = [], self._callbacks #switcharoo smoke & mirrors to prevent callbacks from being called early/twice
+		self._callbacks, temp  = [], self._callbacks #switcharoo to prevent callbacks from being called early/twice
 		super()._set(value)
 		self._callbacks = temp
 		self._property(self._value)
 
 class CalculatedProperty(Property[T]):
-	def __init__(self, calcFun, *properties : List[Property]) -> None:
-		super().__init__(None)
-		self._properties = properties
-		self._dirtyflags = {}
+	def __init__(self, calcFun, *properties : Property[Any]) -> None:
+		super().__init__(calcFun)
 		self._calcFun = calcFun
-		self._value = calcFun()
 		self._dirty = False
-		for property in self._properties:
+		for property in properties:
 			property.addCallback(self._notify)
 	def _notify(self):
 		self._dirty = True
