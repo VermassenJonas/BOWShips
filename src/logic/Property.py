@@ -80,10 +80,10 @@ class DependentAliasProperty(AliasProperty[T]):
 		super().__init__(property)
 		self._dependency = dependency
 	def addProcessor(self, *processors):
-		processors = [partial(proc, dependency=self._dependency()) for proc in processors]
+		processors = [partial(proc, dependency=self._dependency) for proc in processors]
 		return super().addProcessor(*processors)
 	def addBackProcessor(self, *backProcessors):
-		backProcessors = [partial(proc, dependency=self._dependency()) for proc in backProcessors]
+		backProcessors = [partial(proc, dependency=self._dependency) for proc in backProcessors]
 		return super().addBackProcessor(*backProcessors)
 
 class DependentProperty(Property[T]):

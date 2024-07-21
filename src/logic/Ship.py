@@ -46,22 +46,23 @@ class Ship:
 
 
 #region calcs
-	def ftToM(self,value : Decimal, old=None) -> Decimal:
-		return self._rem_zeros(value * constants.ftTometer)
-	def mToFt(self,value : Decimal, old=None) -> Decimal:
-		return self._rem_zeros(value / constants.ftTometer)
+	def ftToM(self,newValue : Decimal, *args, **kwds) -> Decimal:
+		return self._rem_zeros(newValue * constants.ftTometer)
+	def mToFt(self,newValue : Decimal, *args, **kwds) -> Decimal:
+		return self._rem_zeros(newValue / constants.ftTometer)
 	def calcBlockVolume(self) -> Decimal:
+
 		return self._rem_zeros(self.length()*self.beam()*self.draft())
-	def dispToBlock(self, value : Decimal, old=None) -> Decimal:
-		return self._rem_zeros(value / self.blockVolume())
-	def blockToDisp(self, value : Decimal, old=None) -> Decimal:
-		return self._rem_zeros(value * self.blockVolume())	
+	def dispToBlock(self, newValue : Decimal, *args, **kwds) -> Decimal:
+		return self._rem_zeros(newValue / self.blockVolume())
+	def blockToDisp(self, newValue : Decimal, *args, **kwds) -> Decimal:
+		return self._rem_zeros(newValue * self.blockVolume())	
 
 #endregion
 #region cleaning
-	def _validateDecimal(self, value, old=None):
+	def _validateDecimal(self, newValue, *args, **kwds):
 		try:
-			result = Decimal(value)
+			result = Decimal(newValue)
 			return self._rem_zeros(result) 
 		except:
 			return None	
@@ -70,9 +71,9 @@ class Ship:
 	def _rem_zeros(self, d : Decimal) -> Decimal:
 		return d.quantize(Decimal(1)) if d == d.to_integral() else d.normalize()
 
-	def readEnum(self, enum, name : str | None, old = None):
-		if name:
-			return enum[name]
+	def readEnum(self, enum, newValue, oldValue = None):
+		if newValue:
+			return enum[newValue]
 		else:
-			return False 
+			return None 
 #endregion
