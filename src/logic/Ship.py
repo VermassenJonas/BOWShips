@@ -1,7 +1,7 @@
 from decimal import Decimal, getcontext
 from enum import Enum
 from functools import partial
-from logic.Property import Property, AliasProperty, CalculatedProperty
+from logic.Property import DependentAliasProperty, Property, AliasProperty, CalculatedProperty
 import logic.constants as constants
 import logic.Enums as enums
 class Ship:
@@ -37,9 +37,6 @@ class Ship:
 
 		self.displacement = Property(Decimal(10000))
 		self.displacement.addProcessor(self._validateDecimal)
-		self.blockCoeff = AliasProperty(self.displacement)
-		self.blockCoeff.addProcessor(self._validateDecimal,self.blockToDisp)
-		self.blockCoeff.addBackProcessor(self.dispToBlock)
 
 		self.fuelType = Property(enums.Fuel.COAL)
 		self.fuelType.addProcessor(partial(self.readEnum, enums.Fuel))
@@ -47,6 +44,9 @@ class Ship:
 		self.engineType.addProcessor(partial(self.readEnum, enums.Engine))
 		self.coalPercent = Property(Decimal(100))
 
+		self.blockCoeff = DependentAliasProperty(self.displacement, self.blockVolume)
+		self.blockCoeff.addProcessor(self._validateDecimal,self.blockToDisp)
+		self.blockCoeff.addBackProcessor(self.dispToBlock)
 
 #region calcs
 	def ftToM(self,newValue : Decimal, *args, **kwds) -> Decimal:
@@ -74,7 +74,7 @@ class Ship:
 	def _rem_zeros(self, d : Decimal) -> Decimal:
 		return d.quantize(Decimal(1)) if d == d.to_integral() else d.normalize()
 
-	def readEnum(self, enum, newValue, oldValue = None):
+	def readEnum(self, enum, newValue, *args, **kwds):
 		if newValue:
 			return enum[newValue]
 		else:

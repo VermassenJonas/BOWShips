@@ -14,7 +14,7 @@ class DisplacementData(Component):
 		self.dispLabel 		= wm.create_label(self.base, text=f'{app.lang.displacement}:')
 		self.blockEntry 	= wm.create_entry(self.base)
 		self.dispEntry 		= wm.create_entry(self.base)
-		self.blockEntry.config(state=DISABLED) #TODO: make block bidirectional
+		#self.blockEntry.config(state=DISABLED) #TODO: make block bidirectional
 
 		self.titleLabel.grid(column=0, row=0, columnspan=2)
 

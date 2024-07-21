@@ -1,11 +1,11 @@
 from functools import partial
-from typing import Any, Callable, Generic, TypeVar
+from typing import Any, Callable, Generic,  TypeVar, Self
 
-T = TypeVar('T')
-
-class Property(Generic[T]):
-	_value : T
-	def __init__(self, value : T) -> None:
+_T = TypeVar('_T')
+_Tprop = TypeVar('_Tprop', bound='Property')
+class Property(Generic[_T]):
+	_value : _T
+	def __init__(self, value : _T, dependencies : list[_Tprop]) -> None:
 		super().__init__()
 		self._callbacks = []
 		self._processors = []
@@ -24,12 +24,12 @@ class Property(Generic[T]):
 	def addBackProcessor(self, *backProcessors):
 		for backProcessor in backProcessors:
 			self._backProcessors.append(backProcessor)
-	def _get(self) -> T:
+	def _get(self) -> _T:
 		value = self._value
 		for backProc in self._backProcessors:
 			value = backProc(value)
 		return value
-	def _set(self,value) -> None:
+	def _set(self,value : Any) -> None:
 		for proc in self._processors:
 			old = self._value
 			new = proc(newValue=value, oldValue=old)
@@ -37,19 +37,19 @@ class Property(Generic[T]):
 		if value:
 			self._value = value
 		self._notify()
-	def __call__(self, value: T | None = None, val_fn : Callable[[], T] | None = None) -> T:
+	def __call__(self, value: _T | None = None, val_fn : Callable[[], _T] | None = None) -> _T:
 		if val_fn:
 			value = val_fn()
 		if value:
 			self._set(value)
 		return self._get()
 
-class AliasProperty(Property[T]):
+class AliasProperty(Property[_T]):
 	def __init__(self, property : Property) -> None:
 		self._property = property
 		property.addCallback(self._notify)
 		super().__init__(property())
-	def _get(self) -> T:
+	def _get(self) -> _T:
 		self._value = self._property()
 		return super()._get()
 	def _set(self, value):
@@ -58,7 +58,7 @@ class AliasProperty(Property[T]):
 		self._callbacks = temp
 		self._property(self._value)
 
-class CalculatedProperty(Property[T]):
+class CalculatedProperty(Property[_T]):
 	def __init__(self, calcFun, *properties : Property[Any]) -> None:
 		super().__init__(calcFun())
 		self._calcFun = calcFun
@@ -68,14 +68,14 @@ class CalculatedProperty(Property[T]):
 	def _notify(self):
 		self._dirty = True
 		return super()._notify()
-	def _get(self) -> T:
+	def _get(self) -> _T:
 		if self._dirty:
 			self._value = self._calcFun()
 			self._dirty = False
 		return super()._get()
 	def _set(self, value) -> None:
 		pass
-class DependentAliasProperty(AliasProperty[T]):
+class DependentAliasProperty(AliasProperty[_T]):
 	def __init__(self, property: Property, dependency : CalculatedProperty) -> None:
 		super().__init__(property)
 		dependency.addCallback(self._notify)
@@ -87,8 +87,8 @@ class DependentAliasProperty(AliasProperty[T]):
 		backProcessors = [partial(proc, dependency=self._dependency) for proc in backProcessors]
 		return super().addBackProcessor(*backProcessors)
 
-class DependentProperty(Property[T]):
-	def __init__(self, value : T, dependency : CalculatedProperty) -> None:
+class DependentProperty(Property[_T]):
+	def __init__(self, value : _T, dependency : CalculatedProperty) -> None:
 		super().__init__(value)
 		dependency.addCallback(self._notify)
 		self._dependency = dependency
