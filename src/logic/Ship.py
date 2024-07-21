@@ -64,7 +64,7 @@ class Ship:
 			result = Decimal(value)
 			return self._rem_zeros(result) 
 		except:
-			return False	
+			return None	
 		#TODO: write actual validation logic; improper try usage
 		
 	def _rem_zeros(self, d : Decimal) -> Decimal:

@@ -1,4 +1,5 @@
-from typing import Any, Generic, TypeVar
+from functools import partial
+from typing import Any, Callable, Generic, TypeVar
 
 T = TypeVar('T')
 
@@ -11,16 +12,16 @@ class Property(Generic[T]):
 		self._backProcessors = []
 		self._value = value
 		self._set(value)
-	def addCallback(self, *callbacks):
+	def addCallback(self, *callbacks : Callable[[], Any]):
 		for callback in callbacks:
 			self._callbacks.append(callback)
 	def _notify(self):
 		for callback in self._callbacks:
 			callback()
-	def addProcessor(self, *processors):
+	def addProcessor(self, *processors : Callable[[T, T] , T | None]):
 		for processor in processors:
 			self._processors.append(processor)
-	def addBackProcessor(self, *backProcessors):
+	def addBackProcessor(self, *backProcessors : Callable[[T] , T | None]):
 		for backProcessor in backProcessors:
 			self._backProcessors.append(backProcessor)
 	def _get(self) -> T:
@@ -28,15 +29,15 @@ class Property(Generic[T]):
 		for backProc in self._backProcessors:
 			value = backProc(value)
 		return value
-	def _set(self,value ) -> None:
+	def _set(self,value) -> None:
 		for proc in self._processors:
 			old = self._value
-			val = proc(value, old)
-			value, old = val, value
+			new = proc(newValue=value, oldValue=old)
+			value, old = new, value
 		if value:
 			self._value = value
 		self._notify()
-	def __call__(self, value: Any= None, val_fn = None) -> T:
+	def __call__(self, value: T | None = None, val_fn : Callable[[], T] | None = None) -> T:
 		if val_fn:
 			value = val_fn()
 		if value:
@@ -67,10 +68,32 @@ class CalculatedProperty(Property[T]):
 	def _notify(self):
 		self._dirty = True
 		return super()._notify()
-	def _get(self):
+	def _get(self) -> T:
 		if self._dirty:
 			self._value = self._calcFun()
 			self._dirty = False
 		return super()._get()
 	def _set(self, value) -> None:
 		pass
+class DependentAliasProperty(AliasProperty[T]):
+	def __init__(self, property: Property, dependency : CalculatedProperty) -> None:
+		super().__init__(property)
+		self._dependency = dependency
+	def addProcessor(self, *processors):
+		processors = [partial(proc, dependency=self._dependency()) for proc in processors]
+		return super().addProcessor(*processors)
+	def addBackProcessor(self, *backProcessors):
+		backProcessors = [partial(proc, dependency=self._dependency()) for proc in backProcessors]
+		return super().addBackProcessor(*backProcessors)
+
+class DependentProperty(Property[T]):
+	def __init__(self, value : T, dependency : CalculatedProperty) -> None:
+		super().__init__(value)
+		self._dependency = dependency
+	def addProcessor(self, *processors):
+		processors = [partial(proc, dependency=self._dependency()) for proc in processors]
+		return super().addProcessor(*processors)
+	def addBackProcessor(self, *backProcessors):
+		processors = [partial(proc, dependency=self._dependency()) for proc in backProcessors]
+		return super().addBackProcessor(*backProcessors)
+	
