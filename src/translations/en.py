@@ -2,7 +2,6 @@ from enum import Enum
 from importlib import simple
 from typing import Any
 
-from requests import get
 _trans_dict = {
 		'main_title' 		: "BOWShips: Build your Own Warships",
 		'hull' 				: "Hull",

@@ -12,6 +12,9 @@ class Ship:
 		self.country	= Property('')
 		self.type 		= Property('')
 
+		self.buildYear 		= Property(Decimal(1920))
+		self.engineBuilt 	= Property(Decimal(1920))
+
 		self.length = Property(Decimal(180))
 		self.length.addProcessor(self._validateDecimal)
 		self.lengthft = AliasProperty(self.length)

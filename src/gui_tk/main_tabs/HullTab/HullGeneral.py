@@ -41,6 +41,10 @@ class GeneralData(Component):
 		self.doRigging()
 
 	def doRigging(self):
+		
+		self.bindEntryCallback(self.engineBuiltEntry,		 	self.app.ship.engineBuilt)
+
+		self.bindEntryRead(self.engineBuiltEntry, 				self.app.ship.engineBuilt)
 		pass #TODO: implement interactivity	
 
 if __name__ == "__main__":	
