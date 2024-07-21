@@ -75,25 +75,25 @@ class CalculatedProperty(Property[T]):
 		return super()._get()
 	def _set(self, value) -> None:
 		pass
-class DependentAliasProperty(AliasProperty[T]):
-	def __init__(self, property: Property, dependency : CalculatedProperty) -> None:
-		super().__init__(property)
-		self._dependency = dependency
-	def addProcessor(self, *processors):
-		processors = [partial(proc, dependency=self._dependency) for proc in processors]
-		return super().addProcessor(*processors)
-	def addBackProcessor(self, *backProcessors):
-		backProcessors = [partial(proc, dependency=self._dependency) for proc in backProcessors]
-		return super().addBackProcessor(*backProcessors)
-
-class DependentProperty(Property[T]):
-	def __init__(self, value : T, dependency : CalculatedProperty) -> None:
-		super().__init__(value)
-		self._dependency = dependency
-	def addProcessor(self, *processors):
-		processors = [partial(proc, dependency=self._dependency()) for proc in processors]
-		return super().addProcessor(*processors)
-	def addBackProcessor(self, *backProcessors):
-		processors = [partial(proc, dependency=self._dependency()) for proc in backProcessors]
-		return super().addBackProcessor(*backProcessors)
+#class DependentAliasProperty(AliasProperty[T]):
+#	def __init__(self, property: Property, dependency : CalculatedProperty) -> None:
+#		super().__init__(property)
+#		self._dependency = dependency
+#	def addProcessor(self, *processors):
+#		processors = [partial(proc, dependency=self._dependency) for proc in processors]
+#		return super().addProcessor(*processors)
+#	def addBackProcessor(self, *backProcessors):
+#		backProcessors = [partial(proc, dependency=self._dependency) for proc in backProcessors]
+#		return super().addBackProcessor(*backProcessors)
+#
+#class DependentProperty(Property[T]):
+#	def __init__(self, value : T, dependency : CalculatedProperty) -> None:
+#		super().__init__(value)
+#		self._dependency = dependency
+#	def addProcessor(self, *processors):
+#		processors = [partial(proc, dependency=self._dependency()) for proc in processors]
+#		return super().addProcessor(*processors)
+#	def addBackProcessor(self, *backProcessors):
+#		processors = [partial(proc, dependency=self._dependency()) for proc in backProcessors]
+#		return super().addBackProcessor(*backProcessors)
 	
