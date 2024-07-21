@@ -1,9 +1,12 @@
 import csv
 from decimal import Decimal
 import os
-base_dir = os.getcwd()
-print(base_dir)
-def readCsv() -> list[list[Decimal]]:
+import os.path
+
+
+
+def readCsv() -> list[list[Decimal]]:	
+	base_dir = os.getcwd()
 	table = []
 	with open(f'{base_dir}/csv/default/engineWeight.csv') as csvfile:
 		reader = csv.reader(csvfile)

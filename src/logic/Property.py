@@ -44,10 +44,10 @@ class Property(Generic[T]):
 		return self._get()
 
 class AliasProperty(Property[T]):
-	def __init__(self, _property : Property) -> None:
-		self._property = _property
-		_property.addCallback(self._notify)
-		super().__init__(_property())
+	def __init__(self, property : Property) -> None:
+		self._property = property
+		property.addCallback(self._notify)
+		super().__init__(property())
 	def _get(self) -> T:
 		self._value = self._property()
 		return super()._get()
@@ -59,7 +59,7 @@ class AliasProperty(Property[T]):
 
 class CalculatedProperty(Property[T]):
 	def __init__(self, calcFun, *properties : Property[Any]) -> None:
-		super().__init__(calcFun)
+		super().__init__(calcFun())
 		self._calcFun = calcFun
 		self._dirty = False
 		for property in properties:
@@ -72,5 +72,5 @@ class CalculatedProperty(Property[T]):
 			self._value = self._calcFun()
 			self._dirty = False
 		return super()._get()
-	def __call__(self, *args) -> T:
-		return self._get()
+	def _set(self, value) -> None:
+		pass
