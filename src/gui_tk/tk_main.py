@@ -1,12 +1,13 @@
 from tkinter import BOTH, Misc, Widget
 import tkinter.messagebox as messagebox
+from BOWS import App
 import translations.en as en_lang
 from gui_tk.utils.Component import Component
 from logic.Ship import Ship
 from gui_tk.utils.WidgetManager import wm
-class App(Component):
+class ScreenRoot(Component):
 	ship : Ship
-	def __init__(self, parent : Misc, app) -> None:
+	def __init__(self, parent : Misc, app : App) -> None:
 		super().__init__(parent, app)
 		self.app = self
 		self.readCBs = []
@@ -39,7 +40,7 @@ class App(Component):
 
 	
 
-def main():
+def main(app ):
 	from gui_tk.MainContent import MainContent #deferred to prevent circular imports
 	root = wm.create_root()
 	def on_closing():
@@ -48,7 +49,7 @@ def main():
 
 	root.protocol("WM_DELETE_WINDOW", on_closing)
 	root.geometry("800x600")
-	app = App(root, None)
+	app = ScreenRoot(root, None)
 	app.draw()
 	root.mainloop()
 

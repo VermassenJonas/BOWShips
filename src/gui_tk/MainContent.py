@@ -1,6 +1,6 @@
 from tkinter import RAISED, Misc, Widget, HORIZONTAL, BOTH
 
-from gui_tk.tk_main import App
+from BOWS import App
 from gui_tk.utils.Component import Component
 from gui_tk.main_tabs.MainTabs import MainTabs
 from gui_tk.side_tabs.SideTabs import SideTabs
@@ -21,7 +21,7 @@ class MainContent(Component):
 		
 
 if __name__ == "__main__":	
-	from gui_tk.tk_main import App
+	from BOWS import App
 	root = wm.create_root()
 	root.geometry("800x600")
 	app = App(root, None)
