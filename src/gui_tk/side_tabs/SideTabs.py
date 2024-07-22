@@ -20,7 +20,7 @@ class SideTabs(Component):
 if __name__ == "__main__":	
 	root = wm.create_root()
 	root.geometry("600x600")
-	app = App(root, None)
+	app = App()
 	screen = SideTabs(root, app)
 	screen.base.pack()
 	root.mainloop()

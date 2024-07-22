@@ -1,4 +1,6 @@
-from tkinter import Misc, Widget, DISABLED
+from math import dist
+from os import stat
+from tkinter import ACTIVE, NORMAL, Misc, StringVar, Widget, DISABLED
 from gui_tk.tk_main import App
 from gui_tk.utils.Component import Component
 from gui_tk.utils.WidgetManager import wm
@@ -16,8 +18,8 @@ class SpeedPower(Component):
 		self.maxSpeedEntry 			= wm.create_entry(self.base)
 		self.cruiseSpeedEntry 		= wm.create_entry(self.base)
 		self.shaftCountEntry 		= wm.create_entry(self.base)
-		self.powReqMaxHPLabel 		= wm.create_label(self.base, text=f'0Power(shp): 0x0000')
-
+		self.powReqMaxHPLabel 		= wm.create_label(self.base, text=f'{self.app.lang('power')}:')
+		self.powReqMaxHPEntry		= wm.create_entry(self.base)
 
 		self.titleLabel.grid		(column=0, row=0, columnspan=2)
 		self.maxSpeedlabel.grid		(column=0, row=1)
@@ -26,18 +28,28 @@ class SpeedPower(Component):
 		self.maxSpeedEntry.grid		(column=1, row=1)
 		self.cruiseSpeedEntry.grid	(column=1, row=2)
 		self.shaftCountEntry.grid	(column=1, row=3)
-		
+		self.powReqMaxHPLabel.grid	(column=2, row=1)
+		self.powReqMaxHPEntry.grid	(column=3, row=1)
 
 		self.doRigging()
 
 	def doRigging(self):
 		self.cruiseSpeedEntry.config(state=DISABLED) #TODO: Cruising's for later
+		
+		self._maxPowVar = StringVar()
+		self.powReqMaxHPEntry.config(state=DISABLED, textvariable=self._maxPowVar)
+		self.bindVarTwoWays(self._maxPowVar, self.app.ship.maxPowerHP)
+
+
+		self._maxSpeedVar = StringVar()
+		self.bindVarTwoWays(self._maxSpeedVar, self.app.ship.maxSpeed)
+		self.maxSpeedEntry.config(textvariable=self._maxSpeedVar)
 		pass #TODO: implement interactivity	
 
 if __name__ == "__main__":
 	root = wm.create_root()
 	root.geometry("600x600")
-	app = App(root, None)
+	app = App()
 	screen =SpeedPower(root, app)
 	screen.base.grid()
 	root.mainloop()

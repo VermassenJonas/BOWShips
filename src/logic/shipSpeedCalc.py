@@ -2,7 +2,7 @@ from decimal import Decimal
 import math
 import csv
 
-from logic.Ship import Ship
+import logic.Ship
 
 
 ########## FRICTIONAL RESISTANCE (R_F) CALCS ###############
@@ -584,7 +584,7 @@ def HoltropMennenPowerCalculation(length, beam, T, displacementMass, v,
     c1 = c1_calcs(c7, T, beam, iE)
     #Froude Number, based on waterline length
     Fn = froude_length_calcs(v, length, G)
-    print(f"Froude Number: {Fn}")
+    #print(f"Froude Number: {Fn}")
     lambda_w = lamdba_calcs(length, beam, cP)
     c16 = c16_calcs(cP)
     m1 = m1_calcs(length, T, nabla, beam, c16)
@@ -630,7 +630,7 @@ def HoltropMennenPowerCalculation(length, beam, T, displacementMass, v,
     shaftPower *= 1 / trueEfficiencyCoefficient
     return shaftPower
 
-def main(ship : Ship):
+def main(ship):
     # manual data
     name = "test"
     length = float(ship.length())
@@ -639,7 +639,7 @@ def main(ship : Ship):
     displacement = float(ship.displacement())
     numShafts = 2
     numBlades = 4
-    speed = 30 / 1.944
+    speed = float(ship.maxSpeed()) / 1.944
     cM = 0.95
     cWP = 0.7
     dProp = 3.5
@@ -647,12 +647,14 @@ def main(ship : Ship):
     shaftPower = HoltropMennenPowerCalculation(length, beam, draft, displacement, speed, cM = cM, cWP = cWP,
                             numPropellers = numShafts, dProp = dProp,
                             numBlades = numBlades, n = propSpeed)
-    print(f"{name}: {round(shaftPower/1000)} kW")
+    #print(f"{name}: {round(shaftPower/1000)} kW")
+    return Decimal(shaftPower/1000)
        
             
 
 
 if __name__ == "__main__":
+    from logic.Ship import Ship
     ship = Ship()
     ship.length(240)
     ship.beam(30)

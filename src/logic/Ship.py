@@ -1,6 +1,8 @@
 from decimal import Decimal, getcontext
+import decimal
 from enum import Enum
 from functools import partial
+from logic import shipSpeedCalc
 from logic.Property import DependentAliasProperty, Property, AliasProperty, CalculatedProperty
 import logic.constants as constants
 import logic.Enums as enums
@@ -8,26 +10,26 @@ class Ship:
 	def __init__(self) -> None:
 		getcontext().prec = constants.precision
 
-		self.name 		= Property('')
-		self.country	= Property('')
-		self.type 		= Property('')
+		self.name 			= Property('')
+		self.country		= Property('')
+		self.type 			= Property('')
 
 		self.buildYear 		= Property(Decimal(1920))
 		self.engineBuilt 	= Property(Decimal(1920))
 
-		self.length = Property(Decimal(180))
-		self.length.addProcessor(self._validateDecimal)
-		self.lengthft = AliasProperty(self.length)
-		self.lengthft.addProcessor(self._validateDecimal, self.ftToM)
-		self.lengthft.addBackProcessor(self.mToFt)
+		self.length			= Property(Decimal(180))
+		self.length			.addProcessor(self._validateDecimal)
+		self.lengthft 		= AliasProperty(self.length)
+		self.lengthft		.addProcessor(self._validateDecimal, self.ftToM)
+		self.lengthft		.addBackProcessor(self.mToFt)
 
-		self.beam = Property(Decimal(20))
-		self.beam.addProcessor(self._validateDecimal)
-		self.beamft = AliasProperty(self.beam)
-		self.beamft.addProcessor(self._validateDecimal,self.ftToM)
-		self.beamft.addBackProcessor(self.mToFt)
+		self.beam			= Property(Decimal(20))
+		self.beam			.addProcessor(self._validateDecimal)
+		self.beamft			= AliasProperty(self.beam)
+		self.beamft			.addProcessor(self._validateDecimal,self.ftToM)
+		self.beamft			.addBackProcessor(self.mToFt)
 
-		self.draft = Property(Decimal(180))
+		self.draft = Property(Decimal(6))
 		self.draft.addProcessor(self._validateDecimal)
 		self.draftft = AliasProperty(self.draft)
 		self.draftft.addProcessor(self._validateDecimal,self.ftToM)
@@ -48,6 +50,14 @@ class Ship:
 		self.blockCoeff.addProcessor(self._validateDecimal,self.blockToDisp)
 		self.blockCoeff.addBackProcessor(self.dispToBlock)
 
+		
+		self.maxSpeed = Property(Decimal(25))
+		self.maxSpeed.addProcessor(self._validateDecimal)
+
+		self.maxPowerkW = CalculatedProperty(partial(shipSpeedCalc.main, self), self.displacement, self.blockCoeff, self.maxSpeed) 
+		self.maxPowerkW.addProcessor(self._validateDecimal)
+		self.maxPowerHP = CalculatedProperty(partial(self.kwToHP, self.maxPowerkW) , self.maxPowerkW)
+
 #region calcs
 	def ftToM(self,newValue : Decimal, *args, **kwds) -> Decimal:
 		return self._rem_zeros(newValue * constants.ftTometer)
@@ -60,6 +70,8 @@ class Ship:
 		return self._rem_zeros(newValue / self.blockVolume())
 	def blockToDisp(self, newValue : Decimal, *args, **kwds) -> Decimal:
 		return self._rem_zeros(newValue * self.blockVolume())	
+	def kwToHP(self, kwPower : Property[Decimal]):
+		return kwPower()*constants.kWtoHP
 
 #endregion
 #region cleaning

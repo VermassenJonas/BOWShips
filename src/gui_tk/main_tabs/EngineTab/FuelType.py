@@ -32,12 +32,12 @@ class FuelType(Component):
 	def confFuelField(self):
 		value = self.app.ship.fuelType()
 		if value == enums.Fuel.COAL:
-			self.percEntry.config(state=DISABLED)
+			self.percEntry.config(state='readonly')
 			self.percVar.set('100')
 		elif value == enums.Fuel.MIXED:
 			self.percEntry.config(state=NORMAL)
 		elif value == enums.Fuel.OIL:			
-			self.percEntry.config(state=DISABLED)
+			self.percEntry.config(state='readonly')
 			self.percVar.set('0')
 		else:
 			print(f'panic in {self}')
@@ -45,7 +45,7 @@ class FuelType(Component):
 if __name__ == "__main__":
 	root = wm.create_root()
 	root.geometry("600x600")
-	app = App(root, None)
+	app = App()
 	screen =FuelType(root, app)
 	screen.base.pack()
 	root.mainloop()

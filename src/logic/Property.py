@@ -36,7 +36,7 @@ class Property(Generic[T]):
 			value, old = new, value
 		if value:
 			self._value = value
-		self._notify()
+			self._notify()
 	def __call__(self, value: T | None = None, val_fn : Callable[[], T] | None = None) -> T:
 		if val_fn:
 			value = val_fn()

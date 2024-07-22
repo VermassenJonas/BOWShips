@@ -7,16 +7,32 @@ class Component:
 		self.parent = parent
 		self.app = app
 	
-	def bindEntryRead(self, entry : tk.Entry, var_fn):
-		fn = partial(var_fn, val_fn=entry.get)
+	def bindEntryRead(self, entry : tk.Entry, property : Property):
+		fn = partial(property, val_fn=entry.get)
 		entry.bind('<Return>', fn)
 		entry.bind('<FocusOut>', fn)
+		
 	def bindEntryCallback(self, entry : tk.Entry , property : Property):			
 		def _updateEntry( element : tk.Entry, _property):
 			element.delete(0, tk.END)
 			element.insert(0, str(_property()))
 		property.addCallback(partial(_updateEntry, entry, property))
-	def bindVarRead(self, var : tk.StringVar, _property: Property):
+		_updateEntry(entry, property)
+
+	def bindVarRead(self, var : tk.StringVar, property: Property):
 		def _readVar(*args):
-			_property(var.get())
+			if len(var.get()) and var.get()[-1] == '.':
+				pass
+			else:
+				property(var.get())
 		var.trace_add('write', _readVar)
+
+	def bindVarCallback(self, var : tk.StringVar, property : Property):
+		def _updateVar(_var : tk.StringVar, prop : Property):
+			_var.set(str(prop()))
+		property.addCallback(partial(_updateVar, var, property))
+		_updateVar(var, property)
+
+	def bindVarTwoWays(self, var: tk.StringVar, property : Property):
+		self.bindVarRead(var, property)
+		self.bindVarCallback(var, property)

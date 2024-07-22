@@ -25,7 +25,7 @@ if __name__ == "__main__":
 	from gui_tk.tk_main import App
 	root = wm.create_root()
 	root.geometry("600x600")
-	app = App(root, None)
+	app = App()
 	screen = MainTabs(root, app)
 	screen.base.pack()
 	root.mainloop()
