@@ -11,6 +11,7 @@ class Component:
 		fn = partial(property, val_fn=entry.get)
 		entry.bind('<Return>', fn)
 		entry.bind('<FocusOut>', fn)
+		entry.bind('KP_Enter', fn)
 		
 	def bindEntryCallback(self, entry : tk.Entry , property : Property):			
 		def _updateEntry( element : tk.Entry, _property):
