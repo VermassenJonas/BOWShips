@@ -24,7 +24,7 @@ if __name__ == "__main__":
 	from BOWS import App
 	root = wm.create_root()
 	root.geometry("800x600")
-	app = App(root, None)
+	app = App()
 	screen = MainContent(root, app)	
 	screen.base.pack(expand=True, fill=BOTH)
 	root.mainloop()

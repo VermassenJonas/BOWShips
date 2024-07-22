@@ -18,9 +18,9 @@ class GeneralData(Component):
 		self.countryEntry 	= wm.create_entry(self.base)
 		self.typeEntry		= wm.create_entry(self.base)
 
-		self.yearLabel 			= wm.create_label(self.base, text=f'{app.lang.year}:')
-		self.laidDownLabel 		= wm.create_label(self.base, text=f'{app.lang.laid_down}:')
-		self.engineBuiltLabel	= wm.create_label(self.base, text=f'{app.lang.engine_built}:')
+		self.yearLabel 			= wm.create_label(self.base, text=f'{app.lang("year")}:')
+		self.laidDownLabel 		= wm.create_label(self.base, text=f'{app.lang("laid_down")}:')
+		self.engineBuiltLabel	= wm.create_label(self.base, text=f'{app.lang("engine_built")}:')
 		self.laidDownEntry 		= wm.create_entry(self.base)
 		self.engineBuiltEntry 	= wm.create_entry(self.base)
 
@@ -50,7 +50,7 @@ class GeneralData(Component):
 if __name__ == "__main__":	
 	root = wm.create_root()
 	root.geometry("600x600")
-	app = App(root, None)
+	app = App()
 	screen =GeneralData(root, app)
 	screen.base.grid()
 	root.mainloop()

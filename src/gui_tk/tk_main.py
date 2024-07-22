@@ -7,9 +7,9 @@ from logic.Ship import Ship
 from gui_tk.utils.WidgetManager import wm
 class ScreenRoot(Component):
 	ship : Ship
-	def __init__(self, parent : Misc, app : App) -> None:
+	def __init__(self, parent, app) -> None:
 		super().__init__(parent, app)
-		self.app = self
+		self.app = app
 		self.readCBs = []
 		self.calcCBs = []
 		self._updateCBs = []
@@ -20,7 +20,7 @@ class ScreenRoot(Component):
 	def draw(self):	
 		from gui_tk.MainContent import MainContent	
 		self.base = wm.create_frame(self.parent)
-		mainContent = MainContent(self.base,self)
+		mainContent = MainContent(self.base,self.app)
 		self.parent.title(self.lang('main_title')) # type: ignore
 		self.base.pack(expand=True, fill=BOTH)
 		mainContent.base.pack(expand=True, fill=BOTH)
@@ -49,10 +49,11 @@ def main(app ):
 
 	root.protocol("WM_DELETE_WINDOW", on_closing)
 	root.geometry("800x600")
-	app = ScreenRoot(root, None)
-	app.draw()
+	screen = ScreenRoot(root, app)
+	screen.draw()
 	root.mainloop()
 
 
 if __name__ == "__main__":
-	main()
+	app = App()
+	main(app)
