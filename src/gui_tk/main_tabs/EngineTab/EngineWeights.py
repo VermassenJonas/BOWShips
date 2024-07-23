@@ -11,8 +11,8 @@ class EngineWeights(Component):
 		self.title = wm.create_title_label(self.base, app.lang('engine_weight'))
 		self.title.grid()
 
-		self.engineEfficiencyLabel	= wm.create_label(self.base, app.lang('engine_efficiency:') )
-		self.engineWeightLabel	= wm.create_label(self.base, app.lang('weight_of_main_engine:') )
+		self.engineEfficiencyLabel	= wm.create_label(self.base, app.lang('engine_efficiency') )
+		self.engineWeightLabel	= wm.create_label(self.base, app.lang('weight_of_main_engine') )
 
 		self.engineEfficiencyEntry = wm.create_readOnly_entry(self.base)		
 		self.engineWeightEntry = wm.create_readOnly_entry(self.base)

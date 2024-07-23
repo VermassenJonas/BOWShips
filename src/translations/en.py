@@ -40,7 +40,9 @@ class Lang:
 		'complex' : 'Complex',
 		'turbine' : 'Turbine',
 		'power' : 'Power',
-		'engine_weight' : 'Engine Weight'
+		'engine_weight' : 'Engine Weight',
+		'engine_efficiency' : 'Engine Efficiency',
+		'weight_of_main_engine' : 'Weight of Engine',
 
 	} 
 	def __call__(self, name : str,*args: Any, **kwds: Any) -> Any:
