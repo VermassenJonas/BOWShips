@@ -101,7 +101,6 @@ class Ship:
 	def calcEngineEfficiency(self, *args, **kwds):
 		ee = EngineEfficiency(self)
 		result = ee.calcEngineEfficiency()
-		print('pass')
 		if result:
 			return result
 		else:
