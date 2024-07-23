@@ -1,6 +1,9 @@
 from typing import Any
 
-_trans_dict = {
+
+
+class Lang:
+	_trans_dict = {
 		'main_title' 		: "BOWShips: Build your Own Warships",
 		'hull' 				: "Hull",
 		'freeboard' 		: "Freeboard",
@@ -37,21 +40,14 @@ _trans_dict = {
 		'complex' : 'Complex',
 		'turbine' : 'Turbine',
 		'power' : 'Power',
+		'engine_weight' : 'Engine Weight'
 
 	} 
-
-class Lang(object):
 	def __call__(self, name : str,*args: Any, **kwds: Any) -> Any:
 		try: 
-			return _trans_dict[name]
+			return self._trans_dict[name]
 		except:
 			print(f'untranslated string: {name}')
 			return f'00_{name}'
-	def __getattribute__(self, name: str) -> Any:
-		try: 
-			#print(f'outdated access of translation string: {name}')
-			return _trans_dict[name]
-		except:
-			print(f'untranslated string: {name}')
-			return f'00_{name}'
+	
 lang = Lang()

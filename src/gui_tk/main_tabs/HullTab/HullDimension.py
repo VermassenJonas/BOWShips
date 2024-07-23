@@ -9,13 +9,13 @@ class DimensionData(Component):
 		super().__init__(parent, app)
 		self.base =  wm.create_frame(self.parent)
 		
-		self.titleLabel = wm.create_title_label(self.base, text=f'{app.lang.dimensions}')
+		self.titleLabel = wm.create_title_label(self.base, text=f'{app.lang('dimensions')}')
 
-		self.lengthLabel	= wm.create_label(self.base, text=f'{app.lang.length}:')
-		self.beamLabel 		= wm.create_label(self.base, text=f'{app.lang.beam}:')
-		self.draftLabel 	= wm.create_label(self.base, text=f'{app.lang.draft}:')
-		self.meterLabel 	= wm.create_label(self.base, text=f'{app.lang.meter} (m):' )
-		self.feetLabel 		= wm.create_label(self.base, text=f'{app.lang.feet} (ft):' )
+		self.lengthLabel	= wm.create_label(self.base, text=f'{app.lang('length')}:')
+		self.beamLabel 		= wm.create_label(self.base, text=f'{app.lang('beam')}:')
+		self.draftLabel 	= wm.create_label(self.base, text=f'{app.lang('draft')}:')
+		self.meterLabel 	= wm.create_label(self.base, text=f'{app.lang('meter')} (m):' )
+		self.feetLabel 		= wm.create_label(self.base, text=f'{app.lang('feet')} (ft):' )
 
 		self.lengthMeterEntry 	= wm.create_entry(self.base)
 		self.beamMeterEntry 	= wm.create_entry(self.base)

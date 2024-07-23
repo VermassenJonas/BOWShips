@@ -11,6 +11,8 @@ class Interpolator:
 
 		if not x1 <= x <= x2:
 			raise ValueError('x not within the interval')
+		if q1<=0 or q2 <= 0:
+			raise ValueError('bad data or invalid combination')
 		return (q1 * (x2-x)+ q2 *(x-x1)) / (x2-x1)
 	@staticmethod
 	def bilinear_interpolation( x, y, *points): # from stackoverflow

@@ -9,7 +9,7 @@ class FuelType(Component):
 		super().__init__(parent, app)
 		self.base =  wm.create_frame(self.parent)
 		self.base.grid(column=0, row=1)
-		self.fuelLabel = wm.create_label(self.base, self.app.lang.fuel)
+		self.fuelLabel = wm.create_label(self.base, self.app.lang('fuel'))
 		self.fuelLabel.grid()
 		(self.fuelVar, self.fuelButtons) = wm.create_radio_set(self.base, app, enums.Fuel)
 		for button in self.fuelButtons:

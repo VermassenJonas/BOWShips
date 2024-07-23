@@ -9,7 +9,7 @@ class Engines(Component):
 	def __init__(self, parent : Misc, app : App)  -> None:
 		super().__init__(parent, app)
 		self.base =  wm.create_frame(self.parent)
-		self.titleLabel = wm.create_title_label(self.base, self.app.lang.engines)
+		self.titleLabel = wm.create_title_label(self.base, self.app.lang('engines'))
 		self.titleLabel.grid(column=0, row=0)
 		
 		self.fuelType = FuelType(self.base, self.app)
@@ -25,7 +25,7 @@ class Engines(Component):
 if __name__ == "__main__":
 	root = wm.create_root()
 	root.geometry("600x600")
-	app = App(root, None)
+	app = App()
 	screen =Engines(root, app)
 	screen.base.pack()
 	root.mainloop()

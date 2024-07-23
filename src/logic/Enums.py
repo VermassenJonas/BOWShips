@@ -5,6 +5,7 @@ class Engine(StrEnum):
 	SIMPLE = auto()
 	COMPLEX =  auto()
 	TURBINE =  auto()
+	
 class Fuel(StrEnum):
 	COAL 	=  auto()
 	OIL 	=  auto()

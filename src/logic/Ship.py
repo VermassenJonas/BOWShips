@@ -4,6 +4,7 @@ from enum import Enum
 from functools import partial
 from logic import shipSpeedCalc
 from logic.Property import DependentAliasProperty, Property, AliasProperty, CalculatedProperty
+from logic.calculations.EngineEfficiency import EngineEfficiency
 import logic.constants as constants
 import logic.Enums as enums
 class Ship:
@@ -55,8 +56,6 @@ class Ship:
 		self.coalPercent = Property(Decimal('100'))
 		self.coalPercent.addProcessor(self._validateDecimal)
 		self.coalPercent.addBackProcessor(self.roundOutBound)
-
-
 		
 		self.maxSpeed = Property(Decimal(25))
 		self.maxSpeed.addProcessor(self._validateDecimal)
@@ -64,9 +63,16 @@ class Ship:
 
 		self.maxPowerkW = CalculatedProperty(partial(self.calclKWPower, self), self.displacement, self.blockCoeff, self.maxSpeed) 
 		self.maxPowerkW.addProcessor(self._validateDecimal)
+		self.maxPowerkW.addBackProcessor(self.roundOutBound)
 		self.maxPowerHP = CalculatedProperty(partial(self.kwToHP, self.maxPowerkW) , self.maxPowerkW)
+		self.maxPowerHP.addBackProcessor(self.roundOutBound)
 
-#region calcs
+		self.engineEfficiency= CalculatedProperty[Decimal](self.calcEngineEfficiency, self.buildYear, self.fuelType, self.engineType, self.coalPercent)
+		self.engineEfficiency.addBackProcessor(self.roundOutBound) 
+		self.engineWeight 		= CalculatedProperty[Decimal](self.calcEngineWeight, self.engineEfficiency, self.maxPowerHP)
+		self.engineWeight.addBackProcessor(self.roundOutBound)
+
+#region Simple Calcs
 	def ftToM(self,newValue : Decimal, *args, **kwds) -> Decimal:
 		return self._rem_zeros(newValue * constants.ftTometer)
 	def mToFt(self,newValue : Decimal, *args, **kwds) -> Decimal:
@@ -78,15 +84,24 @@ class Ship:
 		return self._rem_zeros(newValue / self.blockVolume())
 	def blockToDisp(self, newValue : Decimal, *args, **kwds) -> Decimal:
 		return self._rem_zeros(newValue * self.blockVolume())	
-	def kwToHP(self, kwPower : Property[Decimal]):
+	def kwToHP(self, kwPower : Property[Decimal]) -> Decimal:
 		return kwPower()*constants.kWtoHP
-
+	def calcEngineWeight(self, *args, **kwds) -> Decimal:
+		return self.maxPowerHP() / self.engineEfficiency()
+#endregion
+#region Outer Calls
 	def calclKWPower(self, *args, **kwds):
 		try:
 			return shipSpeedCalc.main(self)
 		except:
-			return 0
-
+			return Decimal(0)
+	def calcEngineEfficiency(self, *args, **kwds):
+		ee = EngineEfficiency(self)
+		result = ee.calcEngineEfficiency()
+		if result:
+			return result
+		else:
+			return Decimal(5)
 #endregion
 #region cleaning
 	def _validateDecimal(self, newValue, *args, **kwds):
@@ -107,5 +122,8 @@ class Ship:
 			return None 
 
 	def roundOutBound(self, val: Decimal, *args, **kwds):
-		return self._rem_zeros(val.quantize(Decimal(constants.roundTo)))
+		if val:
+			return self._rem_zeros(val.quantize(Decimal(constants.roundTo)))
+		else:
+			return Decimal(0)
 #endregion

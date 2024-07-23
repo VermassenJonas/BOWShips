@@ -8,11 +8,11 @@ class GeneralData(Component):
 		super().__init__(parent, app)
 		self.base =  wm.create_frame(self.parent)
 
-		self.titleLabel 	= wm.create_title_label(self.base, text=app.lang.ship)
+		self.titleLabel 	= wm.create_title_label(self.base, text=app.lang('ship'))
 
-		self.nameLabel 		= wm.create_label(self.base, text=f'{app.lang.name}:')
-		self.countryLabel	= wm.create_label(self.base, text=f'{app.lang.country}:')
-		self.typeLabel 		= wm.create_label(self.base, text=f'{app.lang.type}:')
+		self.nameLabel 		= wm.create_label(self.base, text=f'{app.lang('name')}:')
+		self.countryLabel	= wm.create_label(self.base, text=f'{app.lang('country')}:')
+		self.typeLabel 		= wm.create_label(self.base, text=f'{app.lang('type')}:')
 
 		self.nameEntry 		= wm.create_entry(self.base)
 		self.countryEntry 	= wm.create_entry(self.base)

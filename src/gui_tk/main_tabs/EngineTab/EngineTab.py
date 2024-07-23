@@ -1,4 +1,5 @@
 from tkinter import Misc, Widget
+from gui_tk.main_tabs.EngineTab.EngineWeights import EngineWeights
 from gui_tk.tk_main import App
 from gui_tk.main_tabs.EngineTab.SpeedNPower import SpeedPower
 from gui_tk.main_tabs.EngineTab.Engines import Engines
@@ -11,8 +12,10 @@ class EngineTab(Component):
 		self.base =  wm.create_frame(self.parent)
 		self.speedPower = SpeedPower(self.base, self.app)
 		self.engines = Engines(self.base, self.app)
+		self.weights = EngineWeights(self.base, self.app)
 		self.speedPower.base.grid()
 		self.engines.base.grid()
+		self.weights.base.grid()
 		self.doRigging()
 
 	def doRigging(self):
@@ -22,7 +25,7 @@ class EngineTab(Component):
 if __name__ == "__main__":
 	root = wm.create_root()
 	root.geometry("600x600")
-	app = App(root, None)
+	app = App()
 	screen =EngineTab(root, app)
 	screen.base.pack()
 	root.mainloop()

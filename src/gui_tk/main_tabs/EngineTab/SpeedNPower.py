@@ -10,7 +10,7 @@ class SpeedPower(Component):
 		super().__init__(parent, app)
 		self.base 				= wm.create_frame(self.parent)
 
-		self.titleLabel				= wm.create_title_label(self.base, text=f'{app.lang.speed_and_power}')
+		self.titleLabel				= wm.create_title_label(self.base, text=f'{app.lang('speed_and_power')}')
 
 		self.maxSpeedlabel 			= wm.create_label(self.base, text=self.app.lang('maxSpeed'))
 		self.cruiseSpeedLabel 		= wm.create_label(self.base, text=self.app.lang('cruise_speed'))
@@ -35,7 +35,7 @@ class SpeedPower(Component):
 
 	def doRigging(self):
 		self.cruiseSpeedEntry.config(state=DISABLED) #TODO: Cruising's for later	
-			
+
 		self.powReqMaxHPEntry.config(state=DISABLED)
 
 		wm.bindEntryTwoWay(self.powReqMaxHPEntry, self.app.ship.maxPowerHP)

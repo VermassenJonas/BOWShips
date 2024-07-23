@@ -1,6 +1,7 @@
 from enum import Enum
 from functools import partial
-from tkinter import font
+from os import stat
+from tkinter import DISABLED, Misc, font
 import tkinter as tk
 import tkinter.ttk as ttk
 from logic.Property import Property
@@ -15,13 +16,11 @@ class WidgetManager(metaclass=Singleton):
 			self.widgets[key] = [] 
 		self.widgets[key].append(widget)
 
-	def _boldFont(self) -> font.Font:
-		return font.Font(weight='bold')
-
-	def _standardizeAlignment(self, widget : tk.Widget):
-		widget.grid = partial(widget.grid, sticky=tk.NW)
-
 	#region creators 
+	def create_readOnly_entry(self, parent : Misc):
+		widget = self.create_entry(parent)
+		widget.config(state=DISABLED)
+		return widget
 	def create_entry(self, parent : tk.Misc) -> tk.Entry:
 		widget = tk.Entry(parent) 
 		self._standardizeAlignment(widget)
@@ -82,11 +81,6 @@ class WidgetManager(metaclass=Singleton):
 
 	#region bindings	
 	
-	#def bindReadOnlyEntry(self, entry : tk.Entry, property : Property):		
-	#	_var = tk.StringVar()
-	#	entry.config(state=tk.DISABLED, textvariable=_var)
-	#	self.bindVarTwoWays(_var, property)
-	#	return _var
 	def restrictEntryNumeric(self, *entries: tk.Entry):
 		for entry in entries:
 			def is_numeric_input(inp):
@@ -137,5 +131,12 @@ class WidgetManager(metaclass=Singleton):
 	def bindVarTwoWays(self, var: tk.StringVar, property : Property):
 		self.bindVarRead(var, property)
 		self.bindVarCallback(var, property)
+	#endregion
+	#region bits n bobs
+	def _boldFont(self) -> font.Font:
+		return font.Font(weight='bold')
+
+	def _standardizeAlignment(self, widget : tk.Widget):
+		widget.grid = partial(widget.grid, sticky=tk.NW)
 	#endregion
 wm = WidgetManager()

@@ -14,8 +14,8 @@ class MainTabs(Component):
 		self.hullTab.base.grid()
 		self.engineTab = EngineTab(self.base, self.app)
 		self.engineTab.base.grid()
-		self.base.add(self.hullTab.base, 	text=f'{app.lang.hull}') 
-		self.base.add(self.engineTab.base,	text=f'{app.lang.engine}')
+		self.base.add(self.hullTab.base, 	text=f'{app.lang('hull')}') 
+		self.base.add(self.engineTab.base,	text=f'{app.lang('engine')}')
 		
 		#mainTabs.add(FreeboardTab, 	text =strings.freeboard) 
 

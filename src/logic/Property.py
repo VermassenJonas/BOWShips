@@ -12,7 +12,7 @@ class Property(Generic[T]):
 		self._backProcessors = []
 		self._value = value
 		self._isUpdating = True
-		self._set(value)
+		self._set(value) #TODO: check if nmecessary
 	def isUpdating(self, bool : bool | None = None):
 		old = self._isUpdating
 		if bool is not None:
@@ -66,7 +66,7 @@ class AliasProperty(Property[T]):
 		self._property(self._value)
 
 class CalculatedProperty(Property[T]):
-	def __init__(self, calcFun, *properties : Property[Any]) -> None:
+	def __init__(self, calcFun : Callable[[], T], *properties : Property[Any]) -> None:
 		super().__init__(calcFun())
 		self._calcFun = calcFun
 		self._dirty = False
