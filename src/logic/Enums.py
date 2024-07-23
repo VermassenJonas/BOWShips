@@ -1,11 +1,11 @@
-from enum import Enum
+from enum import StrEnum, auto
 
 
-class Engine(Enum):
-	SIMPLE 	= 'simple'
-	COMPLEX = 'complex'
-	TURBINE = 'turbine'
-class Fuel(Enum):
-	COAL 	= 'Coal'
-	OIL 	= 'Oil'
-	MIXED 	= 'Mixed'
+class Engine(StrEnum):
+	SIMPLE = auto()
+	COMPLEX =  auto()
+	TURBINE =  auto()
+class Fuel(StrEnum):
+	COAL 	=  auto()
+	OIL 	=  auto()
+	MIXED 	=  auto()

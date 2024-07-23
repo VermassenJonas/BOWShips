@@ -34,7 +34,7 @@ class Property(Generic[T]):
 			old = self._value
 			new = proc(newValue=value, oldValue=old)
 			value, old = new, value
-		if value:
+		if type(value) == type(self._value):
 			self._value = value
 			self._notify()
 	def __call__(self, value: Any | None = None, val_fn : Callable[[], T] | None = None) -> T:

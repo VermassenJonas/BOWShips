@@ -26,7 +26,7 @@ class Component:
 	def bindEntryTwoWay(self, entry : tk.Entry, property : Property):
 		self.bindEntryRead(entry, property)
 		self.bindEntryCallback(entry, property)
-		
+
 	def bindEntryRead(self, entry : tk.Entry, property : Property):
 		fn = partial(property, val_fn=entry.get)
 		entry.bind('<Return>', fn)
@@ -34,7 +34,7 @@ class Component:
 		entry.bind('KP_Enter', fn)
 	
 	def _updateEntry( self, entry : tk.Entry, property):
-		var = str(property())
+		var = property()
 		state = entry.cget('state')		
 		entry.config(state=tk.NORMAL)	
 		entry.delete(0, tk.END)

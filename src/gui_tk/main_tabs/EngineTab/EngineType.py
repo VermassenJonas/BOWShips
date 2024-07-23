@@ -17,13 +17,13 @@ class EngineType(Component):
 		self.doRigging()
 
 	def doRigging(self):
-		self.engineVar.set( self.app.ship.engineType().name)
+		self.engineVar.set( self.app.ship.engineType())
 		self.bindVarRead(self.engineVar, self.app.ship.engineType)
 
 if __name__ == "__main__":
 	root = wm.create_root()
 	root.geometry("600x600")
-	app = App(root, None)
+	app = App()
 	screen =EngineType(root, app)
 	screen.base.pack()
 	root.mainloop()

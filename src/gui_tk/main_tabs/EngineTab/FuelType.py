@@ -23,7 +23,7 @@ class FuelType(Component):
 	def doRigging(self):
 		self.fuelVar.set( self.app.ship.fuelType().name)
 		self.confFuelField()
-		self.bindVarRead(self.fuelVar, self.app.ship.fuelType)
+		self.bindVarTwoWays(self.fuelVar, self.app.ship.fuelType)
 		self.app.ship.fuelType.addCallback(self.confFuelField)
 
 		self.bindEntryTwoWay(self.percEntry, self.app.ship.coalPercent)

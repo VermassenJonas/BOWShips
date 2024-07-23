@@ -71,7 +71,7 @@ class WidgetManager(metaclass=Singleton):
 		buttons = []
 		var = tk.StringVar()
 		for item in list(enum): 
-			button = self.create_radiobutton(parent, text=app.lang(item.value), variable=var, value=item.name)
+			button = self.create_radiobutton(parent, text=app.lang(item), variable=var, value=item)
 			buttons.append(button)
 			self._addWidget(button)
 		return (var, buttons)
