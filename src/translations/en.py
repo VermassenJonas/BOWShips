@@ -36,6 +36,8 @@ _trans_dict = {
 		'simple' : 'Simple',
 		'complex' : 'Complex',
 		'turbine' : 'Turbine',
+		'power' : 'Power',
+
 	} 
 
 class Lang(object):

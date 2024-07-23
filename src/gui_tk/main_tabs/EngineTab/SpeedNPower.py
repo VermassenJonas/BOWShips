@@ -18,7 +18,7 @@ class SpeedPower(Component):
 		self.maxSpeedEntry 			= wm.create_entry(self.base)
 		self.cruiseSpeedEntry 		= wm.create_entry(self.base)
 		self.shaftCountEntry 		= wm.create_entry(self.base)
-		self.powReqMaxHPLabel 		= wm.create_label(self.base, text=f'{self.app.lang('power')}:')
+		self.powReqMaxHPLabel 		= wm.create_label(self.base, text=f'{self.app.lang('power')} (hp):')
 		self.powReqMaxHPEntry		= wm.create_entry(self.base)
 
 		self.titleLabel.grid		(column=0, row=0, columnspan=2)
@@ -36,15 +36,13 @@ class SpeedPower(Component):
 	def doRigging(self):
 		self.cruiseSpeedEntry.config(state=DISABLED) #TODO: Cruising's for later
 		
-		self._maxPowVar = StringVar()
-		self.powReqMaxHPEntry.config(state=DISABLED, textvariable=self._maxPowVar)
-		self.bindVarTwoWays(self._maxPowVar, self.app.ship.maxPowerHP)
+		
+		#print(self.powReqMaxHPEntry['state'])
+		self.bindEntryTwoWay(self.powReqMaxHPEntry, self.app.ship.maxPowerHP)
+		self.powReqMaxHPEntry.config(state=DISABLED)
+		#print(self.powReqMaxHPEntry.cget('state'))
 
-
-		self._maxSpeedVar = StringVar()
-		self.bindVarTwoWays(self._maxSpeedVar, self.app.ship.maxSpeed)
-		self.maxSpeedEntry.config(textvariable=self._maxSpeedVar)
-		pass #TODO: implement interactivity	
+		self.bindEntryTwoWay(self.maxSpeedEntry, self.app.ship.maxSpeed)
 
 if __name__ == "__main__":
 	root = wm.create_root()
