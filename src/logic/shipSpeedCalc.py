@@ -3,7 +3,7 @@ import math
 import csv
 
 import logic.Ship
-
+# MAIN AUTHOR: BOB
 
 ########## FRICTIONAL RESISTANCE (R_F) CALCS ###############
 
@@ -206,8 +206,7 @@ def rB_calcs(aBT, hB, G, TF, v)->float:
 
     #0 if no bulbous bow 
     if aBT == 0: return 0
-    else: return 0.11 * math.exp(-3 * p_B ** -2) * Fni ** 3 * aBT ** 1.5 * rho * G / (1 + Fni ** 2)
-
+    else: return 0.11 * math.exp(-3 * p_B ** -2) * Fni ** 3 * aBT ** 1.5 * 1 * G / (1 + Fni ** 2) # there was an undf value in here called 'rho'. 
 
 
 ########## TRANSOM STERN RESISTANCE (R_TR) CALCS ###############

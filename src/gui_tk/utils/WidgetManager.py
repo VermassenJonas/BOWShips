@@ -1,4 +1,4 @@
-from enum import Enum, EnumMeta
+from enum import Enum
 from functools import partial
 from tkinter import font
 import tkinter as tk
@@ -81,6 +81,7 @@ class WidgetManager(metaclass=Singleton):
 	#endregion
 
 	#region bindings	
+	
 	#def bindReadOnlyEntry(self, entry : tk.Entry, property : Property):		
 	#	_var = tk.StringVar()
 	#	entry.config(state=tk.DISABLED, textvariable=_var)
