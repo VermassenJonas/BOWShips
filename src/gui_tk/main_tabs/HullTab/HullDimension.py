@@ -42,24 +42,24 @@ class DimensionData(Component):
 
 	def doRigging(self):
 
-		self.bindEntryCallback(self.lengthMeterEntry, 	self.app.ship.length)
-		self.bindEntryCallback(self.lengthFeetEntry, 	self.app.ship.lengthft)
-		self.bindEntryCallback(self.beamMeterEntry, 	self.app.ship.beam)
-		self.bindEntryCallback(self.beamFeetEntry,	 	self.app.ship.beamft)
-		self.bindEntryCallback(self.draftMeterEntry,	self.app.ship.draft)
-		self.bindEntryCallback(self.draftFeetEntry, 	self.app.ship.draftft)
+		self.bindEntryTwoWay(self.lengthMeterEntry, 	self.app.ship.length)
+		self.bindEntryTwoWay(self.lengthFeetEntry, 	self.app.ship.lengthft)
+		self.bindEntryTwoWay(self.beamMeterEntry, 	self.app.ship.beam)
+		self.bindEntryTwoWay(self.beamFeetEntry,	 	self.app.ship.beamft)
+		self.bindEntryTwoWay(self.draftMeterEntry,	self.app.ship.draft)
+		self.bindEntryTwoWay(self.draftFeetEntry, 	self.app.ship.draftft)
 
-		self.bindEntryRead(self.lengthMeterEntry, 		self.app.ship.length)
-		self.bindEntryRead(self.lengthFeetEntry, 		self.app.ship.lengthft)
-		self.bindEntryRead(self.beamMeterEntry, 		self.app.ship.beam)
-		self.bindEntryRead(self.beamFeetEntry, 			self.app.ship.beamft)
-		self.bindEntryRead(self.draftMeterEntry, 		self.app.ship.draft)
-		self.bindEntryRead(self.draftFeetEntry, 		self.app.ship.draftft)
+		self.restrictEntryNumeric(self.lengthMeterEntry)
+		self.restrictEntryNumeric(self.lengthFeetEntry)
+		self.restrictEntryNumeric(self.beamMeterEntry)
+		self.restrictEntryNumeric(self.beamFeetEntry)
+		self.restrictEntryNumeric(self.draftMeterEntry)
+		self.restrictEntryNumeric(self.draftFeetEntry)
 
 if __name__ == "__main__":
 	root = wm.create_root()
 	root.geometry("600x600")
-	app = App(root, None)
+	app = App()
 	screen =DimensionData(root, app)
 	screen.base.grid()
 	root.mainloop()

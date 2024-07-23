@@ -25,11 +25,9 @@ class DisplacementData(Component):
 
 		self.doRigging()
 	def doRigging(self):
-		self.bindEntryCallback(self.dispEntry,			self.app.ship.displacement)
-		self.bindEntryCallback(self.blockEntry,		 	self.app.ship.blockCoeff)
-
-		self.bindEntryRead(self.dispEntry, 				self.app.ship.displacement)
-		self.bindEntryRead(self.blockEntry, 			self.app.ship.blockCoeff)
+		self.bindEntryTwoWay(self.blockEntry, self.app.ship.blockCoeff)
+		self.bindEntryTwoWay(self.dispEntry, self.app.ship.displacement)
+		self.restrictEntryNumeric(self.blockEntry, self.dispEntry)
 
 if __name__ == "__main__":
 	root = wm.create_root()

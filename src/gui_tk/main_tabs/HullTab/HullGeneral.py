@@ -31,8 +31,8 @@ class GeneralData(Component):
 		self.countryLabel.grid(column=0, row=2)
 		self.countryEntry.grid(column=1, row=2)
 		self.typeLabel.grid(column=0, row=3)
-		self.typeEntry.grid(column=1, row=3)
-		self.yearLabel.grid(column=3, row=1, sticky=EW)
+		self.typeEntry.grid(column=1, row=3) 
+		self.yearLabel.grid(column=3, row=1)
 		self.laidDownLabel.grid(column=2, row=2)
 		self.laidDownEntry.grid(column=3, row=2)
 		self.engineBuiltLabel.grid(column=2, row=3)
@@ -41,11 +41,14 @@ class GeneralData(Component):
 		self.doRigging()
 
 	def doRigging(self):
-		
-		self.bindEntryCallback(self.engineBuiltEntry,		 	self.app.ship.engineBuilt)
+		self.bindEntryTwoWay(self.engineBuiltEntry, self.app.ship.engineBuilt)
+		self.bindEntryTwoWay(self.laidDownEntry, self.app.ship.buildYear)
+		self.bindEntryTwoWay(self.nameEntry, self.app.ship.name)
+		self.bindEntryTwoWay(self.countryEntry, self.app.ship.country)
+		self.bindEntryTwoWay(self.typeEntry, self.app.ship.type)
 
-		self.bindEntryRead(self.engineBuiltEntry, 				self.app.ship.engineBuilt)
-		pass #TODO: implement interactivity	
+		self.restrictEntryNumeric(self.laidDownEntry, self.engineBuiltEntry)
+		
 
 if __name__ == "__main__":	
 	root = wm.create_root()

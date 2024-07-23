@@ -14,9 +14,9 @@ class FuelType(Component):
 		(self.fuelVar, self.fuelButtons) = wm.create_radio_set(self.base, app, enums.Fuel)
 		for button in self.fuelButtons:
 			button.grid()		
-		self.percVar = StringVar(self.base)
+		#self.percVar = StringVar(self.base)
 		self.percEntry = wm.create_entry(self.base)
-		self.percEntry.config(textvariable=self.percVar)
+		#self.percEntry.config(textvariable=self.percVar)
 		self.percEntry.grid()
 		self.doRigging()
 
@@ -26,19 +26,20 @@ class FuelType(Component):
 		self.bindVarRead(self.fuelVar, self.app.ship.fuelType)
 		self.app.ship.fuelType.addCallback(self.confFuelField)
 
-		self.bindVarRead(self.percVar, self.app.ship.coalPercent)
+		self.bindEntryTwoWay(self.percEntry, self.app.ship.coalPercent)
+		#self.bindVarRead(self.percVar, self.app.ship.coalPercent)
 
 
 	def confFuelField(self):
 		value = self.app.ship.fuelType()
 		if value == enums.Fuel.COAL:
-			self.percEntry.config(state='readonly')
-			self.percVar.set('100')
+			self.app.ship.coalPercent('100')
+			self.percEntry.config(state=DISABLED)
 		elif value == enums.Fuel.MIXED:
 			self.percEntry.config(state=NORMAL)
 		elif value == enums.Fuel.OIL:			
-			self.percEntry.config(state='readonly')
-			self.percVar.set('0')
+			self.app.ship.coalPercent('0')
+			self.percEntry.config(state=DISABLED)
 		else:
 			print(f'panic in {self}')
 
