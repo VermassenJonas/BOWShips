@@ -29,12 +29,14 @@ class DataReader(metaclass=Singleton):
 			data = self._readCsv(filename)
 			self._data[filename] = data
 			return data
+	def clearCache(self):
+		self._data = {}
 
 dr = DataReader()
 def readSingleDataColumn(column, index : Decimal, csv_file: str):
 	data =dr.readCsv(csv_file)
 	for i in range(len(data)-1):
-		if(data[i][0] <index < data[i+1][0]):
+		if(data[i][0] <= index < data[i+1][0]):
 			return [(data[i][0], data[i][column]), (data[i+1][0], data[i+1][column])]
 	print(f'panic in DataReader')
 	return []

@@ -2,6 +2,7 @@ from decimal import Decimal, getcontext
 import decimal
 from enum import Enum
 from functools import partial
+from tkinter.messagebox import QUESTION
 from logic import shipSpeedCalc
 from logic.Property import DependentAliasProperty, Property, AliasProperty, CalculatedProperty
 from logic.calculations.EngineEfficiency import EngineEfficiency
@@ -17,6 +18,8 @@ class Ship:
 
 		self.buildYear 		= Property(Decimal(1920))
 		self.engineBuilt 	= Property(Decimal(1920))
+		self.engineBuilt	.addProcessor(self._validateDecimal)
+		self.engineBuilt	.addBackProcessor(self.roundOutBound)
 
 		self.length			= Property(Decimal(180))
 		self.length			.addProcessor(self._validateDecimal)
@@ -67,7 +70,7 @@ class Ship:
 		self.maxPowerHP = CalculatedProperty(partial(self.kwToHP, self.maxPowerkW) , self.maxPowerkW)
 		self.maxPowerHP.addBackProcessor(self.roundOutBound)
 
-		self.engineEfficiency= CalculatedProperty[Decimal](self.calcEngineEfficiency, self.buildYear, self.fuelType, self.engineType, self.coalPercent)
+		self.engineEfficiency= CalculatedProperty[Decimal](self.calcEngineEfficiency, self.engineBuilt, self.fuelType, self.engineType, self.coalPercent)
 		self.engineEfficiency.addBackProcessor(self.roundOutBound) 
 		self.engineWeight 		= CalculatedProperty[Decimal](self.calcEngineWeight, self.engineEfficiency, self.maxPowerHP)
 		self.engineWeight.addBackProcessor(self.roundOutBound)
@@ -98,6 +101,7 @@ class Ship:
 	def calcEngineEfficiency(self, *args, **kwds):
 		ee = EngineEfficiency(self)
 		result = ee.calcEngineEfficiency()
+		print('pass')
 		if result:
 			return result
 		else:
@@ -126,4 +130,7 @@ class Ship:
 			return self._rem_zeros(val.quantize(Decimal(constants.roundTo)))
 		else:
 			return Decimal(0)
+	def verifyUpdate(self, newvalue, *args, **kwds):
+		print(f'update: {newvalue}')
+		return newvalue
 #endregion
