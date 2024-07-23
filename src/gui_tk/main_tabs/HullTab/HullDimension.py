@@ -42,19 +42,19 @@ class DimensionData(Component):
 
 	def doRigging(self):
 
-		self.bindEntryTwoWay(self.lengthMeterEntry, 	self.app.ship.length)
-		self.bindEntryTwoWay(self.lengthFeetEntry, 	self.app.ship.lengthft)
-		self.bindEntryTwoWay(self.beamMeterEntry, 	self.app.ship.beam)
-		self.bindEntryTwoWay(self.beamFeetEntry,	 	self.app.ship.beamft)
-		self.bindEntryTwoWay(self.draftMeterEntry,	self.app.ship.draft)
-		self.bindEntryTwoWay(self.draftFeetEntry, 	self.app.ship.draftft)
+		wm.bindEntryTwoWay(self.lengthMeterEntry, 	self.app.ship.length)
+		wm.bindEntryTwoWay(self.lengthFeetEntry, 	self.app.ship.lengthft)
+		wm.bindEntryTwoWay(self.beamMeterEntry, 	self.app.ship.beam)
+		wm.bindEntryTwoWay(self.beamFeetEntry,	 	self.app.ship.beamft)
+		wm.bindEntryTwoWay(self.draftMeterEntry,	self.app.ship.draft)
+		wm.bindEntryTwoWay(self.draftFeetEntry, 	self.app.ship.draftft)
 
-		self.restrictEntryNumeric(self.lengthMeterEntry)
-		self.restrictEntryNumeric(self.lengthFeetEntry)
-		self.restrictEntryNumeric(self.beamMeterEntry)
-		self.restrictEntryNumeric(self.beamFeetEntry)
-		self.restrictEntryNumeric(self.draftMeterEntry)
-		self.restrictEntryNumeric(self.draftFeetEntry)
+		wm.restrictEntryNumeric(self.lengthMeterEntry)
+		wm.restrictEntryNumeric(self.lengthFeetEntry)
+		wm.restrictEntryNumeric(self.beamMeterEntry)
+		wm.restrictEntryNumeric(self.beamFeetEntry)
+		wm.restrictEntryNumeric(self.draftMeterEntry)
+		wm.restrictEntryNumeric(self.draftFeetEntry)
 
 if __name__ == "__main__":
 	root = wm.create_root()

@@ -34,15 +34,12 @@ class SpeedPower(Component):
 		self.doRigging()
 
 	def doRigging(self):
-		self.cruiseSpeedEntry.config(state=DISABLED) #TODO: Cruising's for later
-		
-		
-		#print(self.powReqMaxHPEntry['state'])
-		self.bindEntryTwoWay(self.powReqMaxHPEntry, self.app.ship.maxPowerHP)
+		self.cruiseSpeedEntry.config(state=DISABLED) #TODO: Cruising's for later	
+			
 		self.powReqMaxHPEntry.config(state=DISABLED)
-		#print(self.powReqMaxHPEntry.cget('state'))
 
-		self.bindEntryTwoWay(self.maxSpeedEntry, self.app.ship.maxSpeed)
+		wm.bindEntryTwoWay(self.powReqMaxHPEntry, self.app.ship.maxPowerHP)
+		wm.bindEntryTwoWay(self.maxSpeedEntry, self.app.ship.maxSpeed)
 
 if __name__ == "__main__":
 	root = wm.create_root()

@@ -13,12 +13,12 @@ class EngineType(Component):
 		self.engineLabel.grid()
 		(self.engineVar, self.engineButtons) = wm.create_radio_set(self.base,app,  enums.Engine)
 		for button in self.engineButtons:
-			button.grid()	
+			button.grid()	 
 		self.doRigging()
 
 	def doRigging(self):
 		self.engineVar.set( self.app.ship.engineType())
-		self.bindVarRead(self.engineVar, self.app.ship.engineType)
+		wm.bindVarTwoWays(self.engineVar, self.app.ship.engineType)
 
 if __name__ == "__main__":
 	root = wm.create_root()

@@ -41,13 +41,13 @@ class GeneralData(Component):
 		self.doRigging()
 
 	def doRigging(self):
-		self.bindEntryTwoWay(self.engineBuiltEntry, self.app.ship.engineBuilt)
-		self.bindEntryTwoWay(self.laidDownEntry, self.app.ship.buildYear)
-		self.bindEntryTwoWay(self.nameEntry, self.app.ship.name)
-		self.bindEntryTwoWay(self.countryEntry, self.app.ship.country)
-		self.bindEntryTwoWay(self.typeEntry, self.app.ship.type)
+		wm.bindEntryTwoWay(self.engineBuiltEntry, self.app.ship.engineBuilt)
+		wm.bindEntryTwoWay(self.laidDownEntry, self.app.ship.buildYear)
+		wm.bindEntryTwoWay(self.nameEntry, self.app.ship.name)
+		wm.bindEntryTwoWay(self.countryEntry, self.app.ship.country)
+		wm.bindEntryTwoWay(self.typeEntry, self.app.ship.type)
 
-		self.restrictEntryNumeric(self.laidDownEntry, self.engineBuiltEntry)
+		wm.restrictEntryNumeric(self.laidDownEntry, self.engineBuiltEntry)
 		
 
 if __name__ == "__main__":	
