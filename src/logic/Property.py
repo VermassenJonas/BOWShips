@@ -11,13 +11,20 @@ class Property(Generic[T]):
 		self._processors = []
 		self._backProcessors = []
 		self._value = value
+		self._isUpdating = True
 		self._set(value)
+	def isUpdating(self, bool : bool | None = None):
+		old = self._isUpdating
+		if bool is not None:
+			self._isUpdating = bool
+		return old
 	def addCallback(self, *callbacks : Callable[[], Any]):
 		for callback in callbacks:
 			self._callbacks.append(callback)
 	def _notify(self):
-		for callback in self._callbacks:
-			callback()
+		if self._isUpdating:
+			for callback in self._callbacks:
+				callback()
 	def addProcessor(self, *processors):
 		for processor in processors:
 			self._processors.append(processor)
@@ -53,9 +60,9 @@ class AliasProperty(Property[T]):
 		self._value = self._property()
 		return super()._get()
 	def _set(self, value):
-		self._callbacks, temp  = [], self._callbacks #switcharoo to prevent callbacks from being called early/twice
+		temp = self.isUpdating(False) # to prevent callbacks from being called early and twice
 		super()._set(value)
-		self._callbacks = temp
+		self.isUpdating(temp)
 		self._property(self._value)
 
 class CalculatedProperty(Property[T]):
