@@ -9,11 +9,11 @@ from logic.Singleton import Singleton
 class DataReader(metaclass=Singleton):
 	def __init__(self):
 		self._data = {}
+		self.base_dir = os.getcwd()
 	def _readCsv(self, filename: str) -> list[list[Decimal]]:	
 		print(f'reading {filename}.csv')
-		base_dir = os.getcwd()
 		table = []
-		with open(f'{base_dir}/csv/{filename}.csv') as csvfile:
+		with open(f'{self.base_dir}/csv/{filename}.csv') as csvfile:
 			reader = csv.reader(csvfile)
 			next(reader)
 			next(reader)
