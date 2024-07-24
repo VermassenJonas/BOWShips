@@ -10,17 +10,17 @@ class GeneralData(Component):
 
 		self.titleLabel 	= wm.create_title_label(self.base, text=app.lang('ship'))
 
-		self.nameLabel 		= wm.create_label(self.base, text=f'{app.lang('name')}:')
-		self.countryLabel	= wm.create_label(self.base, text=f'{app.lang('country')}:')
-		self.typeLabel 		= wm.create_label(self.base, text=f'{app.lang('type')}:')
+		self.nameLabel 		= wm.create_label(self.base, text=app.lang('name'))
+		self.countryLabel	= wm.create_label(self.base, text=app.lang('country'))
+		self.typeLabel 		= wm.create_label(self.base, text=app.lang('type'))
 
 		self.nameEntry 		= wm.create_entry(self.base)
 		self.countryEntry 	= wm.create_entry(self.base)
 		self.typeEntry		= wm.create_entry(self.base)
 
-		self.yearLabel 			= wm.create_label(self.base, text=f'{app.lang("year")}:')
-		self.laidDownLabel 		= wm.create_label(self.base, text=f'{app.lang("laid_down")}:')
-		self.engineBuiltLabel	= wm.create_label(self.base, text=f'{app.lang("engine_built")}:')
+		self.yearLabel 			= wm.create_label(self.base, text=app.lang("year"))
+		self.laidDownLabel 		= wm.create_label(self.base, text=app.lang("laid_down"))
+		self.engineBuiltLabel	= wm.create_label(self.base, text=app.lang("engine_built"))
 		self.laidDownEntry 		= wm.create_entry(self.base)
 		self.engineBuiltEntry 	= wm.create_entry(self.base)
 

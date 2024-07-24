@@ -10,7 +10,7 @@ class SpeedPower(Component):
 		super().__init__(parent, app)
 		self.base 				= wm.create_frame(self.parent)
 
-		self.titleLabel				= wm.create_title_label(self.base, text=f'{app.lang('speed_and_power')}')
+		self.titleLabel				= wm.create_title_label(self.base, text=app.lang('speed_and_power'))
 
 		self.maxSpeedlabel 			= wm.create_label(self.base, text=self.app.lang('maxSpeed'))
 		self.cruiseSpeedLabel 		= wm.create_label(self.base, text=self.app.lang('cruise_speed'))
@@ -18,7 +18,7 @@ class SpeedPower(Component):
 		self.maxSpeedEntry 			= wm.create_entry(self.base)
 		self.cruiseSpeedEntry 		= wm.create_entry(self.base)
 		self.shaftCountEntry 		= wm.create_entry(self.base)
-		self.powReqMaxHPLabel 		= wm.create_label(self.base, text=f'{self.app.lang('power')} (hp):')
+		self.powReqMaxHPLabel 		= wm.create_label(self.base, text=self.app.lang('power'))
 		self.powReqMaxHPEntry		= wm.create_entry(self.base)
 
 		self.titleLabel.grid		(column=0, row=0, columnspan=2)

@@ -8,10 +8,10 @@ class DisplacementData(Component):
 		super().__init__(parent, app)
 		self.base =  wm.create_frame(self.parent)
 		
-		self.titleLabel = wm.create_title_label(self.base, text=f'{app.lang('displacement')}')
+		self.titleLabel = wm.create_title_label(self.base, text=app.lang('displacement'))
 		
-		self.blockLabel 	= wm.create_label(self.base, text=f'{app.lang('block_coefficient')}:')
-		self.dispLabel 		= wm.create_label(self.base, text=f'{app.lang('displacement')}:')
+		self.blockLabel 	= wm.create_label(self.base, text=app.lang('block_coefficient'))
+		self.dispLabel 		= wm.create_label(self.base, text=app.lang('displacement'))
 		self.blockEntry 	= wm.create_entry(self.base)
 		self.dispEntry 		= wm.create_entry(self.base)
 		#self.blockEntry.config(state=DISABLED)

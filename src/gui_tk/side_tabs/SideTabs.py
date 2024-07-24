@@ -8,8 +8,8 @@ class SideTabs(Component):
 		self.base =  wm.create_notebook(self.parent)
 		shipOverviewTab = wm.create_frame(self.base) 
 		reportTab = wm.create_frame(self.base) 
-		self.base.add(shipOverviewTab, text=f'{app.lang('ship_info')}')
-		self.base.add(reportTab, text=f'{app.lang('report')}')
+		self.base.add(shipOverviewTab, text=app.lang('ship_info'))
+		self.base.add(reportTab, text=app.lang('report'))
 		
 		#self.base.add(shipOverviewTab, 	text =self.app.lang.ship_overview) 
 		#self.base.add(reportTab, 		text =self.app.lang.report) 
