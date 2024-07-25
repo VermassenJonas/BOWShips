@@ -16,27 +16,16 @@ class DimensionData(Component):
 		self.lengthLabel		= wm.create_label(self.base, text=app.lang('length'))
 		self.beamLabel 			= wm.create_label(self.base, text=app.lang('beam'))
 		self.draftLabel 		= wm.create_label(self.base, text=app.lang('draft'))
+		self.unitWidgets = []
 
-		self.lengthMeterEntry 	= wm.create_entry(self.base)
-		self.beamMeterEntry 	= wm.create_entry(self.base)
-		self.draftMeterEntry 	= wm.create_entry(self.base)
-		self.meterWidgets = [
-			self.lengthMeterEntry,
-			self.beamMeterEntry,
-			self.draftMeterEntry
-		]
+		self.lengthMeterEntry 	= wm.create_entry(self.base , dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets)
+		self.beamMeterEntry 	= wm.create_entry(self.base , dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets)
+		self.draftMeterEntry 	= wm.create_entry(self.base , dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets)
 
-
-		self.lengthFeetEntry 	= wm.create_entry(self.base)
-		self.beamFeetEntry 		= wm.create_entry(self.base)
-		self.draftFeetEntry 	= wm.create_entry(self.base)
-		self.feetWidgets = [
-			self.lengthFeetEntry,
-			self.beamFeetEntry,
-			self.draftFeetEntry
-		]
-
-
+		self.lengthFeetEntry 	= wm.create_entry(parent=self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets)
+		self.beamFeetEntry 		= wm.create_entry(parent=self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets)
+		self.draftFeetEntry 	= wm.create_entry(parent=self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets)
+		
 		self.titleLabel.grid		(column=0, row=0, columnspan=2)
 		self.lengthLabel.grid		(column=1, row=1)
 		self.beamLabel.grid			(column=2, row=1)
@@ -77,23 +66,10 @@ class DimensionData(Component):
 		self.selectUnit()
 #endregion
 #region interactivity
-	def hideFeet(self):
-		wm.hideWidgetsGrid(*self.feetWidgets)
-	def showFeet(self):
-		wm.showWidgetsGrid(*self.feetWidgets)
-	def hideMeter(self):
-		wm.hideWidgetsGrid(*self.meterWidgets)
-	def showMeter(self):
-		wm.showWidgetsGrid(*self.meterWidgets)
 
 	def selectUnit(self, event = None):
-		unit = self.unitCombo.get()
-		if unit == self.app.enums.Unit.IMPERIAL:
-			self.hideMeter()
-			self.showFeet()
-		else:
-			self.hideFeet()
-			self.showMeter()
+		unit = self.app.enums.Unit(self.unitCombo.get())
+		wm.switchUnits(self.unitWidgets, unit=unit)
 
 #endregion
 

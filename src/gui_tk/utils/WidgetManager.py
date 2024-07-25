@@ -29,7 +29,7 @@ class WidgetManager(metaclass=Singleton):
 		widget = CustomEntry(parent, dataType)
 		self._standardizeAlignment(widget)
 		self._addWidget(widget)
-		if widgetList:
+		if widgetList is not None:
 			widgetList.append(widget)
 		return widget
 
@@ -41,7 +41,7 @@ class WidgetManager(metaclass=Singleton):
 
 	def create_frame(self, parent : tk.Misc) -> tk.Frame:
 		widget = tk.Frame(parent)
-		widget.config(highlightbackground='red', highlightthickness=0.5) # debug line
+		#widget.config(highlightbackground='red', highlightthickness=0.5) # debug line
 		widget.grid_configure(ipadx=5, ipady=5)
 		self._standardizeAlignment(widget)	
 		self._addWidget(widget)
@@ -146,7 +146,7 @@ class WidgetManager(metaclass=Singleton):
 		self.bindVarCallback(var, property)
 	#endregion
 	#region interactivity
-	def switchUnits(self, widgets : list[CustomEntry],  unit : Unit):
+	def switchUnits(self, widgets : list[CustomEntry],  unit : Unit | str):
 		for widget in widgets:
 			if widget.dataType == unit:
 				widget.grid()
