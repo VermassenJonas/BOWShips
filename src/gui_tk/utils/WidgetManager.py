@@ -75,6 +75,13 @@ class WidgetManager(metaclass=Singleton):
 			self._addWidget(button)
 		return (var, buttons)
 
+	def create_ComboBox(self, parent, options):		
+		widget = ttk.Combobox(parent, values=options)
+		widget.config(state='readonly')
+		self._standardizeAlignment(widget)
+		self._addWidget(widget)
+		return widget
+
 	def create_root(self) -> tk.Tk:
 		return tk.Tk()
 	#endregion
@@ -132,7 +139,17 @@ class WidgetManager(metaclass=Singleton):
 		self.bindVarRead(var, property)
 		self.bindVarCallback(var, property)
 	#endregion
-	#region bits n bobs
+	#region interactivity
+	def hideWidgetsGrid(self, *widgets : tk.Widget) :
+		for widget in widgets:
+			widget.grid_remove()
+	def showWidgetsGrid(self, *widgets : tk.Widget) :
+		for widget in widgets:
+			widget.grid()
+
+	#endregion
+	
+	#region styling
 	def _boldFont(self) -> font.Font:
 		return font.Font(weight='bold')
 
