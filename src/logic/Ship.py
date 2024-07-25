@@ -48,6 +48,11 @@ class Ship:
 		self.displacement 	= Property(Decimal(10000))
 		self.displacement	.addProcessor(self._validateDecimal)
 		self.displacement	.addBackProcessor(self.roundOutBound)
+		self.longDisplacement = AliasProperty(self.displacement)
+		self.longDisplacement .addProcessor(self._validateDecimal, self.tonToLongTon)
+		self.longDisplacement .addBackProcessor(self.longTonToTon)
+
+
 		self.blockCoeff 	= DependentAliasProperty(self.displacement, self.blockVolume)
 		self.blockCoeff		.addProcessor(self._validateDecimal,self.blockToDisp)
 		self.blockCoeff		.addBackProcessor(self.dispToBlock, self.roundOutBound)
@@ -91,6 +96,12 @@ class Ship:
 		return kwPower()*constants.kWtoHP
 	def calcEngineWeight(self, *args, **kwds) -> Decimal:
 		return self.maxPowerHP() / self.engineEfficiency()
+	def tonToLongTon(self, metricMass=None,  *args, **kwds):
+		if not metricMass:
+			metricMass = self.displacement()
+		return metricMass * constants.tonToLongTon
+	def longTonToTon(self,  *args, **kwds):
+		return self.longDisplacement() / constants.tonToLongTon
 #endregion
 #region Outer Calls
 	def calclKWPower(self, *args, **kwds):

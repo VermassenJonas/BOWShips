@@ -48,6 +48,7 @@ class GeneralData(Component):
 		wm.bindEntryTwoWay(self.typeEntry, self.app.ship.type)
 
 		wm.restrictEntryNumeric(self.laidDownEntry, self.engineBuiltEntry)
+		wm.restrictEntryNumeric(self.laidDownEntry, self.laidDownEntry)
 		
 
 if __name__ == "__main__":	
