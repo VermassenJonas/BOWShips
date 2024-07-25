@@ -17,23 +17,20 @@ class DimensionData(Component):
 		self.beamLabel 			= wm.create_label(self.base, text=app.lang('beam'))
 		self.draftLabel 		= wm.create_label(self.base, text=app.lang('draft'))
 
-		self.meterLabel 		= wm.create_label(self.base, text=app.lang('meter'))
 		self.lengthMeterEntry 	= wm.create_entry(self.base)
 		self.beamMeterEntry 	= wm.create_entry(self.base)
 		self.draftMeterEntry 	= wm.create_entry(self.base)
 		self.meterWidgets = [
-			self.meterLabel,
 			self.lengthMeterEntry,
 			self.beamMeterEntry,
 			self.draftMeterEntry
 		]
 
-		self.feetLabel 			= wm.create_label(self.base, text=app.lang('feet'))
+
 		self.lengthFeetEntry 	= wm.create_entry(self.base)
 		self.beamFeetEntry 		= wm.create_entry(self.base)
 		self.draftFeetEntry 	= wm.create_entry(self.base)
 		self.feetWidgets = [
-			self.feetLabel,
 			self.lengthFeetEntry,
 			self.beamFeetEntry,
 			self.draftFeetEntry
@@ -45,19 +42,17 @@ class DimensionData(Component):
 		self.beamLabel.grid			(column=2, row=1)
 		self.draftLabel.grid		(column=3, row=1)
 
-		self.meterLabel.grid		(column=0, row=2)
 		self.lengthMeterEntry.grid	(column=1, row=2)
 		self.beamMeterEntry.grid	(column=2, row=2)
 		self.draftMeterEntry.grid	(column=3, row=2)
 
-		self.feetLabel.grid			(column=0, row=3)
-		self.lengthFeetEntry.grid	(column=1, row=3)
-		self.beamFeetEntry.grid		(column=2, row=3)
-		self.draftFeetEntry.grid	(column=3, row=3)
+		self.lengthFeetEntry.grid	(column=1, row=2)
+		self.beamFeetEntry.grid		(column=2, row=2)
+		self.draftFeetEntry.grid	(column=3, row=2)
 
-		self.unitCombo = wm.create_ComboBox(self.base, list(self.app.enums.UnitBig))
+		self.unitCombo = wm.create_ComboBox(self.base, list(self.app.enums.Unit))
 		
-		self.unitCombo.grid(row=1, column=0)
+		self.unitCombo.grid(row=2, column=0)
 
 		self.doRigging()
 #endregion
@@ -78,7 +73,7 @@ class DimensionData(Component):
 		wm.restrictEntryNumeric(self.draftFeetEntry)
 
 		self.unitCombo.bind('<<ComboboxSelected>>', func=self.selectUnit)
-		self.unitCombo.set(self.app.enums.UnitBig.METER)
+		self.unitCombo.set(self.app.enums.Unit.METRIC)
 		self.selectUnit()
 #endregion
 #region interactivity
@@ -93,7 +88,7 @@ class DimensionData(Component):
 
 	def selectUnit(self, event = None):
 		unit = self.unitCombo.get()
-		if unit == self.app.enums.UnitBig.FOOT:
+		if unit == self.app.enums.Unit.IMPERIAL:
 			self.hideMeter()
 			self.showFeet()
 		else:

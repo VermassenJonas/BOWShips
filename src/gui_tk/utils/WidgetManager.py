@@ -1,11 +1,14 @@
 from enum import Enum
+import enum
 from functools import partial
 from os import stat
 from tkinter import DISABLED, Misc, font
 import tkinter as tk
 import tkinter.ttk as ttk
+from logic.Enums import Unit
 from logic.Property import Property
 from logic.Singleton import Singleton
+from gui_tk.utils.CustomWidgets import CustomEntry
 class WidgetManager(metaclass=Singleton):
 	def __init__(self) -> None:
 		self.widgets = {}
@@ -21,13 +24,16 @@ class WidgetManager(metaclass=Singleton):
 		widget = self.create_entry(parent)
 		widget.config(state=DISABLED)
 		return widget
-	def create_entry(self, parent : tk.Misc) -> tk.Entry:
-		widget = tk.Entry(parent) 
+
+	def create_entry(self, parent : tk.Misc, dataType = None, widgetList = None) -> tk.Entry:
+		widget = CustomEntry(parent, dataType)
 		self._standardizeAlignment(widget)
 		self._addWidget(widget)
+		if widgetList:
+			widgetList.append(widget)
 		return widget
 
-	def create_label(self, parent : tk.Misc, text='') -> tk.Label:
+	def create_label(self, parent : tk.Misc, text) -> tk.Label:
 		widget = tk.Label(parent, text=text)
 		self._standardizeAlignment(widget)
 		self._addWidget(widget)
@@ -35,7 +41,7 @@ class WidgetManager(metaclass=Singleton):
 
 	def create_frame(self, parent : tk.Misc) -> tk.Frame:
 		widget = tk.Frame(parent)
-		#widget.config(highlightbackground='red', highlightthickness=0.5) # debug line
+		widget.config(highlightbackground='red', highlightthickness=0.5) # debug line
 		widget.grid_configure(ipadx=5, ipady=5)
 		self._standardizeAlignment(widget)	
 		self._addWidget(widget)
@@ -140,6 +146,14 @@ class WidgetManager(metaclass=Singleton):
 		self.bindVarCallback(var, property)
 	#endregion
 	#region interactivity
+	def switchUnits(self, widgets : list[CustomEntry],  unit : Unit):
+		for widget in widgets:
+			if widget.dataType == unit:
+				widget.grid()
+			else:
+				widget.grid_remove()
+
+
 	def hideWidgetsGrid(self, *widgets : tk.Widget) :
 		for widget in widgets:
 			widget.grid_remove()
