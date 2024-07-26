@@ -18,30 +18,34 @@ class DimensionData(Component):
 		self.draftLabel 		= wm.create_label(self.base, text=app.lang('draft'))
 		self.unitWidgets = []
 
-		self.lengthMeterEntry 	= wm.create_entry(self.base , dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets)
-		self.beamMeterEntry 	= wm.create_entry(self.base , dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets)
-		self.draftMeterEntry 	= wm.create_entry(self.base , dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets)
+		self.meterLabel 		= wm.create_label(self.base, dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets, text=app.lang('meter'))
+		self.lengthMeterEntry 	= wm.create_entry(self.base, dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets)
+		self.beamMeterEntry 	= wm.create_entry(self.base, dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets)
+		self.draftMeterEntry 	= wm.create_entry(self.base, dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets)
 
-		self.lengthFeetEntry 	= wm.create_entry(parent=self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets)
-		self.beamFeetEntry 		= wm.create_entry(parent=self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets)
-		self.draftFeetEntry 	= wm.create_entry(parent=self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets)
+		self.feetLabel 			= wm.create_label(self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets, text=app.lang('feet'))
+		self.lengthFeetEntry 	= wm.create_entry(self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets)
+		self.beamFeetEntry 		= wm.create_entry(self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets)
+		self.draftFeetEntry 	= wm.create_entry(self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets)
 		
 		self.titleLabel.grid		(column=0, row=0, columnspan=2)
 		self.lengthLabel.grid		(column=1, row=1)
 		self.beamLabel.grid			(column=2, row=1)
 		self.draftLabel.grid		(column=3, row=1)
 
+		self.meterLabel.grid		(column=0, row=2)
 		self.lengthMeterEntry.grid	(column=1, row=2)
 		self.beamMeterEntry.grid	(column=2, row=2)
 		self.draftMeterEntry.grid	(column=3, row=2)
 
+		self.feetLabel.grid			(column=0, row=2)
 		self.lengthFeetEntry.grid	(column=1, row=2)
 		self.beamFeetEntry.grid		(column=2, row=2)
 		self.draftFeetEntry.grid	(column=3, row=2)
 
 		self.unitCombo = wm.create_ComboBox(self.base, list(self.app.enums.Unit))
 		
-		self.unitCombo.grid(row=2, column=0)
+		self.unitCombo.grid(row=1, column=0)
 
 		self.doRigging()
 #endregion

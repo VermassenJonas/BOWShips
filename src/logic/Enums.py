@@ -13,9 +13,9 @@ class Fuel(StrEnum):
 class Unit(StrEnum):
 	METRIC 	= auto()
 	IMPERIAL	= auto()
-class Magnitude(StrEnum):
-	METER = auto()
-	MM = auto()
+#class Magnitude(StrEnum):
+#	METER		= auto()
+#	MM 		= auto()
 
 
 

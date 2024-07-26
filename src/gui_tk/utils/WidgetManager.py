@@ -8,16 +8,18 @@ import tkinter.ttk as ttk
 from logic.Enums import Unit
 from logic.Property import Property
 from logic.Singleton import Singleton
-from gui_tk.utils.CustomWidgets import CustomEntry
+from gui_tk.utils.CustomWidgets import CustomEntry, CustomLabel, CustomWidget
 class WidgetManager(metaclass=Singleton):
 	def __init__(self) -> None:
 		self.widgets = {}
 
-	def _addWidget(self, widget : tk.Widget):
+	def _addWidget(self, widget : tk.Widget, widgetList = None):
 		key = str(type(widget))
 		if not key in self.widgets:
 			self.widgets[key] = [] 
-		self.widgets[key].append(widget)
+		self.widgets[key].append(widget)		
+		if widgetList is not None:
+			widgetList.append(widget)
 
 	#region creators 
 	def create_readOnly_entry(self, parent : Misc):
@@ -25,18 +27,16 @@ class WidgetManager(metaclass=Singleton):
 		widget.config(state=DISABLED)
 		return widget
 
-	def create_entry(self, parent : tk.Misc, dataType = None, widgetList = None) -> tk.Entry:
+	def create_entry(self, parent : tk.Misc, dataType = None, widgetList = None) :
 		widget = CustomEntry(parent, dataType)
 		self._standardizeAlignment(widget)
-		self._addWidget(widget)
-		if widgetList is not None:
-			widgetList.append(widget)
+		self._addWidget(widget, widgetList=widgetList)
 		return widget
 
-	def create_label(self, parent : tk.Misc, text) -> tk.Label:
-		widget = tk.Label(parent, text=text)
+	def create_label(self, parent : tk.Misc, text, dataType=None, widgetList = None) :
+		widget = CustomLabel(parent, text=text, dataType=dataType)
 		self._standardizeAlignment(widget)
-		self._addWidget(widget)
+		self._addWidget(widget, widgetList)
 		return widget
 
 	def create_frame(self, parent : tk.Misc) -> tk.Frame:
@@ -146,10 +146,12 @@ class WidgetManager(metaclass=Singleton):
 		self.bindVarCallback(var, property)
 	#endregion
 	#region interactivity
-	def switchUnits(self, widgets : list[CustomEntry],  unit : Unit | str):
+	def switchUnits(self, widgets : list[CustomWidget],  unit : Unit):
 		for widget in widgets:
 			if widget.dataType == unit:
 				widget.grid()
+			elif widget.dataType is None:
+				pass
 			else:
 				widget.grid_remove()
 
