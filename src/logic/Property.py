@@ -93,7 +93,7 @@ class AliasProperty(Property[T]):
 	def _get(self) -> T:
 		self._value = self._upTransfo(self._property())
 		return super()._get()
-	def _set(self, value):
+	def _set(self, value) -> None:
 		temp = self.isUpdating(False) # to prevent callbacks from being called early and twice
 		super()._set(value)
 		self.isUpdating(temp)

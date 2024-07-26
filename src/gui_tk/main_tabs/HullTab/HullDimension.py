@@ -18,15 +18,15 @@ class DimensionData(Component):
 		self.draftLabel 		= wm.create_label(self.base, text=app.lang('draft'))
 		self.unitWidgets = []
 
-		self.meterLabel 		= wm.create_label(self.base, dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets, text=app.lang('meter'))
-		self.lengthMeterEntry 	= wm.create_entry(self.base, dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets)
-		self.beamMeterEntry 	= wm.create_entry(self.base, dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets)
-		self.draftMeterEntry 	= wm.create_entry(self.base, dataType=app.enums.Unit.METRIC, widgetList=self.unitWidgets)
+		self.meterLabel 		= wm.create_label(self.base, dataType=[app.enums.Unit.METRIC], widgetList=self.unitWidgets, text=app.lang('meter'))
+		self.lengthMeterEntry 	= wm.create_entry(self.base, dataType=[app.enums.Unit.METRIC], widgetList=self.unitWidgets)
+		self.beamMeterEntry 	= wm.create_entry(self.base, dataType=[app.enums.Unit.METRIC], widgetList=self.unitWidgets)
+		self.draftMeterEntry 	= wm.create_entry(self.base, dataType=[app.enums.Unit.METRIC], widgetList=self.unitWidgets)
 
-		self.feetLabel 			= wm.create_label(self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets, text=app.lang('feet'))
-		self.lengthFeetEntry 	= wm.create_entry(self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets)
-		self.beamFeetEntry 		= wm.create_entry(self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets)
-		self.draftFeetEntry 	= wm.create_entry(self.base, dataType=app.enums.Unit.IMPERIAL, widgetList=self.unitWidgets)
+		self.feetLabel 			= wm.create_label(self.base, dataType=[app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets, text=app.lang('feet'))
+		self.lengthFeetEntry 	= wm.create_entry(self.base, dataType=[app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets)
+		self.beamFeetEntry 		= wm.create_entry(self.base, dataType=[app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets)
+		self.draftFeetEntry 	= wm.create_entry(self.base, dataType=[app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets)
 		
 		self.titleLabel.grid		(column=0, row=0, columnspan=2)
 		self.lengthLabel.grid		(column=1, row=1)

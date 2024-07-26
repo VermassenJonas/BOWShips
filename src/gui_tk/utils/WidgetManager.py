@@ -5,6 +5,7 @@ from os import stat
 from tkinter import DISABLED, Misc, font
 import tkinter as tk
 import tkinter.ttk as ttk
+from typing import Any
 from logic.Enums import Unit
 from logic.Property import Property
 from logic.Singleton import Singleton
@@ -27,18 +28,18 @@ class WidgetManager(metaclass=Singleton):
 		widget.config(state=DISABLED)
 		return widget
 
-	def create_entry(self, parent : tk.Misc, dataType = None, widgetList = None) :
+	def create_entry(self, parent : tk.Misc, dataType: list[Any] = [] , widgetList = None) :
 		widget = CustomEntry(parent, dataType)
 		self._standardizeAlignment(widget)
 		self._addWidget(widget, widgetList=widgetList)
 		return widget
 
-	def create_numeric_entry(self, parent : tk.Misc, dataType = None, widgetList = None) :
+	def create_numeric_entry(self, parent : tk.Misc, dataType : list[Any]= [], widgetList = None) :
 		widget = self.create_entry(parent, dataType=dataType, widgetList=widgetList)
 		self.restrictEntryNumeric(widget)
 		return widget
 
-	def create_label(self, parent : tk.Misc, text, dataType=None, widgetList = None) :
+	def create_label(self, parent : tk.Misc, text, dataType: list[Any] =[], widgetList = None) :
 		widget = CustomLabel(parent, text=text, dataType=dataType)
 		self._standardizeAlignment(widget)
 		self._addWidget(widget, widgetList)
@@ -152,13 +153,14 @@ class WidgetManager(metaclass=Singleton):
 	#endregion
 	#region interactivity
 	def switchUnits(self, widgets : list[CustomWidget],  unit : Unit):
+		antiUnit = Unit.IMPERIAL if unit == Unit.METRIC else Unit.METRIC
 		for widget in widgets:
-			if widget.dataType == unit:
+			if unit in widget.dataType:
 				widget.grid()
-			elif widget.dataType is None:
-				pass
-			else:
+			elif antiUnit in widget.dataType:
 				widget.grid_remove()
+			else:
+				pass
 
 
 	def hideWidgetsGrid(self, *widgets : tk.Widget) :

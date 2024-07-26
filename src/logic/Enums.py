@@ -15,12 +15,12 @@ class Unit(StrEnum):
 	METRIC 	= auto()
 	IMPERIAL	= auto()
 class Belt(StrEnum):
-	MAIN 		= auto()
-	UPPER 		= auto()
-	EXTENDED 	= auto()
-	TORPEDO 	= auto()
-	MACHINERY 	= auto()
-	MAGAZINES 	= auto()
+	MAIN_BELT 		= auto()
+	UPPER_BELT 		= auto()
+	EXTENDED_BELT 	= auto()
+	TORPEDO_BELT 	= auto()
+	MACHINERY_BELT 	= auto()
+	MAGAZINES_BELT 	= auto()
 
 
 
