@@ -83,7 +83,14 @@ class ArmourBelt(Component):
 									lenFt=beltLenFt,
 									heiM=beltHeightM,
 									HeiFt=beltHeightFt)
-		#TODO: rigging
+		beltData = self.app.ship.armourBelts[belt]
+		wm.bindEntryTwoWay(beltThickMM, beltData.thickness)
+		wm.bindEntryTwoWay(beltThickIN, beltData.thicknessIn)
+		wm.bindEntryTwoWay(beltLenM, beltData.length)
+		wm.bindEntryTwoWay(beltLenFt, beltData.lengthFt)
+		wm.bindEntryTwoWay(beltHeightM, beltData.height)
+		wm.bindEntryTwoWay(beltHeightFt, beltData.heightFt)
+
 		
 if __name__ == "__main__":
 	root = wm.create_root()

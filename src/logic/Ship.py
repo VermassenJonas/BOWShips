@@ -1,7 +1,9 @@
 from enum import Enum
 from functools import partial
 from tkinter.messagebox import QUESTION
+from typing import Dict
 from logic import shipSpeedCalc
+from logic.ArmourBelt import ArmourBelt
 from logic.Property import Property, AliasProperty, CalculatedProperty
 from logic.calculations.EngineEfficiency import EngineEfficiency
 import logic.constants as constants
@@ -65,6 +67,10 @@ class Ship:
 								
 		self.engineWeight = CalculatedProperty(self.calcEngineWeight, self.engineEfficiency, 
 								self.maxPowerHP, backProcessor=roundOutBound)
+		self.armourBelts : Dict[enums.Belt, ArmourBelt]=  {}
+		for belt in enums.Belt:
+			self.armourBelts[belt] = ArmourBelt(belt)
+		
 
 #region Simple Calcs
 	def calcBlockVolume(self):

@@ -1,11 +1,11 @@
 from logic.Property import AliasProperty, Property
-from logic.utils import ftToM, init_num, mToFt, roundOutBound, validateDecimal
+from logic.utils import ftToM, inToMm, init_num, mToFt, mmToIn, roundOutBound, validateDecimal
 from logic.Enums import Belt
 
 
 class ArmourBelt:
-	def __init__(self) -> None:
-		self.name = Belt
+	def __init__(self, belt : Belt) -> None:
+		self.name = belt
 		self.length			= Property		(init_num(0),
 											processor=validateDecimal,
 											backProcessor=roundOutBound)
@@ -20,5 +20,5 @@ class ArmourBelt:
 											processor=validateDecimal, backProcessor=roundOutBound)
 		self.heightFt 		= AliasProperty	(self.height, downTransfo=ftToM, upTransfo=mToFt,
 											processor=validateDecimal, backProcessor=roundOutBound)
-		self.thicknessIn	= AliasProperty	(self.thickness, downTransfo=ftToM, upTransfo=mToFt,
+		self.thicknessIn	= AliasProperty	(self.thickness, downTransfo=inToMm, upTransfo=mmToIn,
 											processor=validateDecimal, backProcessor=roundOutBound)

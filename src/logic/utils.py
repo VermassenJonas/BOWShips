@@ -10,6 +10,10 @@ def ftToM(newValue : Decimal, *args, **kwds) -> Decimal:
 	return rem_zeros(newValue * constants.ftTometer)
 def mToFt(newValue : Decimal, *args, **kwds) -> Decimal:
 	return rem_zeros(newValue / constants.ftTometer)
+def inToMm(value) :
+	return rem_zeros(value * constants.inToMm)
+def mmToIn(value) :
+	return rem_zeros(value / constants.inToMm)
 
 def rem_zeros( d : Decimal) -> Decimal:
 	return d.quantize(Decimal(1)) if d == d.to_integral() else d.normalize()

@@ -9,3 +9,5 @@ roundTo = '0.00001'
 kWtoHP = Decimal('0.7457')
 
 tonToLongTon = Decimal('0.9842065')
+
+inToMm = Decimal('25.4')
