@@ -1,5 +1,3 @@
-from decimal import Decimal, getcontext
-import decimal
 from enum import Enum
 from functools import partial
 from tkinter.messagebox import QUESTION
@@ -8,89 +6,88 @@ from logic.Property import DependentAliasProperty, Property, AliasProperty, Calc
 from logic.calculations.EngineEfficiency import EngineEfficiency
 import logic.constants as constants
 import logic.Enums as enums
+from logic.utils import ftToM, init_num, mToFt, readEnum, rem_zeros, roundOutBound, validateDecimal
+
 class Ship:
 	def __init__(self) -> None:
-		getcontext().prec = constants.precision
 
 		self.name 			= Property('')
 		self.country		= Property('')
 		self.type 			= Property('')
 
-		self.buildYear 		= Property(Decimal(1920))
-		self.engineBuilt 	= Property(Decimal(1920))
-		self.engineBuilt	.addProcessor(self._validateDecimal)
-		self.engineBuilt	.addBackProcessor(self.roundOutBound)
+		self.buildYear 		= Property(init_num(1920))
+		self.buildYear 		.addProcessor(validateDecimal)
+		self.buildYear 		.addBackProcessor(roundOutBound)
+		self.engineBuilt 	= Property(init_num(1920))
+		self.engineBuilt	.addProcessor(validateDecimal)
+		self.engineBuilt	.addBackProcessor(roundOutBound)
 
-		self.length			= Property(Decimal(180))
-		self.length			.addProcessor(self._validateDecimal)
-		self.length			.addBackProcessor(self.roundOutBound)
+		self.length			= Property(init_num(180))
+		self.length			.addProcessor(validateDecimal)
+		self.length			.addBackProcessor(roundOutBound)
 		self.lengthft 		= AliasProperty(self.length)
-		self.lengthft		.addProcessor(self._validateDecimal, self.ftToM)
-		self.lengthft		.addBackProcessor(self.mToFt, self.roundOutBound)
+		self.lengthft		.addProcessor(validateDecimal, ftToM)
+		self.lengthft		.addBackProcessor(mToFt, roundOutBound)
 
-		self.beam			= Property(Decimal(20))
-		self.beam			.addProcessor(self._validateDecimal)
-		self.beam			.addBackProcessor(self.roundOutBound)
+		self.beam			= Property(init_num(20))
+		self.beam			.addProcessor(validateDecimal)
+		self.beam			.addBackProcessor(roundOutBound)
 		self.beamft			= AliasProperty(self.beam)
-		self.beamft			.addProcessor(self._validateDecimal,self.ftToM)
-		self.beamft			.addBackProcessor(self.mToFt, self.roundOutBound)
+		self.beamft			.addProcessor(validateDecimal,ftToM)
+		self.beamft			.addBackProcessor(mToFt, roundOutBound)
 
-		self.draft 			= Property(Decimal(6))
-		self.draft			.addProcessor(self._validateDecimal)
-		self.draft			.addBackProcessor(self.roundOutBound)
+		self.draft 			= Property(init_num(6))
+		self.draft			.addProcessor(validateDecimal)
+		self.draft			.addBackProcessor(roundOutBound)
 		self.draftft 		= AliasProperty(self.draft)
-		self.draftft		.addProcessor(self._validateDecimal,self.ftToM)
-		self.draftft		.addBackProcessor(self.mToFt, self.roundOutBound)
+		self.draftft		.addProcessor(validateDecimal,ftToM)
+		self.draftft		.addBackProcessor(mToFt, roundOutBound)
 
 		self.blockVolume 	= CalculatedProperty(self.calcBlockVolume, self.length, self.beam, self.draft)
-		self.blockVolume	.addBackProcessor(self.roundOutBound)
+		self.blockVolume	.addBackProcessor(roundOutBound)
 
-		self.displacement 	= Property(Decimal(10000))
-		self.displacement	.addProcessor(self._validateDecimal)
-		self.displacement	.addBackProcessor(self.roundOutBound)
+		self.displacement 	= Property(init_num(10000))
+		self.displacement	.addProcessor(validateDecimal)
+		self.displacement	.addBackProcessor(roundOutBound)
 
 		self.blockCoeff 	= DependentAliasProperty(self.displacement, self.blockVolume)
-		self.blockCoeff		.addProcessor(self._validateDecimal,self.blockToDisp)
-		self.blockCoeff		.addBackProcessor(self.dispToBlock, self.roundOutBound)
+		self.blockCoeff		.addProcessor(validateDecimal,self.blockToDisp)
+		self.blockCoeff		.addBackProcessor(self.dispToBlock,roundOutBound)
 
 		self.fuelType = Property(enums.Fuel.COAL)
-		self.fuelType.addProcessor(partial(self.readEnum, enums.Fuel))
+		self.fuelType.addProcessor(partial(readEnum, enums.Fuel))
 		self.engineType = Property(enums.Engine.SIMPLE)
-		self.engineType.addProcessor(partial(self.readEnum, enums.Engine))
-		self.coalPercent = Property(Decimal('100'))
-		self.coalPercent.addProcessor(self._validateDecimal)
-		self.coalPercent.addBackProcessor(self.roundOutBound)
+		self.engineType.addProcessor(partial(readEnum, enums.Engine))
+		self.coalPercent = Property(init_num(100))
+		self.coalPercent.addProcessor(validateDecimal)
+		self.coalPercent.addBackProcessor(roundOutBound)
 		
-		self.maxSpeed = Property(Decimal(25))
-		self.maxSpeed.addProcessor(self._validateDecimal)
-		self.maxSpeed.addBackProcessor(self.roundOutBound)
+		self.maxSpeed = Property(init_num(25))
+		self.maxSpeed.addProcessor(validateDecimal)
+		self.maxSpeed.addBackProcessor(roundOutBound)
 
 		self.maxPowerkW = CalculatedProperty(partial(self.calclKWPower, self), self.displacement, self.blockCoeff, self.maxSpeed) 
-		self.maxPowerkW.addProcessor(self._validateDecimal)
-		self.maxPowerkW.addBackProcessor(self.roundOutBound)
+		self.maxPowerkW.addProcessor(validateDecimal)
+		self.maxPowerkW.addBackProcessor(roundOutBound)
 		self.maxPowerHP = CalculatedProperty(partial(self.kwToHP, self.maxPowerkW) , self.maxPowerkW)
-		self.maxPowerHP.addBackProcessor(self.roundOutBound)
+		self.maxPowerHP.addBackProcessor(roundOutBound)
 
-		self.engineEfficiency= CalculatedProperty[Decimal](self.calcEngineEfficiency, self.engineBuilt, self.fuelType, self.engineType, self.coalPercent)
-		self.engineEfficiency.addBackProcessor(self.roundOutBound) 
-		self.engineWeight 		= CalculatedProperty[Decimal](self.calcEngineWeight, self.engineEfficiency, self.maxPowerHP)
-		self.engineWeight.addBackProcessor(self.roundOutBound)
+		self.engineEfficiency= CalculatedProperty(self.calcEngineEfficiency, self.engineBuilt, self.fuelType, self.engineType, self.coalPercent)
+		self.engineEfficiency.addBackProcessor(roundOutBound) 
+		self.engineWeight 		= CalculatedProperty(self.calcEngineWeight, self.engineEfficiency, self.maxPowerHP)
+		self.engineWeight.addBackProcessor(roundOutBound)
 
 #region Simple Calcs
-	def ftToM(self,newValue : Decimal, *args, **kwds) -> Decimal:
-		return self._rem_zeros(newValue * constants.ftTometer)
-	def mToFt(self,newValue : Decimal, *args, **kwds) -> Decimal:
-		return self._rem_zeros(newValue / constants.ftTometer)
-	def calcBlockVolume(self) -> Decimal:
+	def calcBlockVolume(self):
 
-		return self._rem_zeros(self.length()*self.beam()*self.draft())
-	def dispToBlock(self, newValue : Decimal, *args, **kwds) -> Decimal:
-		return self._rem_zeros(newValue / self.blockVolume())
-	def blockToDisp(self, newValue : Decimal, *args, **kwds) -> Decimal:
-		return self._rem_zeros(newValue * self.blockVolume())	
-	def kwToHP(self, kwPower : Property[Decimal]) -> Decimal:
+		return rem_zeros(self.length()*self.beam()*self.draft())
+	def dispToBlock(self, newValue , *args, **kwds):
+		return rem_zeros(newValue / self.blockVolume())
+	def blockToDisp(self, newValue, *args, **kwds):
+		return rem_zeros(newValue * self.blockVolume())	
+	def kwToHP(self, kwPower : Property):
 		return kwPower()*constants.kWtoHP
-	def calcEngineWeight(self, *args, **kwds) -> Decimal:
+	def calcEngineWeight(self, *args, **kwds):
 		return self.maxPowerHP() / self.engineEfficiency()
 #endregion
 #region Outer Calls
@@ -98,39 +95,15 @@ class Ship:
 		try:
 			return shipSpeedCalc.main(self)
 		except:
-			return Decimal(0)
+			return init_num(0)
 	def calcEngineEfficiency(self, *args, **kwds):
 		ee = EngineEfficiency(self)
 		result = ee.calcEngineEfficiency()
 		if result:
 			return result
 		else:
-			return Decimal(5)
+			return init_num(5)
 #endregion
 #region cleaning
-	def _validateDecimal(self, newValue, *args, **kwds):
-		try:
-			result = Decimal(newValue)
-			return self._rem_zeros(result) 
-		except:
-			return None	
-		#TODO: write actual validation logic; improper try usage
-		
-	def _rem_zeros(self, d : Decimal) -> Decimal:
-		return d.quantize(Decimal(1)) if d == d.to_integral() else d.normalize()
-
-	def readEnum(self, enum, newValue : str, *args, **kwds):
-		if newValue:
-			return enum[newValue.upper()]
-		else:
-			return None 
-
-	def roundOutBound(self, val: Decimal, *args, **kwds):
-		if val:
-			return self._rem_zeros(val.quantize(Decimal(constants.roundTo)))
-		else:
-			return Decimal(0)
-	def verifyUpdate(self, newvalue, *args, **kwds):
-		print(f'update: {newvalue}')
-		return newvalue
+	
 #endregion

@@ -33,6 +33,11 @@ class WidgetManager(metaclass=Singleton):
 		self._addWidget(widget, widgetList=widgetList)
 		return widget
 
+	def create_numeric_entry(self, parent : tk.Misc, dataType = None, widgetList = None) :
+		widget = self.create_entry(parent, dataType=dataType, widgetList=widgetList)
+		self.restrictEntryNumeric(widget)
+		return widget
+
 	def create_label(self, parent : tk.Misc, text, dataType=None, widgetList = None) :
 		widget = CustomLabel(parent, text=text, dataType=dataType)
 		self._standardizeAlignment(widget)

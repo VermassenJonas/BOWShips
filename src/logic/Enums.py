@@ -1,4 +1,5 @@
 from enum import StrEnum, auto
+from tkinter import EXTENDED
 
 
 class Engine(StrEnum):
@@ -13,9 +14,14 @@ class Fuel(StrEnum):
 class Unit(StrEnum):
 	METRIC 	= auto()
 	IMPERIAL	= auto()
-#class Magnitude(StrEnum):
-#	METER		= auto()
-#	MM 		= auto()
+class Belt(StrEnum):
+	MAIN 		= auto()
+	UPPER 		= auto()
+	EXTENDED 	= auto()
+	TORPEDO 	= auto()
+	MACHINERY 	= auto()
+	MAGAZINES 	= auto()
+
 
 
 
