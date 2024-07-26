@@ -2,7 +2,7 @@ from enum import Enum
 from functools import partial
 from tkinter.messagebox import QUESTION
 from logic import shipSpeedCalc
-from logic.Property import DependentAliasProperty, Property, AliasProperty, CalculatedProperty
+from logic.Property import Property, AliasProperty, CalculatedProperty
 from logic.calculations.EngineEfficiency import EngineEfficiency
 import logic.constants as constants
 import logic.Enums as enums
@@ -15,72 +15,62 @@ class Ship:
 		self.country		= Property('')
 		self.type 			= Property('')
 
-		self.buildYear 		= Property(init_num(1920))
-		self.buildYear 		.addProcessor(validateDecimal)
-		self.buildYear 		.addBackProcessor(roundOutBound)
-		self.engineBuilt 	= Property(init_num(1920))
-		self.engineBuilt	.addProcessor(validateDecimal)
-		self.engineBuilt	.addBackProcessor(roundOutBound)
+		self.buildYear 		= Property(init_num(1920),
+								processor=validateDecimal, backProcessor=roundOutBound)
+		self.engineBuilt 	= Property(init_num(1920),
+								processor=validateDecimal,backProcessor=roundOutBound)
 
-		self.length			= Property(init_num(180))
-		self.length			.addProcessor(validateDecimal)
-		self.length			.addBackProcessor(roundOutBound)
-		self.lengthft 		= AliasProperty(self.length)
-		self.lengthft		.addProcessor(validateDecimal, ftToM)
-		self.lengthft		.addBackProcessor(mToFt, roundOutBound)
+		self.length			= Property(init_num(180),
+								processor=validateDecimal,backProcessor=roundOutBound)
+		self.lengthft 		= AliasProperty(self.length, downTransfo=ftToM, upTransfo=mToFt,
+								processor=validateDecimal, backProcessor=roundOutBound)
 
-		self.beam			= Property(init_num(20))
-		self.beam			.addProcessor(validateDecimal)
-		self.beam			.addBackProcessor(roundOutBound)
-		self.beamft			= AliasProperty(self.beam)
-		self.beamft			.addProcessor(validateDecimal,ftToM)
-		self.beamft			.addBackProcessor(mToFt, roundOutBound)
+		self.beam			= Property(init_num(20),
+								processor=validateDecimal, backProcessor=roundOutBound)
+		self.beamft			= AliasProperty(self.beam, downTransfo=ftToM, upTransfo=mToFt,
+								processor=validateDecimal, backProcessor=roundOutBound)
 
-		self.draft 			= Property(init_num(6))
-		self.draft			.addProcessor(validateDecimal)
-		self.draft			.addBackProcessor(roundOutBound)
-		self.draftft 		= AliasProperty(self.draft)
-		self.draftft		.addProcessor(validateDecimal,ftToM)
-		self.draftft		.addBackProcessor(mToFt, roundOutBound)
+		self.draft 			= Property(init_num(6),
+								processor=validateDecimal,backProcessor=roundOutBound)
 
-		self.blockVolume 	= CalculatedProperty(self.calcBlockVolume, self.length, self.beam, self.draft)
-		self.blockVolume	.addBackProcessor(roundOutBound)
+		self.draftft 		= AliasProperty(self.draft, downTransfo=ftToM, upTransfo=mToFt,
+								processor=validateDecimal,backProcessor=roundOutBound)
 
-		self.displacement 	= Property(init_num(10000))
-		self.displacement	.addProcessor(validateDecimal)
-		self.displacement	.addBackProcessor(roundOutBound)
+		self.blockVolume 	= CalculatedProperty(self.calcBlockVolume, self.length, self.beam, self.draft,
+								backProcessor=roundOutBound)
 
-		self.blockCoeff 	= DependentAliasProperty(self.displacement, self.blockVolume)
-		self.blockCoeff		.addProcessor(validateDecimal,self.blockToDisp)
-		self.blockCoeff		.addBackProcessor(self.dispToBlock,roundOutBound)
+		self.displacement 	= Property(init_num(10000),
+								processor=validateDecimal,backProcessor=roundOutBound)
 
-		self.fuelType = Property(enums.Fuel.COAL)
-		self.fuelType.addProcessor(partial(readEnum, enums.Fuel))
-		self.engineType = Property(enums.Engine.SIMPLE)
-		self.engineType.addProcessor(partial(readEnum, enums.Engine))
-		self.coalPercent = Property(init_num(100))
-		self.coalPercent.addProcessor(validateDecimal)
-		self.coalPercent.addBackProcessor(roundOutBound)
+		self.blockCoeff 	= AliasProperty(self.displacement, downTransfo=self.blockToDisp, upTransfo=self.dispToBlock,
+								processor=validateDecimal,backProcessor=roundOutBound, dependency=self.blockVolume)
+
+		self.fuelType = Property(enums.Fuel.COAL,
+							processor=partial(readEnum, enums.Fuel))
+		self.engineType = Property(enums.Engine.SIMPLE,
+							processor=partial(readEnum, enums.Engine))
+		self.coalPercent = Property(init_num(100),
+								processor=validateDecimal,backProcessor=roundOutBound)
 		
-		self.maxSpeed = Property(init_num(25))
-		self.maxSpeed.addProcessor(validateDecimal)
-		self.maxSpeed.addBackProcessor(roundOutBound)
+		self.maxSpeed = Property(init_num(25),
+								processor=validateDecimal,backProcessor=roundOutBound)
 
-		self.maxPowerkW = CalculatedProperty(partial(self.calclKWPower, self), self.displacement, self.blockCoeff, self.maxSpeed) 
-		self.maxPowerkW.addProcessor(validateDecimal)
-		self.maxPowerkW.addBackProcessor(roundOutBound)
-		self.maxPowerHP = CalculatedProperty(partial(self.kwToHP, self.maxPowerkW) , self.maxPowerkW)
-		self.maxPowerHP.addBackProcessor(roundOutBound)
+		self.maxPowerkW = CalculatedProperty(partial(self.calclKWPower, self), self.displacement,
+								self.blockCoeff, self.maxSpeed,backProcessor=roundOutBound)
+		self.maxPowerHP = CalculatedProperty(partial(self.kwToHP, self.maxPowerkW), 
+								self.maxPowerkW,backProcessor=roundOutBound)
 
-		self.engineEfficiency= CalculatedProperty(self.calcEngineEfficiency, self.engineBuilt, self.fuelType, self.engineType, self.coalPercent)
-		self.engineEfficiency.addBackProcessor(roundOutBound) 
-		self.engineWeight 		= CalculatedProperty(self.calcEngineWeight, self.engineEfficiency, self.maxPowerHP)
-		self.engineWeight.addBackProcessor(roundOutBound)
+		self.engineEfficiency= CalculatedProperty(self.calcEngineEfficiency, self.engineBuilt, 
+								self.fuelType, self.engineType, self.coalPercent, backProcessor=roundOutBound)
+								
+		self.engineWeight = CalculatedProperty(self.calcEngineWeight, self.engineEfficiency, 
+								self.maxPowerHP, backProcessor=roundOutBound)
 
 #region Simple Calcs
 	def calcBlockVolume(self):
-
-		return rem_zeros(self.length()*self.beam()*self.draft())
+		length, beam, draft = self.length(), self.beam(), self.draft()	 
+		if not None in (length, beam, draft):
+			return rem_zeros(length*beam*draft)#ignore
 	def dispToBlock(self, newValue , *args, **kwds):
 		return rem_zeros(newValue / self.blockVolume())
 	def blockToDisp(self, newValue, *args, **kwds):

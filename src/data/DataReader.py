@@ -33,7 +33,7 @@ class DataReader(metaclass=Singleton):
 		self._data = {}
 
 dr = DataReader()
-def readSingleDataColumn(column, index : Decimal, csv_file: str):
+def readSingleDataColumn(column, index, csv_file: str):
 	data =dr.readCsv(csv_file)
 	for i in range(len(data)-1):
 		if(data[i][0] <= index < data[i+1][0]):

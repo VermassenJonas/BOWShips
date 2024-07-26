@@ -6,26 +6,19 @@ from logic.Enums import Belt
 class ArmourBelt:
 	def __init__(self) -> None:
 		self.name = Belt
-		self.length			= Property		(init_num(0))
-		self.height			= Property		(init_num(0))
-		self.thickness		= Property		(init_num(0))
+		self.length			= Property		(init_num(0),
+											processor=validateDecimal,
+											backProcessor=roundOutBound)
+		self.height			= Property		(init_num(0),
+											processor=validateDecimal,
+											backProcessor=roundOutBound)
+		self.thickness		= Property		(init_num(0),
+											processor=validateDecimal,
+											backProcessor=roundOutBound)
 
-		self.lengthFt 		= AliasProperty	(self.length)
-		self.heightFt 		= AliasProperty	(self.height)
-		self.thicknessIn	= AliasProperty	(self.thickness)
-
-		self.length			.addProcessor(validateDecimal)
-		self.height			.addProcessor(validateDecimal)
-		self.thickness		.addProcessor(validateDecimal)
-
-		self.lengthFt 		.addProcessor(validateDecimal, ftToM)
-		self.heightFt 		.addProcessor(validateDecimal, ftToM)
-		self.thicknessIn	.addProcessor(validateDecimal, ftToM)
-
-		self.length			.addBackProcessor(roundOutBound)	
-		self.height			.addBackProcessor(roundOutBound)	
-		self.thickness		.addBackProcessor(roundOutBound)
-			
-		self.lengthFt 		.addBackProcessor(mToFt, roundOutBound)	
-		self.heightFt 		.addBackProcessor(mToFt, roundOutBound)	
-		self.thicknessIn	.addBackProcessor(mToFt, roundOutBound)	
+		self.lengthFt 		= AliasProperty	(self.length, downTransfo=ftToM, upTransfo=mToFt,
+											processor=validateDecimal, backProcessor=roundOutBound)
+		self.heightFt 		= AliasProperty	(self.height, downTransfo=ftToM, upTransfo=mToFt,
+											processor=validateDecimal, backProcessor=roundOutBound)
+		self.thicknessIn	= AliasProperty	(self.thickness, downTransfo=ftToM, upTransfo=mToFt,
+											processor=validateDecimal, backProcessor=roundOutBound)

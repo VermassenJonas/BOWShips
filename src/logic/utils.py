@@ -19,7 +19,7 @@ def validateDecimal(newValue, *args, **kwds):
 		result = Decimal(newValue)
 		return rem_zeros(result) 
 	except:
-		return None	
+		return Decimal(0)	
 
 def readEnum(enum, newValue : str, *args, **kwds):
 	if newValue:
@@ -27,7 +27,7 @@ def readEnum(enum, newValue : str, *args, **kwds):
 	else:
 		return None 
 
-def roundOutBound(val: Decimal, *args, **kwds):
+def roundOutBound(val, *args, **kwds):
 	if val:
 		return rem_zeros(val.quantize(Decimal(constants.roundTo)))
 	else:

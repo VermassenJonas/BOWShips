@@ -1,5 +1,4 @@
 from functools import partial
-from tkinter import NO
 from typing import Any, Callable, Generic, TypeVar
 
 T = TypeVar('T')
@@ -13,6 +12,7 @@ class Property(Generic[T]):
 		self._backProcessors = []
 		self._value = value
 		self._isUpdating = True
+		self._set(value) #TODO: check if nmecessary
 	def isUpdating(self, bool : bool | None = None):
 		old = self._isUpdating
 		if bool is not None:
@@ -54,6 +54,20 @@ class Property(Generic[T]):
 			self._set(value)
 		return self._get()
 
+class AliasProperty(Property[T]):
+	def __init__(self, property : Property) -> None:
+		self._property = property
+		property.addCallback(self._notify)
+		super().__init__(property())
+	def _get(self) -> T:
+		self._value = self._property()
+		return super()._get()
+	def _set(self, value):
+		temp = self.isUpdating(False) # to prevent callbacks from being called early and twice
+		super()._set(value)
+		self.isUpdating(temp)
+		self._property(self._value)
+
 class CalculatedProperty(Property[T]):
 	def __init__(self, calcFun : Callable[[], T], *properties : Property[Any]) -> None:
 		super().__init__(calcFun())
@@ -71,35 +85,26 @@ class CalculatedProperty(Property[T]):
 		return super()._get()
 	def _set(self, value) -> None:
 		pass
-
-
-class AliasProperty(Property[T]):
-	def __init__(self, property : Property, forward : Callable, backward : Callable, dependency : CalculatedProperty | None = None) -> None:
-		self._property = property
-		self._forward = forward
-		self._backward = backward
-		property.addCallback(self._notify)
-		super().__init__(property())
-	def _get(self) -> T:
-		self._value = self._backward(self._property())
-		return super()._get()
-	def _set(self, value):
-		temp = self.isUpdating(False) # to prevent callbacks from being called early and twice
-		super()._set(value)
-		self.isUpdating(temp)
-		self._property(self._forward(self._value))
-
-
-#class DependentAliasProperty(AliasProperty[T]):
-#	def __init__(self, property: Property, dependency : CalculatedProperty) -> None:
-#		super().__init__(property)
+class DependentAliasProperty(AliasProperty[T]):
+	def __init__(self, property: Property, dependency : CalculatedProperty) -> None:
+		super().__init__(property)
+		dependency.addCallback(self._notify)
+		self._dependency = dependency
+	def addProcessor(self, *processors):
+		processors = [partial(proc, dependency=self._dependency) for proc in processors]
+		return super().addProcessor(*processors)
+	def addBackProcessor(self, *backProcessors):
+		backProcessors = [partial(proc, dependency=self._dependency) for proc in backProcessors]
+		return super().addBackProcessor(*backProcessors)
+#
+#lass DependentProperty(Property[T]):
+#	def __init__(self, value : T, dependency : CalculatedProperty) -> None:
+#		super().__init__(value)
 #		dependency.addCallback(self._notify)
 #		self._dependency = dependency
 #	def addProcessor(self, *processors):
-#		processors = [partial(proc, dependency=self._dependency) for proc in processors]
+#		processors = [partial(proc, dependency=self._dependency()) for proc in processors]
 #		return super().addProcessor(*processors)
 #	def addBackProcessor(self, *backProcessors):
-#		backProcessors = [partial(proc, dependency=self._dependency) for proc in backProcessors]
+#		backProcessors = [partial(proc, dependency=self._dependency()) for proc in backProcessors]
 #		return super().addBackProcessor(*backProcessors)
-
-

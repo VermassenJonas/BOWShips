@@ -21,7 +21,7 @@ class FuelType(Component):
 		self.doRigging()
 
 	def doRigging(self):
-		self.fuelVar.set( self.app.ship.fuelType().name)
+		self.fuelVar.set( str(self.app.ship.fuelType()))
 		self.confFuelField()
 		wm.bindVarTwoWays(self.fuelVar, self.app.ship.fuelType)
 		self.app.ship.fuelType.addCallback(self.confFuelField)
