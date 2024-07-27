@@ -16,7 +16,7 @@ class Unit(StrEnum):
 	IMPERIAL	= auto()
 class Belt(StrEnum):
 	MAIN_BELT 		= auto()
-	UPPER_BELT 		= auto()
+	UPPER_BELT 	= auto()
 	EXTENDED_BELT 	= auto()
 	TORPEDO_BELT 	= auto()
 	MACHINERY_BELT 	= auto()

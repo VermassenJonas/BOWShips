@@ -21,27 +21,27 @@ class ArmourBelt(Component):
 		self.titleLabel = wm.create_title_label(self.base, app.lang('belt_and_bulkheads'))
 		self.titleLabel.grid(row=0, columnspan=5)
 		self.unitWidgets = []
-		self.drawnBelts = [
-			app.enums.Belt.MAIN_BELT,
-			app.enums.Belt.UPPER_BELT,
-			app.enums.Belt.EXTENDED_BELT,
-			app.enums.Belt.TORPEDO_BELT,
+		self.hiddenBelts = [
+			app.enums.Belt.MACHINERY_BELT,
+			app.enums.Belt.MAGAZINES_BELT,
 		]
 		self.belts = {}
 		# top labels
 		self.drawTopLabels(1)
 		row = 2
 		# belts themselves
-		for belt in self.drawnBelts:
+		for belt in list(app.enums.Belt):
 			self.drawBelt(row, belt)
 			row += 1
+
+		self.selectUnit()
+		self.hideUnusedBelts()
 
 	def drawTopLabels(self, row):
 
 		self.unitCombo = wm.create_ComboBox(self.base, list(self.app.enums.Unit))
 		self.unitCombo.bind('<<ComboboxSelected>>', func=self.selectUnit)
 		self.unitCombo.set(self.app.enums.Unit.METRIC)
-		self.selectUnit()
 		
 		self.thicknessLabelMM = wm.create_label(self.base, self.app.lang('thickness_mm'), dataType=[self.app.enums.Unit.METRIC], widgetList=self.unitWidgets)
 		self.thicknessLabelIN = wm.create_label(self.base, self.app.lang('thickness_in'), dataType=[self.app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets)
@@ -54,35 +54,42 @@ class ArmourBelt(Component):
 		
 		self.unitCombo			.grid(column=0, row=row)
 
-		self.thicknessLabelMM	.grid(row=row, column=1)
-		self.thicknessLabelIN	.grid(row=row, column=2)
+		self.thicknessLabelMM	.grid(row=row, column=2)
+		self.thicknessLabelIN	.grid(row=row, column=3)
 
-		self.lengthLabelM		.grid(row=row, column=3)
-		self.lengthLabelFt		.grid(row=row, column=4)
+		self.lengthLabelM		.grid(row=row, column=4)
+		self.lengthLabelFt		.grid(row=row, column=5)
 
-		self.heightLabelM		.grid(row=row, column=5)
-		self.heightLabelFt		.grid(row=row, column=6)
+		self.heightLabelM		.grid(row=row, column=6)
+		self.heightLabelFt		.grid(row=row, column=7)
 
 
 	def drawBelt(self, row, belt : Enums.Belt):
-		beltLabel = wm.create_label(self.base, self.app.lang(str(belt)))
+		beltLabel = wm.create_label(self.base, text=self.app.lang(str(belt)),
+				dataType=[belt,self.app.enums.Unit.METRIC, self.app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets)
 
-		beltThickMM = wm.create_numeric_entry(self.base, 	dataType=[belt,self.app.enums.Unit.METRIC],  widgetList=self.unitWidgets)
-		beltThickIN = wm.create_numeric_entry(self.base, 	dataType=[belt,self.app.enums.Unit.IMPERIAL],widgetList=self.unitWidgets)
+		beltThickMM = wm.create_numeric_entry(self.base, 	
+				dataType=[belt,self.app.enums.Unit.METRIC],  widgetList=self.unitWidgets)
+		beltThickIN = wm.create_numeric_entry(self.base, 	
+				dataType=[belt,self.app.enums.Unit.IMPERIAL],widgetList=self.unitWidgets)
 
-		beltLenM = 	wm.create_numeric_entry(self.base, 	dataType=[belt,self.app.enums.Unit.METRIC],  widgetList=self.unitWidgets)
-		beltLenFt =	wm.create_numeric_entry(self.base, 	dataType=[belt,self.app.enums.Unit.IMPERIAL],widgetList=self.unitWidgets)
+		beltLenM = 	wm.create_numeric_entry(self.base, 	
+				dataType=[belt,self.app.enums.Unit.METRIC],  widgetList=self.unitWidgets)
+		beltLenFt =	wm.create_numeric_entry(self.base, 	
+				dataType=[belt,self.app.enums.Unit.IMPERIAL],widgetList=self.unitWidgets)
 
-		beltHeightM = 	wm.create_numeric_entry(self.base, 	dataType=[belt,self.app.enums.Unit.METRIC], widgetList=self.unitWidgets)
-		beltHeightFt = wm.create_numeric_entry(self.base, 	dataType=[belt,self.app.enums.Unit.IMPERIAL],widgetList=self.unitWidgets)
+		beltHeightM = 	wm.create_numeric_entry(self.base, 	
+				dataType=[belt,self.app.enums.Unit.METRIC], widgetList=self.unitWidgets)
+		beltHeightFt = wm.create_numeric_entry(self.base, 	
+				dataType=[belt,self.app.enums.Unit.IMPERIAL],widgetList=self.unitWidgets)
 	
 		beltLabel		.grid(row=row, column=0)
-		beltThickMM		.grid(row=row, column=1)
-		beltThickIN		.grid(row=row, column=2)
-		beltLenM		.grid(row=row, column=3)
-		beltLenFt		.grid(row=row, column=4)
-		beltHeightM		.grid(row=row, column=5)
-		beltHeightFt	.grid(row=row, column=6)
+		beltThickMM		.grid(row=row, column=2)
+		beltThickIN		.grid(row=row, column=3)
+		beltLenM		.grid(row=row, column=4)
+		beltLenFt		.grid(row=row, column=5)
+		beltHeightM		.grid(row=row, column=6)
+		beltHeightFt	.grid(row=row, column=7)
 
 		self.belts[belt] = SingleBelt(label=beltLabel,
 									thickMM=beltThickMM,
@@ -99,11 +106,18 @@ class ArmourBelt(Component):
 		wm.bindEntryTwoWay(beltHeightM, beltData.height)
 		wm.bindEntryTwoWay(beltHeightFt, beltData.heightFt)
 
+#region interactivity
 
 	def selectUnit(self, event = None):
 		unit = self.app.enums.Unit(self.unitCombo.get())
 		wm.switchUnits(self.unitWidgets, unit=unit)
-		
+		self.hideUnusedBelts()
+
+	def hideUnusedBelts(self):
+		for widget in self.unitWidgets:
+			if any(belt in self.hiddenBelts for belt in widget.dataType):
+				widget.grid_remove()
+#endregion 
 if __name__ == "__main__":
 	root = wm.create_root()
 	root.geometry("600x600")
