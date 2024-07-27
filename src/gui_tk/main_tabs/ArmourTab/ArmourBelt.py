@@ -13,6 +13,7 @@ class SingleBelt:
 		self.lenFt = lenFt
 		self.heiM = heiM
 		self.HeiFt = HeiFt
+
 class ArmourBelt(Component):
 	def __init__(self, parent, app)  -> None:
 		super().__init__(parent, app)
@@ -36,6 +37,12 @@ class ArmourBelt(Component):
 			row += 1
 
 	def drawTopLabels(self, row):
+
+		self.unitCombo = wm.create_ComboBox(self.base, list(self.app.enums.Unit))
+		self.unitCombo.bind('<<ComboboxSelected>>', func=self.selectUnit)
+		self.unitCombo.set(self.app.enums.Unit.METRIC)
+		self.selectUnit()
+		
 		self.thicknessLabelMM = wm.create_label(self.base, self.app.lang('thickness_mm'), dataType=[self.app.enums.Unit.METRIC], widgetList=self.unitWidgets)
 		self.thicknessLabelIN = wm.create_label(self.base, self.app.lang('thickness_in'), dataType=[self.app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets)
 		
@@ -45,6 +52,7 @@ class ArmourBelt(Component):
 		self.heightLabelM = wm.create_label(self.base, self.app.lang('height_m'), dataType=[self.app.enums.Unit.METRIC], widgetList=self.unitWidgets)
 		self.heightLabelFt = wm.create_label(self.base, self.app.lang('height_ft'), dataType=[self.app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets)
 		
+		self.unitCombo			.grid(column=0, row=row)
 
 		self.thicknessLabelMM	.grid(row=row, column=1)
 		self.thicknessLabelIN	.grid(row=row, column=2)
@@ -91,6 +99,10 @@ class ArmourBelt(Component):
 		wm.bindEntryTwoWay(beltHeightM, beltData.height)
 		wm.bindEntryTwoWay(beltHeightFt, beltData.heightFt)
 
+
+	def selectUnit(self, event = None):
+		unit = self.app.enums.Unit(self.unitCombo.get())
+		wm.switchUnits(self.unitWidgets, unit=unit)
 		
 if __name__ == "__main__":
 	root = wm.create_root()
