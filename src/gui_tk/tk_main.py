@@ -40,8 +40,7 @@ class ScreenRoot(Component):
 
 	
 
-def main(app ):
-	from gui_tk.MainContent import MainContent #deferred to prevent circular imports
+def main(app : App ) -> None:
 	root = wm.create_root()
 	def on_closing():
 		if messagebox.askokcancel("Quit", "Do you want to quit?"):

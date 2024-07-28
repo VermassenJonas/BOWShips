@@ -29,7 +29,7 @@ class WidgetManager(metaclass=Singleton):
 		return widget
 
 	def create_entry(self, parent : tk.Misc, dataType: list[Any] = [] , widgetList = None) :
-		widget = CustomEntry(parent, dataType)
+		widget = CustomEntry(parent, dataType, width = 15)
 		self._standardizeAlignment(widget)
 		self._addWidget(widget, widgetList=widgetList)
 		return widget
@@ -88,7 +88,7 @@ class WidgetManager(metaclass=Singleton):
 		return (var, buttons)
 
 	def create_ComboBox(self, parent, options):		
-		widget = ttk.Combobox(parent, values=options)
+		widget = ttk.Combobox(parent, values=options, width=15)
 		widget.config(state='readonly')
 		self._standardizeAlignment(widget)
 		self._addWidget(widget)
@@ -151,6 +151,7 @@ class WidgetManager(metaclass=Singleton):
 		self.bindVarRead(var, property)
 		self.bindVarCallback(var, property)
 	#endregion
+	
 	#region interactivity
 	def switchUnits(self, widgets : list[CustomWidget],  unit : Unit):
 		antiUnit = Unit.IMPERIAL if unit == Unit.METRIC else Unit.METRIC
@@ -179,4 +180,5 @@ class WidgetManager(metaclass=Singleton):
 	def _standardizeAlignment(self, widget : tk.Widget):
 		widget.grid = partial(widget.grid, sticky=tk.NW)
 	#endregion
+
 wm = WidgetManager()

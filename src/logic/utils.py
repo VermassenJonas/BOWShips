@@ -33,7 +33,7 @@ def readEnum(enum, newValue : str, *args, **kwds):
 
 def roundOutBound(val, *args, **kwds):
 	if val:
-		return rem_zeros(val.quantize(Decimal(constants.roundTo)))
+		return rem_zeros(val.quantize(constants.roundTo))
 	else:
 		return Decimal(0)
 def verifyUpdate(newvalue, *args, **kwds):
