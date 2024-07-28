@@ -53,7 +53,9 @@ class BeltArmour(Component):
 		self.heightLabelM = wm.create_label(self.base, self.app.lang('height_m'), dataType=[self.app.enums.Unit.METRIC], widgetList=self.unitWidgets)
 		self.heightLabelFt = wm.create_label(self.base, self.app.lang('height_ft'), dataType=[self.app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets)
 		
-		
+		self.weightLabel = wm.create_label(self.base, self.app.lang('weight_ton'),
+					dataType=[self.app.enums.Unit.IMPERIAL, self.app.enums.Unit.METRIC], widgetList=self.unitWidgets)
+
 		self.unitCombo			.grid(column=0, row=row)
 
 		self.thicknessLabelMM	.grid(row=row, column=2)
@@ -64,6 +66,7 @@ class BeltArmour(Component):
 
 		self.heightLabelM		.grid(row=row, column=6)
 		self.heightLabelFt		.grid(row=row, column=7)
+		self.weightLabel		.grid(row=row, column=8)
 
 
 	def drawBelt(self, row, belt : Enums.Belt):

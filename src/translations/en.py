@@ -47,7 +47,7 @@ class Lang:
 		'magazines_belt' 		: 'Belt over Magazines',
 		'machinery_belt' 		: 'Belt over Machinery',
 		'torpedo_belt'	 		: 'Torpedo Bulkheads',
-		'extended_belt'	 		: 'Armour over ship ends',
+		'extended_belt'	 		: 'Armour over ends',
 		'upper_belt'	 		: 'Upper Belt',
 		'main_belt'	 			: 'Main Belt',
 		'thickness_mm'	 		: 'Thickness (mm)',
@@ -57,6 +57,7 @@ class Lang:
 		'height_m'	 			: 'Height (m)',
 		'height_ft'	 			: 'Height (ft)',
 		'belt_and_bulkheads'	: 'Belts & Bulkheads',
+		'weight_ton'			: 'Weight (ton)',
 
 	} 
 	def __call__(self, name : str,*args: Any, **kwds: Any) -> Any:
