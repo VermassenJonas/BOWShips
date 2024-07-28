@@ -1,5 +1,4 @@
 from functools import partial
-from tkinter import NO
 from typing import Any, Callable, Generic, TypeVar
 
 T = TypeVar('T')
