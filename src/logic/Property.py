@@ -45,7 +45,7 @@ class Property(Generic[T]):
 	def _set(self,value) -> None:
 		for proc in self._processors:
 			old = self._value
-			new = proc(newValue=value, oldValue=old)
+			new = proc(value=value, oldValue=old)
 			value, old = new, value
 		if type(value) == type(self._value):
 			self._value = value
@@ -85,13 +85,11 @@ class AliasProperty(Property[T]):
 		self._upTransfo = upTransfo
 		self._dependency = dependency
 		if self._dependency is not None:
-			self._downTransfo = partial(downTransfo, dependency=dependency)
-			self._upTransfo = partial(upTransfo, dependency=dependency)
 			self._dependency.addCallback(self._notify)
 		property.addCallback(self._notify)
-		super().__init__(upTransfo(property()), processor=processor, backProcessor=backProcessor)
+		super().__init__(self._upTransfo(property.value), processor=processor, backProcessor=backProcessor)
 	def _get(self) -> T:
-		self._value = self._upTransfo(self._property())
+		self._value = self._upTransfo(self._property.value)
 		return super()._get()
 	def _set(self, value) -> None:
 		temp = self.isUpdating(False) # to prevent callbacks from being called early and twice

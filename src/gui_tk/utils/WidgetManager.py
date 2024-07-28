@@ -119,7 +119,7 @@ class WidgetManager(metaclass=Singleton):
 		fn = partial(property, val_fn=entry.get)
 		entry.bind('<Return>', fn)
 		entry.bind('<FocusOut>', fn)
-		entry.bind('KP_Enter', fn)
+		entry.bind('<KP_Enter>', fn)
 	
 	def _updateEntry( self, entry : tk.Entry, property):
 		var = property()

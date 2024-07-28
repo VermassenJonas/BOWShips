@@ -5,7 +5,7 @@ from gui_tk.utils.Component import Component
 from gui_tk.utils.WidgetManager import wm
 from logic import Enums
 class SingleBelt:
-	def __init__(self, label, thickMM, thickIN, lenM, lenFt, heiM, HeiFt) -> None:
+	def __init__(self, label, thickMM, thickIN, lenM, lenFt, heiM, HeiFt, weight) -> None:
 		self.label = label
 		self.thickMM = thickMM
 		self.thickIN = thickIN
@@ -13,8 +13,9 @@ class SingleBelt:
 		self.lenFt = lenFt
 		self.heiM = heiM
 		self.HeiFt = HeiFt
+		self.weight = weight
 
-class ArmourBelt(Component):
+class BeltArmour(Component):
 	def __init__(self, parent, app)  -> None:
 		super().__init__(parent, app)
 		self.base =  wm.create_frame(self.parent)
@@ -52,6 +53,7 @@ class ArmourBelt(Component):
 		self.heightLabelM = wm.create_label(self.base, self.app.lang('height_m'), dataType=[self.app.enums.Unit.METRIC], widgetList=self.unitWidgets)
 		self.heightLabelFt = wm.create_label(self.base, self.app.lang('height_ft'), dataType=[self.app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets)
 		
+		
 		self.unitCombo			.grid(column=0, row=row)
 
 		self.thicknessLabelMM	.grid(row=row, column=2)
@@ -82,7 +84,9 @@ class ArmourBelt(Component):
 				dataType=[belt,self.app.enums.Unit.METRIC], widgetList=self.unitWidgets)
 		beltHeightFt = wm.create_numeric_entry(self.base, 	
 				dataType=[belt,self.app.enums.Unit.IMPERIAL],widgetList=self.unitWidgets)
-	
+		beltWeight = wm.create_numeric_entry(self.base, widgetList=self.unitWidgets,
+				dataType=[belt, self.app.enums.Unit.METRIC, self.app.enums.Unit.IMPERIAL])
+
 		beltLabel		.grid(row=row, column=0)
 		beltThickMM		.grid(row=row, column=2)
 		beltThickIN		.grid(row=row, column=3)
@@ -90,6 +94,7 @@ class ArmourBelt(Component):
 		beltLenFt		.grid(row=row, column=5)
 		beltHeightM		.grid(row=row, column=6)
 		beltHeightFt	.grid(row=row, column=7)
+		beltWeight		.grid(row=row, column=8)
 
 		self.belts[belt] = SingleBelt(label=beltLabel,
 									thickMM=beltThickMM,
@@ -97,7 +102,8 @@ class ArmourBelt(Component):
 									lenM=beltLenM,
 									lenFt=beltLenFt,
 									heiM=beltHeightM,
-									HeiFt=beltHeightFt)
+									HeiFt=beltHeightFt,
+									weight = beltWeight)
 		beltData = self.app.ship.armourBelts[belt]
 		wm.bindEntryTwoWay(beltThickMM, beltData.thickness)
 		wm.bindEntryTwoWay(beltThickIN, beltData.thicknessIn)
@@ -105,6 +111,7 @@ class ArmourBelt(Component):
 		wm.bindEntryTwoWay(beltLenFt, beltData.lengthFt)
 		wm.bindEntryTwoWay(beltHeightM, beltData.height)
 		wm.bindEntryTwoWay(beltHeightFt, beltData.heightFt)
+		wm.bindEntryTwoWay(beltWeight, beltData.weight)
 
 #region interactivity
 
@@ -122,6 +129,6 @@ if __name__ == "__main__":
 	root = wm.create_root()
 	root.geometry("600x600")
 	app = App()
-	screen =ArmourBelt(root, app)
+	screen =BeltArmour(root, app)
 	screen.base.pack()
 	root.mainloop()

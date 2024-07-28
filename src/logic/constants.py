@@ -6,8 +6,11 @@ precision = 15
 
 roundTo = Decimal('0.00001')
 
-kWtoHP = Decimal('0.7457')
+HpPerKW = Decimal('0.7457') #in HP per kW
 
-tonToLongTon = Decimal('0.9842065')
 
-inToMm = Decimal('25.4')
+mmPerInch = Decimal('25.4') #in mm per inch
+
+armourDensity = Decimal('7.83') #in long tonnes per m^3
+
+mmPerM = Decimal('1000')

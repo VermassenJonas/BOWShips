@@ -76,13 +76,13 @@ class Ship:
 	def calcBlockVolume(self):
 		length, beam, draft = self.length(), self.beam(), self.draft()	 
 		if not None in (length, beam, draft):
-			return rem_zeros(length*beam*draft)#ignore
-	def dispToBlock(self, newValue , *args, **kwds):
-		return rem_zeros(newValue / self.blockVolume())
-	def blockToDisp(self, newValue, *args, **kwds):
-		return rem_zeros(newValue * self.blockVolume())	
+			return rem_zeros(length*beam*draft)
+	def dispToBlock(self, value , *args, **kwds):
+		return rem_zeros(value / self.blockVolume())
+	def blockToDisp(self, value, *args, **kwds):
+		return rem_zeros(value * self.blockVolume())	
 	def kwToHP(self, kwPower : Property):
-		return kwPower()*constants.kWtoHP
+		return kwPower()*constants.HpPerKW
 	def calcEngineWeight(self, *args, **kwds):
 		return self.maxPowerHP() / self.engineEfficiency()
 #endregion
