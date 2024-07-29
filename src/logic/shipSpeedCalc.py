@@ -2,7 +2,6 @@ from decimal import Decimal
 import math
 import csv
 
-import logic.Ship
 # MAIN AUTHOR: BOB
 
 ########## FRICTIONAL RESISTANCE (R_F) CALCS ###############
@@ -633,13 +632,13 @@ def HoltropMennenPowerCalculation(length, beam, T, displacementMass, v,
 def main(ship):
 	# manual data
 	name = "test"
-	length = float(ship.length())
-	beam = float(ship.beam())
-	draft = float(ship.draft())
-	displacement = float(ship.displacement())
+	length = float(ship.hull.length())
+	beam = float(ship.hull.beam())
+	draft = float(ship.hull.draft())
+	displacement = float(ship.hull.displacement())
 	numShafts = 2
 	numBlades = 4
-	speed = float(ship.maxSpeed()) / 1.944
+	speed = float(ship.engine.maxSpeed()) / 1.944
 	cM = 0.95
 	cWP = 0.7
 	dProp = 3.5
