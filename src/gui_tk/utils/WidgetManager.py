@@ -121,17 +121,18 @@ class WidgetManager(metaclass=Singleton):
 		entry.bind('<FocusOut>', fn)
 		entry.bind('<KP_Enter>', fn)
 	
-	def _updateEntry( self, entry : tk.Entry, property):
-		var = property()
-		state = entry.cget('state')		
-		entry.config(state=tk.NORMAL)	
-		entry.delete(0, tk.END)
-		entry.insert(0, var)
-		entry.config(state=state)
 
-	def bindEntryCallback(self, entry : tk.Entry , property : Property):		
-		property.addCallback(partial(self._updateEntry, entry, property))
-		self._updateEntry(entry, property)
+
+	def bindEntryCallback(self, entry : tk.Entry , property : Property):
+		def _updateEntry(value):
+			var = property.get()
+			state = entry.cget('state')		
+			entry.config(state=tk.NORMAL)	
+			entry.delete(0, tk.END)
+			entry.insert(0, var)
+			entry.config(state=state)		
+		property.addCallback(_updateEntry)
+		_updateEntry(property())
 
 	def bindVarRead(self, var : tk.StringVar, property: Property):
 		def _readVar(*args):
@@ -142,10 +143,10 @@ class WidgetManager(metaclass=Singleton):
 		var.trace_add('write', _readVar)
 
 	def bindVarCallback(self, var : tk.StringVar, property : Property):
-		def _updateVar(_var : tk.StringVar, prop : Property):
-			_var.set(str(prop()))
-		property.addCallback(partial(_updateVar, var, property))
-		_updateVar(var, property)
+		def _updateVar(value):
+			var.set(str(value))
+		property.addCallback(_updateVar)
+		_updateVar(property())
 
 	def bindVarTwoWays(self, var: tk.StringVar, property : Property):
 		self.bindVarRead(var, property)

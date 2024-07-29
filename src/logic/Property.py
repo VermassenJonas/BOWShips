@@ -6,11 +6,16 @@ U = TypeVar('U')
 
 
 class Property(Generic[T]):
-	def __init__(self, value : T, name : str,
+	_id = 0
+
+	def __init__(self, value : T, name : str | None = None,
 				processor : Callable[[Any], T] | None = None,
 				outProcessor : Callable[[T], Any]| None = None) -> None:
 		super().__init__()
 		self._value = value
+		if not name:
+			name = str(self._id)
+			self._id += 1 
 		self._name = name
 		self.callbacks : list[Callable[[T],Any]] = []
 		self.processor = processor
@@ -55,10 +60,11 @@ class PassDown(Generic[U, T]):
 
 
 class CalculatedProperty(Property[T]):
-	def __init__(self, value: T, name: str,
+	def __init__(self, value: T, 
 			dependencies: list[Property[Any]],
 			calcFun : Callable[[dict[str, Property[Any]]], T],
 			passDown : PassDown [Any, T]| None = None,
+			name: str | None = None,
 			processor: Callable[[Any], T] | None = None,
 			outProcessor: Callable[[T], Any] | None = None) -> None:
 		self._dependencies : dict[str, Property[Any]] = {}

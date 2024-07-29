@@ -1,15 +1,19 @@
 from decimal import Decimal
 
-from logic import constants
+from logic import  constants
+from logic.Property import Property
 
 def init_num(value):
 	return Decimal(str(value))
 
 
-def ftToM(value : Decimal, *args, **kwds) -> Decimal:
+def ftToM(value, dependencies: dict[str, Property[Decimal]]) -> Decimal:
 	return rem_zeros(value * constants.ftTometer)
-def mToFt(value : Decimal, *args, **kwds) -> Decimal:
+
+def mToFt(dependencies: dict[str, Property[Decimal]]) -> Decimal:
+	value : Decimal = list(dependencies.values())[0]()
 	return rem_zeros(value / constants.ftTometer)
+
 def inToMm(value) :
 	return rem_zeros(value * constants.mmPerInch)
 def mmToIn(value) :

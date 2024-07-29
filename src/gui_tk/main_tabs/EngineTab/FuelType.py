@@ -30,8 +30,9 @@ class FuelType(Component):
 		#self.bindVarRead(self.percVar, self.app.ship.coalPercent)
 
 
-	def confFuelField(self):
-		value = self.app.ship.engine.fuelType()
+	def confFuelField(self, value = None):
+		if value is None:
+			value = self.app.ship.engine.fuelType()
 		if value == enums.Fuel.COAL:
 			self.app.ship.engine.coalPercent('100')
 			self.percEntry.config(state=DISABLED)

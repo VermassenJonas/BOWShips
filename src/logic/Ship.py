@@ -4,7 +4,7 @@ from tkinter.messagebox import QUESTION
 from typing import Dict
 from logic import shipSpeedCalc
 from logic.components.ArmourBelt import ArmourBelt
-from logic.Property import Property, AliasProperty, CalculatedProperty
+from logic.Property import Property
 import logic.Enums as enums
 from logic.utils import ftToM, init_num, mToFt, readEnum, rem_zeros, roundOutBound, validateDecimal
 
@@ -19,9 +19,9 @@ class Ship:
 		self.type 			= Property('')
 
 		self.buildYear 		= Property(init_num(1920),
-								processor=validateDecimal, backProcessor=roundOutBound)
+								processor=validateDecimal, outProcessor=roundOutBound)
 		self.engineBuilt 	= Property(init_num(1920),
-								processor=validateDecimal,backProcessor=roundOutBound)
+								processor=validateDecimal, outProcessor=roundOutBound)
 
 		self.hull = Hull(self)
 		self.engine = Engine(self)
