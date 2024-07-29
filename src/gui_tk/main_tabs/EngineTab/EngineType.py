@@ -17,8 +17,8 @@ class EngineType(Component):
 		self.doRigging()
 
 	def doRigging(self):
-		self.engineVar.set( str(self.app.ship.engineType()))
-		wm.bindVarTwoWays(self.engineVar, self.app.ship.engineType)
+		self.engineVar.set( str(self.app.ship.engine.engineType()))
+		wm.bindVarTwoWays(self.engineVar, self.app.ship.engine.engineType)
 
 if __name__ == "__main__":
 	root = wm.create_root()

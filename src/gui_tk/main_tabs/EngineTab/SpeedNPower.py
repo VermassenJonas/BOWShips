@@ -38,8 +38,8 @@ class SpeedPower(Component):
 
 		self.powReqMaxHPEntry.config(state=DISABLED)
 
-		wm.bindEntryTwoWay(self.powReqMaxHPEntry, self.app.ship.maxPowerHP)
-		wm.bindEntryTwoWay(self.maxSpeedEntry, self.app.ship.maxSpeed)
+		wm.bindEntryTwoWay(self.powReqMaxHPEntry, self.app.ship.engine.maxPowerHP)
+		wm.bindEntryTwoWay(self.maxSpeedEntry, self.app.ship.engine.maxSpeed)
 
 if __name__ == "__main__":
 	root = wm.create_root()

@@ -21,24 +21,24 @@ class FuelType(Component):
 		self.doRigging()
 
 	def doRigging(self):
-		self.fuelVar.set( str(self.app.ship.fuelType()))
+		self.fuelVar.set( str(self.app.ship.engine.fuelType()))
 		self.confFuelField()
-		wm.bindVarTwoWays(self.fuelVar, self.app.ship.fuelType)
-		self.app.ship.fuelType.addCallback(self.confFuelField)
+		wm.bindVarTwoWays(self.fuelVar, self.app.ship.engine.fuelType)
+		self.app.ship.engine.fuelType.addCallback(self.confFuelField)
 
-		wm.bindEntryTwoWay(self.percEntry, self.app.ship.coalPercent)
+		wm.bindEntryTwoWay(self.percEntry, self.app.ship.engine.coalPercent)
 		#self.bindVarRead(self.percVar, self.app.ship.coalPercent)
 
 
 	def confFuelField(self):
-		value = self.app.ship.fuelType()
+		value = self.app.ship.engine.fuelType()
 		if value == enums.Fuel.COAL:
-			self.app.ship.coalPercent('100')
+			self.app.ship.engine.coalPercent('100')
 			self.percEntry.config(state=DISABLED)
 		elif value == enums.Fuel.MIXED:
 			self.percEntry.config(state=NORMAL)
 		elif value == enums.Fuel.OIL:			
-			self.app.ship.coalPercent('0')
+			self.app.ship.engine.coalPercent('0')
 			self.percEntry.config(state=DISABLED)
 		else:
 			print(f'panic in {self}')

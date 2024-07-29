@@ -2,8 +2,9 @@ from decimal import Decimal
 from data import DataReader
 from logic.Enums import Engine, Fuel 
 from logic.Interpolator import Interpolator
+from logic.Ship import Ship
 class EngineEfficiency:
-	def __init__(self, ship) -> None:
+	def __init__(self, ship : Ship) -> None:
 		from logic.Ship import Ship 
 		self._ship : Ship = ship
 	def calcEngineEfficiency(self) -> Decimal | None:
@@ -17,14 +18,14 @@ class EngineEfficiency:
 		coalVal = Interpolator.linear_interpolation(ship.engineBuilt(), *dataCoal)
 		dataOil = DataReader.readSingleDataColumn(colOil, index=ship.engineBuilt(), csv_file=csv_file)
 		oilVal = Interpolator.linear_interpolation(ship.engineBuilt(), *dataOil)
-		return Interpolator.linear_interpolation(ship.coalPercent(), (100, coalVal), (0, oilVal) )
+		return Interpolator.linear_interpolation(ship.engine.coalPercent(), (100, coalVal), (0, oilVal) )
 
 
 
 			
 	def _determineColumns(self):
 		ship = self._ship
-		_engine = ship.engineType()
+		_engine = ship.engine.engineType()
 		columns: list[int] = []
 		match  _engine:
 			case Engine.SIMPLE:

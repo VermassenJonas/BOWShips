@@ -51,12 +51,12 @@ class DimensionData(Component):
 #endregion
 #region rigging
 	def doRigging(self):
-		wm.bindEntryTwoWay(self.lengthMeterEntry, 	self.app.ship.length)
-		wm.bindEntryTwoWay(self.lengthFeetEntry, 	self.app.ship.lengthft)
-		wm.bindEntryTwoWay(self.beamMeterEntry, 	self.app.ship.beam)
-		wm.bindEntryTwoWay(self.beamFeetEntry,	 	self.app.ship.beamft)
-		wm.bindEntryTwoWay(self.draftMeterEntry,	self.app.ship.draft)
-		wm.bindEntryTwoWay(self.draftFeetEntry, 	self.app.ship.draftft)
+		wm.bindEntryTwoWay(self.lengthMeterEntry, 	self.app.ship.hull.length)
+		wm.bindEntryTwoWay(self.lengthFeetEntry, 	self.app.ship.hull.lengthft)
+		wm.bindEntryTwoWay(self.beamMeterEntry, 	self.app.ship.hull.beam)
+		wm.bindEntryTwoWay(self.beamFeetEntry,	 	self.app.ship.hull.beamft)
+		wm.bindEntryTwoWay(self.draftMeterEntry,	self.app.ship.hull.draft)
+		wm.bindEntryTwoWay(self.draftFeetEntry, 	self.app.ship.hull.draftft)
 
 		wm.restrictEntryNumeric(self.lengthMeterEntry)
 		wm.restrictEntryNumeric(self.lengthFeetEntry)

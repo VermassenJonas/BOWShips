@@ -24,8 +24,8 @@ class DisplacementData(Component):
 
 		self.doRigging()
 	def doRigging(self):
-		wm.bindEntryTwoWay(self.blockEntry, self.app.ship.blockCoeff)
-		wm.bindEntryTwoWay(self.dispEntry, self.app.ship.displacement)
+		wm.bindEntryTwoWay(self.blockEntry, self.app.ship.hull.blockCoeff)
+		wm.bindEntryTwoWay(self.dispEntry, self.app.ship.hull.displacement)
 		wm.restrictEntryNumeric(self.blockEntry, self.dispEntry)
 
 if __name__ == "__main__":

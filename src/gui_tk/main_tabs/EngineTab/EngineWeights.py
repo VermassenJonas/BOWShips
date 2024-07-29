@@ -27,8 +27,8 @@ class EngineWeights(Component):
 
 	def doRigging(self):
 		
-		wm.bindEntryTwoWay(self.engineEfficiencyEntry, self.app.ship.engineEfficiency)
-		wm.bindEntryTwoWay(self.engineWeightEntry, self.app.ship.engineWeight)
+		wm.bindEntryTwoWay(self.engineEfficiencyEntry, self.app.ship.engine.engineEfficiency)
+		wm.bindEntryTwoWay(self.engineWeightEntry, self.app.ship.engine.engineWeight)
 		
 if __name__ == "__main__":
 	root = wm.create_root()

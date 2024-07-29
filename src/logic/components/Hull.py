@@ -1,9 +1,10 @@
 from logic.Property import AliasProperty, CalculatedProperty, Property
+from logic.Ship import Ship
 from logic.utils import ftToM, init_num, mToFt, rem_zeros, roundOutBound, validateDecimal
 
 
 class Hull:
-	def __init__(self) -> None:
+	def __init__(self, ship : Ship) -> None:
 		self.length			= Property(init_num(180),
 								processor=validateDecimal,backProcessor=roundOutBound)
 		self.lengthft 		= AliasProperty(self.length, downTransfo=ftToM, upTransfo=mToFt,
