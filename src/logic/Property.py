@@ -52,7 +52,7 @@ class Property(Generic[T]):
 			value = val_fn()
 		if value:
 			self.set(value)
-		return self.get()
+		return self.value
 
 
 
@@ -77,7 +77,6 @@ class CalculatedProperty(Property[T]):
 			property.addCallback(self.calculate)
 		self._calcFun = calcFun
 		self.passDown = passDown
-		self._isDirty = True
 		super().__init__(value, name, processor, outProcessor)
 	def calculate(self, value : T):
 		self._value = self._calcFun(self._dependencies)

@@ -6,8 +6,8 @@ from logic.Ship import Ship
 import translations.en as en_lang
 
 class App:
-	def __init__(self) -> None:	
-		self.enums = enums	
+	def __init__(self) -> None:
+		self.enums = enums
 		self.ship = Ship()
 		self.lang = en_lang.lang
 
