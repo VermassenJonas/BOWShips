@@ -646,7 +646,7 @@ def main(ship):
 	shaftPower = HoltropMennenPowerCalculation(length, beam, draft, displacement, speed, cM = cM, cWP = cWP,
 							numPropellers = numShafts, dProp = dProp,
 							numBlades = numBlades, n = propSpeed)
-	#print(f"{name}: {round(shaftPower/1000)} kW")
+	print(f"{name}: {round(shaftPower/1000)} kW")
 	return Decimal(shaftPower/1000)
 	   
 			

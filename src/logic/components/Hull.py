@@ -47,7 +47,9 @@ class Hull:
 		length, beam, draft = self.length(), self.beam(), self.draft()	 
 		return rem_zeros(length*beam*draft)
 	
-	def dispToBlock(self, value , *args, **kwds):
+	def dispToBlock(self, dependencies , *args, **kwds):
+		value  = list(dependencies.values())[0]()
 		return rem_zeros(value / self.blockVolume())
-	def blockToDisp(self, value, *args, **kwds):
+	def blockToDisp(self, dependencies, *args, **kwds):
+		value = list(dependencies.values())[0]()
 		return rem_zeros(value * self.blockVolume())	

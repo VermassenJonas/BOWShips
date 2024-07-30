@@ -42,8 +42,11 @@ class Property(Generic[T]):
 	def set(self, value : Any) -> None:
 		if self.processor:
 			value = self.processor(value)
+			self._notify()
 		if type(value) == type(self.value):
 			self._value = value
+		else:
+			raise ValueError(f'type is {type(value) } instead of {type(self._value)}')
 	def __call__(self, value: Any = None, val_fn :Callable[[], Any] | None = None) -> Any:
 		if val_fn:
 			value = val_fn()

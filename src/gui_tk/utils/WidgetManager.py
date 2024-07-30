@@ -116,7 +116,10 @@ class WidgetManager(metaclass=Singleton):
 		self.bindEntryCallback(entry, property)
 
 	def bindEntryRead(self, entry : tk.Entry, property : Property):
-		fn = partial(property, val_fn=entry.get)
+		print(str(property) + str(entry))
+		def fn (event):
+			value = entry.get()
+			property(value = value)
 		entry.bind('<Return>', fn)
 		entry.bind('<FocusOut>', fn)
 		entry.bind('<KP_Enter>', fn)
