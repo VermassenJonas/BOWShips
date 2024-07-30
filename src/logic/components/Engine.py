@@ -1,6 +1,6 @@
 from functools import partial
 from logic import constants, shipSpeedCalc
-from logic.Property import AliasProperty, CalculatedProperty, Property
+from logic.Property import CalculatedProperty, Property
 from logic.Ship import Ship
 from logic.calculations.EngineEfficiency import EngineEfficiency
 from logic.utils import ftToM, init_num, mToFt, readEnum, rem_zeros, roundOutBound, validateDecimal
@@ -19,10 +19,10 @@ class Engine:
 		self.engineType = Property(enums.Engine.SIMPLE,
 							processor=partial(readEnum, enums.Engine))
 		self.coalPercent = Property(init_num(100),
-								processor=validateDecimal,backProcessor=roundOutBound)
+								processor=validateDecimal,outProcessor=roundOutBound)
 		
 		self.maxSpeed = Property(init_num(25),
-								processor=validateDecimal,backProcessor=roundOutBound)
+								processor=validateDecimal,outProcessor=roundOutBound)
 
 		self.maxPowerkW = CalculatedProperty(partial(self.calclKWPower, self._ship), self._ship.hull.displacement,
 								self._ship.hull.blockCoeff, self.maxSpeed,backProcessor=roundOutBound)
@@ -33,21 +33,21 @@ class Engine:
 								self.fuelType, self.engineType, self.coalPercent, backProcessor=roundOutBound)
 								
 		self.engineWeight = CalculatedProperty(self.calcEngineWeight, self.engineEfficiency, 
-								self.maxPowerHP, backProcessor=roundOutBound)
+								self.maxPowerHP, outProcessor=roundOutBound)
 	
 	
 	def kwToHP(self, kwPower : Property):
 		return kwPower()*constants.HpPerKW
-	def calcEngineWeight(self, *args, **kwds):
+	def calcEngineWeight(self):
 		return self.maxPowerHP() / self.engineEfficiency()
 
 	
-	def calclKWPower(self, *args, **kwds):
+	def calclKWPower(self):
 		try:
 			return shipSpeedCalc.main(ship=self._ship)
 		except:
 			return init_num(0)
-	def calcEngineEfficiency(self, *args, **kwds):
+	def calcEngineEfficiency(self):
 		ee = EngineEfficiency(self._ship)
 		result = ee.calcEngineEfficiency()
 		if result:
