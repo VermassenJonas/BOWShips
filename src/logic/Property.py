@@ -88,7 +88,7 @@ class CalculatedProperty(Property[T]):
 		if self.passDown:
 			if self.processor:
 				value = self.processor(value)
-			self.passDown.property(self.passDown.downTransfo(value, self._dependencies))
+			self.passDown.property(self.passDown.downTransfo(self._dependencies, value))
 		else:
 			raise ValueError("can't set CalculatedProperty without Passdown")
 	@property

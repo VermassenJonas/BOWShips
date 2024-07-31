@@ -50,5 +50,5 @@ class Hull:
 	def dispToBlock(self, dependencies , *args, **kwds):
 		value  = list(dependencies.values())[0]()
 		return rem_zeros(value / self.blockVolume())
-	def blockToDisp(self,value , dependencies, *args, **kwds):
+	def blockToDisp(self, dependencies,value , *args, **kwds):
 		return rem_zeros(value * self.blockVolume())	
