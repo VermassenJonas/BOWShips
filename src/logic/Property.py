@@ -42,9 +42,9 @@ class Property(Generic[T]):
 	def set(self, value : Any) -> None:
 		if self.processor:
 			value = self.processor(value)
-			self._notify()
 		if type(value) == type(self.value):
 			self._value = value
+			self._notify()
 		else:
 			raise ValueError(f'type is {type(value) } instead of {type(self._value)}')
 	def __call__(self, value: Any = None, val_fn :Callable[[], Any] | None = None) -> Any:
@@ -79,7 +79,10 @@ class CalculatedProperty(Property[T]):
 		self.passDown = passDown
 		super().__init__(value, name, processor, outProcessor)
 	def calculate(self, value : T):
+		oldVal = self.value
 		self._value = self._calcFun(self._dependencies)
+		if(self.value != oldVal):
+			self._notify()
 	def set(self, value : Any):
 		if self.passDown:
 			if self.processor:
