@@ -7,6 +7,8 @@ class DeckArmour(Component):
 	def __init__(self, parent, app)  -> None:
 		super().__init__(parent, app)
 		self.base =  wm.create_frame(self.parent)
+		self.titleLabel = wm.create_title_label(self.base, app.lang('deck_armour'))
+		self.titleLabel.grid(row=0, columnspan=5)
 
 		self.doRigging()
 

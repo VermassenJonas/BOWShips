@@ -21,6 +21,9 @@ class Belt(StrEnum):
 	TORPEDO_BELT 	= auto()
 	MACHINERY_BELT 	= auto()
 	MAGAZINES_BELT 	= auto()
+class DeckLayout(StrEnum):
+	ARMOURED = auto()
+	PROTECTED = auto()
 
 
 

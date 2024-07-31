@@ -59,13 +59,14 @@ class BeltArmour(Component):
 		self.unitCombo			.grid(column=0, row=row)
 
 		self.thicknessLabelMM	.grid(row=row, column=2)
-		self.thicknessLabelIN	.grid(row=row, column=3)
+		self.thicknessLabelIN	.grid(row=row, column=2)
 
 		self.lengthLabelM		.grid(row=row, column=4)
-		self.lengthLabelFt		.grid(row=row, column=5)
+		self.lengthLabelFt		.grid(row=row, column=4)
 
 		self.heightLabelM		.grid(row=row, column=6)
-		self.heightLabelFt		.grid(row=row, column=7)
+		self.heightLabelFt		.grid(row=row, column=6)
+
 		self.weightLabel		.grid(row=row, column=8)
 
 
@@ -92,11 +93,11 @@ class BeltArmour(Component):
 
 		beltLabel		.grid(row=row, column=0)
 		beltThickMM		.grid(row=row, column=2)
-		beltThickIN		.grid(row=row, column=3)
+		beltThickIN		.grid(row=row, column=2)
 		beltLenM		.grid(row=row, column=4)
-		beltLenFt		.grid(row=row, column=5)
+		beltLenFt		.grid(row=row, column=4)
 		beltHeightM		.grid(row=row, column=6)
-		beltHeightFt	.grid(row=row, column=7)
+		beltHeightFt	.grid(row=row, column=6)
 		beltWeight		.grid(row=row, column=8)
 
 		self.belts[belt] = SingleBelt(label=beltLabel,
