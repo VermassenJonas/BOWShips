@@ -77,6 +77,7 @@ class CalculatedProperty(Property[T]):
 			property.addCallback(self.calculate)
 		self._calcFun = calcFun
 		self.passDown = passDown
+		self._dirty = True
 		super().__init__(value, name, processor, outProcessor)
 	def calculate(self, value : T):
 		oldVal = self.value
@@ -90,4 +91,10 @@ class CalculatedProperty(Property[T]):
 			self.passDown.property(self.passDown.downTransfo(value, self._dependencies))
 		else:
 			raise ValueError("can't set CalculatedProperty without Passdown")
+	@property
+	def value(self):
+		if self._dirty:
+			self._value = self._calcFun(self._dependencies)
+			self._dirty = False
+		return self._value
 

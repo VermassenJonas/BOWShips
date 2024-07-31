@@ -116,7 +116,6 @@ class WidgetManager(metaclass=Singleton):
 		self.bindEntryCallback(entry, property)
 
 	def bindEntryRead(self, entry : tk.Entry, property : Property):
-		print(str(property) + str(entry))
 		def fn (event):
 			value = entry.get()
 			property(value = value)
