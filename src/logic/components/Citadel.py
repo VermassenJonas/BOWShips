@@ -16,9 +16,9 @@ class Citadel:
 		for belt in enums.Belt:
 			self.armourBelts[belt] = ArmourBelt(belt)
 		self.armourDecks : Dict[enums.Deck, ArmourDeck]  = {}
-		self.armourDecks[enums.Deck.MAIN] = ArmourDeck(enums.Deck.MAIN,self.getMainCoverage , self.ship)
-		self.armourDecks[enums.Deck.FORE] = ArmourDeck(enums.Deck.FORE,self.getForeCoverage , self.ship)
-		self.armourDecks[enums.Deck.AFT] = ArmourDeck(enums.Deck.AFT,self.getAftCoverage , self.ship)
+		self.armourDecks[enums.Deck.MAIN_DECK] = ArmourDeck(enums.Deck.MAIN_DECK,self.getMainCoverage , self.ship)
+		self.armourDecks[enums.Deck.FORE_DECK] = ArmourDeck(enums.Deck.FORE_DECK,self.getForeCoverage , self.ship)
+		self.armourDecks[enums.Deck.AFT_DECK] = ArmourDeck(enums.Deck.AFT_DECK,self.getAftCoverage , self.ship)
 
 	def getMainCoverage(self)	:
 		return '1'

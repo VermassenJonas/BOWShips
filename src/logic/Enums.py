@@ -25,9 +25,9 @@ class DeckLayout(StrEnum):
 	ARMOURED = auto()
 	PROTECTED = auto()
 class Deck(StrEnum):
-	MAIN = auto()
-	FORE = auto()
-	AFT = auto()
+	MAIN_DECK = auto()
+	FORE_DECK = auto()
+	AFT_DECK = auto()
 
 
 

@@ -33,8 +33,7 @@ class Engine:
 								
 		self.engineWeight = CalculatedProperty(value=init_num(0), calcFun=self.calcEngineWeight,
 							dependencies=[self.engineEfficiency, self.maxPowerHP], outProcessor=roundOutBound)
-		#CalculatedProperty(self.calcEngineWeight, self.engineEfficiency, 
-		#						self.maxPowerHP, outProcessor=roundOutBound)
+
 	
 	
 	def kwToHP(self, *args):
