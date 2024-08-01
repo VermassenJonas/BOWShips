@@ -10,9 +10,6 @@ class Engine:
 	def __init__(self, ship : Ship) -> None:
 		self._ship = ship
 	
-
-
-	def init_props(self):
 		
 		self.fuelType = Property(enums.Fuel.COAL,
 							processor=partial(readEnum, enums.Fuel))

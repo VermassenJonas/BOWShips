@@ -24,6 +24,11 @@ class Belt(StrEnum):
 class DeckLayout(StrEnum):
 	ARMOURED = auto()
 	PROTECTED = auto()
+class Deck(StrEnum):
+	MAIN = auto()
+	FORE = auto()
+	AFT = auto()
+
 
 
 

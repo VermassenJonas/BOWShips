@@ -13,6 +13,7 @@ class Ship:
 
 		from logic.components.Engine import Engine
 		from logic.components.Hull import Hull
+		from logic.components.Citadel import Citadel
 
 		self.name 			= Property('')
 		self.country		= Property('')
@@ -25,13 +26,7 @@ class Ship:
 
 		self.hull = Hull(self)
 		self.engine = Engine(self)
-		self.engine.init_props()
-
-
-		self.armourBelts : Dict[enums.Belt, ArmourBelt]=  {}
-		for belt in enums.Belt:
-			self.armourBelts[belt] = ArmourBelt(belt)
-		
+		self.citadel = Citadel(self)
 
 #region Simple Calcs
 #endregion

@@ -23,8 +23,8 @@ class WidgetManager(metaclass=Singleton):
 			widgetList.append(widget)
 
 	#region creators 
-	def create_readOnly_entry(self, parent : Misc):
-		widget = self.create_entry(parent)
+	def create_readOnly_entry(self, parent : Misc, dataType: list[Any] = [] , widgetList = None):
+		widget = self.create_entry(parent, dataType=dataType, widgetList=widgetList)
 		widget.config(state=DISABLED)
 		return widget
 

@@ -1,4 +1,3 @@
-from decimal import Decimal
 from logic import constants
 from logic.Property import CalculatedProperty, PassDown, Property
 from logic.utils import ftToM, inToMm, init_num, mToFt, mmToIn, roundOutBound, validateDecimal
@@ -37,13 +36,11 @@ class ArmourBelt:
 						passDown=PassDown(self.thickness, self.weightToThickness),
 						processor=validateDecimal, outProcessor=roundOutBound)
 
-	def calcArmourSurface(self):
-		return self.length()*self.height()*Decimal('2') #two sides to a ship
 
 	def thicknessToWeight(self, dependencies ):
-		surface = self.length()*self.height()*Decimal('2') #two sides to a ship
+		surface = self.length()*self.height()*init_num('2') #two sides to a ship
 		return surface * self.thickness() / constants.mmPerM * constants.armourDensity
 	def weightToThickness(self, dependencies, weight):
-		surface = self.length()*self.height()*Decimal('2') #two sides to a ship
+		surface = self.length()*self.height()*init_num('2') #two sides to a ship
 		return weight / (surface * constants.armourDensity / constants.mmPerM)
  

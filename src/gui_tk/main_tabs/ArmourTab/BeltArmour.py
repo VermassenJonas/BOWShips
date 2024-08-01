@@ -108,7 +108,7 @@ class BeltArmour(Component):
 									heiM=beltHeightM,
 									HeiFt=beltHeightFt,
 									weight = beltWeight)
-		beltData = self.app.ship.armourBelts[belt]
+		beltData = self.app.ship.citadel.armourBelts[belt]
 		wm.bindEntryTwoWay(beltThickMM, beltData.thickness)
 		wm.bindEntryTwoWay(beltThickIN, beltData.thicknessIn)
 		wm.bindEntryTwoWay(beltLenM, beltData.length)

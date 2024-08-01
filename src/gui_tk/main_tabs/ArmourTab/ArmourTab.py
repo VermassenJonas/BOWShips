@@ -12,7 +12,7 @@ class ArmourTab(Component):
 		beltArmour = BeltArmour(self.base, self.app)
 		beltArmour.base.grid()
 		deckArmour = DeckArmour(self.base, self.app)
-		
+		deckArmour.base.grid()
 if __name__ == "__main__":
 	root = wm.create_root()
 	root.geometry("600x600")
