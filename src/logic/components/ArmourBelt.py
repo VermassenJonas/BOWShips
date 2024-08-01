@@ -27,8 +27,8 @@ class ArmourBelt:
 										passDown=PassDown(self.height, ftToM),
 										processor=validateDecimal, outProcessor=roundOutBound)
 		self.thicknessIn	= CalculatedProperty(value=init_num(0), 
-										dependencies=[self.thickness], calcFun=mToFt,
-										passDown=PassDown(self.thickness, ftToM),
+										dependencies=[self.thickness], calcFun=mmToIn,
+										passDown=PassDown(self.thickness, inToMm),
 										processor=validateDecimal, outProcessor=roundOutBound)
 		
 		self.weight = CalculatedProperty(value=init_num(0), 

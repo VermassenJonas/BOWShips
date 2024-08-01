@@ -7,16 +7,17 @@ def init_num(value):
 	return Decimal(str(value))
 
 
-def ftToM(value, dependencies: dict[str, Property[Decimal]]) -> Decimal:
+def ftToM(dependencies: dict[str, Property[Decimal]], value) -> Decimal:
 	return rem_zeros(value * constants.ftTometer)
 
 def mToFt(dependencies: dict[str, Property[Decimal]]) -> Decimal:
 	value : Decimal = list(dependencies.values())[0]()
 	return rem_zeros(value / constants.ftTometer)
 
-def inToMm(value) :
+def inToMm(dependencies: dict[str, Property[Decimal]], value)  -> Decimal:
 	return rem_zeros(value * constants.mmPerInch)
-def mmToIn(value) :
+def mmToIn(dependencies: dict[str, Property[Decimal]])  -> Decimal:
+	value = list(dependencies.values())[0]()
 	return rem_zeros(value / constants.mmPerInch)
 
 def rem_zeros( d : Decimal) -> Decimal:
