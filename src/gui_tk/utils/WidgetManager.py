@@ -1,7 +1,5 @@
 from enum import Enum
-import enum
 from functools import partial
-from os import stat
 from tkinter import DISABLED, Misc, font
 import tkinter as tk
 import tkinter.ttk as ttk

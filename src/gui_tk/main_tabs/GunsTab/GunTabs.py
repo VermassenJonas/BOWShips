@@ -1,4 +1,3 @@
-from tkinter import Misc, Widget
 from gui_tk.main_tabs.GunsTab.BatteryTab.BatteryTab import BatteryTab
 from gui_tk.main_tabs.GunsTab.GunsOverview import GunsOverview
 from gui_tk.tk_main import App

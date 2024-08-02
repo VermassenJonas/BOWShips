@@ -1,4 +1,3 @@
-from tkinter import Misc, Widget
 from gui_tk.tk_main import App
 from gui_tk.utils.Component import Component
 from gui_tk.utils.WidgetManager import wm
