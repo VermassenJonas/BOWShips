@@ -35,13 +35,19 @@ class DeckArmour(Component):
 		pass
 	def drawLabels(self, row):
 
+
+		self.unitCombo = wm.create_ComboBox(self.base, list(self.app.enums.Unit))
+		self.unitCombo.bind('<<ComboboxSelected>>', func=self.selectUnit)
+		self.unitCombo.set(self.app.enums.Unit.METRIC)
+		
+
 		self.thicknessMMlabel = wm.create_label(self.base, self.app.lang('thickness_mm'),dataType=[self.app.enums.Unit.METRIC], widgetList=self.unitWidgets)
 		self.thicknessInlabel = wm.create_label(self.base, self.app.lang('thickness_in'),dataType=[self.app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets)
 		self.lengthMLabel = 	wm.create_label(self.base, self.app.lang('length_m'),dataType=[self.app.enums.Unit.METRIC], widgetList=self.unitWidgets)
 		self.lengthFtLabel = 	wm.create_label(self.base, self.app.lang('length_ft'),dataType=[self.app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets)
 		self.weightLabel = 		wm.create_label(self.base, self.app.lang('weight_ton'))
 
-		
+		self.unitCombo				.grid(column=0, row=row)
 		self.thicknessMMlabel		.grid(column=1, row=row)
 		self.thicknessInlabel		.grid(column=1, row=row)
 		self.lengthMLabel			.grid(column=3, row=row)
@@ -70,6 +76,11 @@ class DeckArmour(Component):
 						lenFt=lengthFtEntry,
 						weight=weight)
 
+	#region interactivity
+	def selectUnit(self, event = None):
+		unit = self.app.enums.Unit(self.unitCombo.get())
+		wm.switchUnits(self.unitWidgets, unit=unit)
+	#endregion
 		
 if __name__ == "__main__":
 	root = wm.create_root()
