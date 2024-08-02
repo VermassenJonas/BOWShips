@@ -1,5 +1,6 @@
 from tkinter import Misc, Widget, BOTH
 from gui_tk.main_tabs.ArmourTab.ArmourTab import ArmourTab
+from gui_tk.main_tabs.GunsTab.GunTabs import GunTabs
 from gui_tk.utils.Component import Component
 from gui_tk.main_tabs.HullTab.HullTab import HullTab
 from gui_tk.main_tabs.EngineTab.EngineTab import EngineTab
@@ -13,11 +14,14 @@ class MainTabs(Component):
 		self.base =  wm.create_notebook(self.parent)
 		self.hullTab = HullTab(self.base, self.app)
 		self.hullTab.base.grid()
+		self.gunTabs = GunTabs(self.base, self.app)
+		self.gunTabs.base.grid()
 		self.armourTab = ArmourTab(self.base, self.app)
 		self.armourTab.base.grid()
 		self.engineTab = EngineTab(self.base, self.app)
 		self.engineTab.base.grid()
-		self.base.add(self.hullTab.base, 	text=app.lang('hull')) 
+		self.base.add(self.gunTabs.base,		text=app.lang('guns'))
+		self.base.add(self.hullTab.base, 		text=app.lang('hull')) 
 		self.base.add(self.armourTab.base,	text=app.lang('citadel'))
 		self.base.add(self.engineTab.base,	text=app.lang('engine'))
 		
