@@ -28,7 +28,12 @@ class ArmourDeck:
 										dependencies=[self.length], calcFun=mToFt,
 										passDown=PassDown(self.length, ftToM),
 										processor=validateDecimal, outProcessor=roundOutBound)
-
+		
+		self.weight = CalculatedProperty(value=init_num(0), 
+						dependencies=[self.length, self.thickness],
+						calcFun=self.thicknessToWeight, 
+						passDown=PassDown(self.thickness, self.weightToThickness),
+						processor=validateDecimal, outProcessor=roundOutBound)
 
 
 	def thicknessToWeight(self, dependencies ):
@@ -36,4 +41,7 @@ class ArmourDeck:
 		return surface * self.thickness() / constants.mmPerM * constants.armourDensity
 	def weightToThickness(self, dependencies, weight):
 		surface = self.length()*self.ship.hull.beam() * init_num(self.coverageCoeff())
-		return weight / (surface * constants.armourDensity / constants.mmPerM)
+		if surface:
+			return weight / (surface * constants.armourDensity / constants.mmPerM)
+		else:
+			return init_num(0)  

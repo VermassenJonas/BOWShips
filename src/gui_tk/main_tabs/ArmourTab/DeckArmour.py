@@ -69,6 +69,13 @@ class DeckArmour(Component):
 		lengthFtEntry	.grid(column=3, row=row)
 		weight			.grid(column=5, row=row)
 
+		wm.bindEntryTwoWay(thickEntry, self.app.ship.citadel.armourDecks[deck].thickness)
+		wm.bindEntryTwoWay(thickInEntry, self.app.ship.citadel.armourDecks[deck].thicknessIn)
+		wm.bindEntryTwoWay(lengthEntry, self.app.ship.citadel.armourDecks[deck].length)
+		wm.bindEntryTwoWay(lengthFtEntry, self.app.ship.citadel.armourDecks[deck].lengthFt)
+		wm.bindEntryTwoWay(weight, self.app.ship.citadel.armourDecks[deck].weight)
+
+
 		return SingleDeck(label=label,
 						thickMM=thickEntry,
 						thickIN=thickInEntry,
