@@ -29,6 +29,7 @@ class DeckArmour(Component):
 		self.mainDeck.lenFt.config(state=DISABLED)
 		self.foreDeck = self.drawDeck(6, self.app.enums.Deck.FORE_DECK)
 		self.aftDeck = self.drawDeck(7, self.app.enums.Deck.AFT_DECK)
+		self.selectUnit()
 
 
 	def drawConfig(self):

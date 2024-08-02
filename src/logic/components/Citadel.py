@@ -23,13 +23,17 @@ class Citadel:
 		self.ship.hull.length.addCallback(self.calcMainDeckLength)	
 		self.armourDecks[enums.Deck.FORE_DECK].length.addCallback(self.calcMainDeckLength)
 		self.armourDecks[enums.Deck.AFT_DECK].length.addCallback(self.calcMainDeckLength)
+		self.calcMainDeckLength()
+
+
 	def getMainCoverage(self)	:
 		return '1'
 	def getForeCoverage(self)	:
 		return '0.5'
 	def getAftCoverage(self)	:
 		return '0.75'
-	#TODO: make coverage dependent on hull shape
+	#TODO: make deck coverage dependent on hull shape
+	
 	def calcMainDeckLength(self, *args):
 		self.armourDecks[enums.Deck.MAIN_DECK].length(self.ship.hull.length()
 												- self.armourDecks[enums.Deck.FORE_DECK].length() 

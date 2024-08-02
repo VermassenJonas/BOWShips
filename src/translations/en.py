@@ -58,6 +58,11 @@ class Lang:
 		'height_ft'	 			: 'Height (ft)',
 		'belt_and_bulkheads'	: 'Belts & Bulkheads',
 		'weight_ton'			: 'Weight (ton)',
+		'citadel'				: 'Citadel',
+		'deck_armour'			: 'Deck Armour',
+		'main_deck'				: 'Main Deck',
+		'fore_deck'				: 'Fore Deck',
+		'aft_deck'				: 'Aft Deck',
 
 	} 
 	def __call__(self, name : str,*args: Any, **kwds: Any) -> Any:
