@@ -8,9 +8,9 @@ class GunTabs(Component):
 	def __init__(self, parent, app)  -> None:
 		super().__init__(parent, app)
 		self.base =  wm.create_notebook(self.parent)
-		self.gunsOverview = GunsOverview(self.base, self.app)
-		self.gunsOverview.base.grid()
-		self.base.add(self.gunsOverview.base,	text=app.lang('overview'))
+		# self.gunsOverview = GunsOverview(self.base, self.app)
+		# self.gunsOverview.base.grid()
+		# self.base.add(self.gunsOverview.base,	text=app.lang('overview'))
 		self.batteries = []
 		for battery in list(self.app.enums.Battery):
 			batteryTab = BatteryTab(self.base, self.app)
