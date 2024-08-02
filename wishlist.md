@@ -1,8 +1,8 @@
 
 ## Ideas
 ### Need (next release):
-- Armour
-- unit switching (mostly done)
+- fore and aft bulkheads
+- guns
 ### Want:
 - put translations in CSV
 ### Desired
