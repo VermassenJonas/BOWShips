@@ -7,11 +7,17 @@ class GunData(Component):
 		super().__init__(parent, app)
 		self.base =  wm.create_frame(self.parent)
 		self.title = wm.create_title_label(self.base, app.lang('gun_data'))
-		self.title.grid()
-		self.doRigging()
+		self.title.grid(column=0, row=0)
 
-	def doRigging(self):
-		pass #TODO: implement interactivity	
+		self.unitCombo = wm.create_ComboBox(self.base, list(self.app.enums.Unit))
+		self.unitCombo.bind('<<ComboboxSelected>>', func=self.selectUnit)
+		self.unitCombo.set(self.app.enums.Unit.METRIC)
+		self.unitCombo.grid(column=2, row=0)
+
+		
+
+	def selectUnit(self, e):
+		pass
 		
 if __name__ == "__main__":
 	root = wm.create_root()

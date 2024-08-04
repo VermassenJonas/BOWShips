@@ -9,6 +9,9 @@ class BatteryTab(Component):
 		self.base =  wm.create_frame(self.parent)
 		self.gunData = GunData(self.base, self.app)
 		self.gunData.base.grid()
+
+
+
 		
 if __name__ == "__main__":
 	root = wm.create_root()
