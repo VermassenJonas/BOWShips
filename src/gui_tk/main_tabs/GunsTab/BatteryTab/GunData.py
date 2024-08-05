@@ -21,12 +21,17 @@ class GunData(Component):
 									dataType=[app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets)
 		self.calibreMmEntry = wm.create_numeric_entry(self.base, dataType=[app.enums.Unit.METRIC], widgetList=self.unitWidgets)
 		self.calibreInEntry = wm.create_numeric_entry(self.base, dataType=[app.enums.Unit.IMPERIAL], widgetList=self.unitWidgets)
+		
+		self.barrelLenLabel = wm.create_label(self.base, app.lang('barrel_cal'))
 		self.barrelLenCal = wm.create_numeric_entry(self.base)
+		
 		self.calibreMmLabel.grid(column=0, row=1)
 		self.calibreInLabel.grid(column=1, row=1)
 		self.calibreMmEntry.grid(column=0, row=2)
 		self.calibreInEntry.grid(column=1, row=2)
 
+		self.barrelLenLabel.grid(column=2, row=1)
+		self.barrelLenCal.grid(column=2, row=2)
 
 		self.selectUnit()
 		

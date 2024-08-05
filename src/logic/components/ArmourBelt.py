@@ -42,5 +42,7 @@ class ArmourBelt:
 		return surface * self.thickness() / constants.mmPerM * constants.armourDensity
 	def weightToThickness(self, dependencies, weight):
 		surface = self.length()*self.height()*init_num('2') #two sides to a ship
-		return weight / (surface * constants.armourDensity / constants.mmPerM)
- 
+		if surface:
+			return weight / (surface * constants.armourDensity / constants.mmPerM)
+		else:
+			return 0

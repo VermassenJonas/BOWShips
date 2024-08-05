@@ -27,7 +27,7 @@ class WidgetManager(metaclass=Singleton):
 		return widget
 
 	def create_entry(self, parent : tk.Misc, dataType: list[Any] = [] , widgetList = None) :
-		widget = CustomEntry(parent, dataType, width = 15)
+		widget = CustomEntry(parent, dataType, width = 10)
 		self._standardizeAlignment(widget)
 		self._addWidget(widget, widgetList=widgetList)
 		return widget
@@ -46,7 +46,7 @@ class WidgetManager(metaclass=Singleton):
 	def create_frame(self, parent : tk.Misc) -> tk.Frame:
 		widget = tk.Frame(parent)
 		#widget.config(highlightbackground='red', highlightthickness=0.5) # debug line
-		widget.grid_configure(ipadx=5, ipady=5)
+		widget.grid_configure(ipadx=10, ipady=10)
 		self._standardizeAlignment(widget)	
 		self._addWidget(widget)
 		return widget
@@ -86,7 +86,7 @@ class WidgetManager(metaclass=Singleton):
 		return (var, buttons)
 
 	def create_ComboBox(self, parent, options):		
-		widget = ttk.Combobox(parent, values=options, width=15)
+		widget = ttk.Combobox(parent, values=options, width=9)
 		widget.config(state='readonly')
 		self._standardizeAlignment(widget)
 		self._addWidget(widget)
